@@ -24,7 +24,7 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 // Routes
-var routes = require('./controllers/burger_controller.js');
+var routes = require('./controllers/bets_controller.js');
 app.use('/', routes);
 
 // Starts the server to begin listening
