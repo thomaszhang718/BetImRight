@@ -3,23 +3,34 @@ var router = express.Router();
 var bets = require('../models/bets.js');
 
 router.get('/', function(req,res) {
-	res.redirect('/bets')
+	res.redirect('/login')
 });
 
-router.get('/bets', function(req,res) {
-	bets.selectAll(function(data){
-		var hbsObject = {products : data}
-		console.log(hbsObject)
-		res.render('index', hbsObject);
-	});
+router.get('/login', function(req,res) {
+		res.render('login');
 });
 
-router.post('/bets/create', function(req,res) {
-	var dateNew = new Date();
-	var date = dateNew.getDate() + "," + (dateNew.getMonth() + 1) + "," + dateNew.getFullYear();
+router.get('/createUser', function(req,res) {
+		res.render('createUser');
+});
+
+router.get('/home', function(req,res) {
+		res.render('home');
+});
+
+router.get('/myBets', function(req,res) {
+		res.render('myBets');
+});
+
+router.get('/newBets', function(req,res) {
+		res.render('newBets');
+});
+
+
+router.post('/createUser/create', function(req,res) {
 	console.log(date);
 	bets.insertOne(['burgerName', 'date'], [req.body.name, date], function(data){
-		res.redirect('/bets')
+		res.redirect('/createUser')
 	});
 });
 
