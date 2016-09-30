@@ -14,56 +14,27 @@ Here is the main HTML where handlebars will render to
 	    <meta name="description" content="">
 	    <meta name="author" content="">
 
-		<link rel="stylesheet" type="text/css" href="../../public/assets/css/bootstrap.min.css"></link>
-		<link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css"></link>
+		<link rel="stylesheet" href="./css/style.css" type="text/css" />
 
 	</head>
 	<body>
 		<!-- Add JQuery and Bootstrap -->
-		<script src="../../public/assets/js/jquery-3.1.1.min.js"></script>
-    	<script src="../../public/assets/css/bootstrap.min.js"></script>
+		<script src="./js/jquery-3.1.1.min.js"></script>
+    	<script src="./js/bootstrap.js"></script>
 		
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
 
-    <!-- Page Content -->
+
+
+<!-- Page Content -->
     <div class="container">
 
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Page Heading
-                    <small>Secondary Text</small>
+                <h1 class="page-header">
+                    <img src="./img/test-logo.jpg" alt="Bet I'm Right Logo" id="bir-logo">
                 </h1>
             </div>
         </div>
@@ -71,130 +42,22 @@ Here is the main HTML where handlebars will render to
 
         <!-- Projects Row -->
         <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            <div class="col-md-12 login-box">
+				<label for="username">Username</label>
+				<input type="text" name="username" id="username" class="login-form" required >
+				<br>
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" class="login-form" required >
+				<br>
+				<button id="log-in">Log In</button>
+				<br>
+
+				<p>Don't have an account? Sign up <a href="/createUser">here!</a></p>
+
             </div>
         </div>
         <!-- /.row -->
 
-        <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
-
-        <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Pagination -->
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- /.row -->
 
         <hr>
 
@@ -202,7 +65,8 @@ Here is the main HTML where handlebars will render to
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                	<p> About Us | Careers | Contact Us | Support</p>
+                    <p>Copyright &copy; 2016 Bet I'm Right </p>
                 </div>
             </div>
             <!-- /.row -->
@@ -211,25 +75,40 @@ Here is the main HTML where handlebars will render to
     </div>
     <!-- /.container -->
 
+	<script>
+	// define sign in function
+	function signIn(){
 
+		console.log("signIn func")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		// grab data from form
+		var data = {
+			username: $('#username').val().trim(),
+			password: $('#password').val().trim()
+		}
+		//console.log(data)
+		// grab url to ajax call
+		var currentURL = window.location.origin + "/api/auth";
 
 		
+
+		// post our login data
+		$.post(currentURL, data, function(results){
+			console.log(results);
+		});
+
+	}
+
+	// define call on button
+	$(document).on('click', '#log-in', function(){
+		// sign in
+		signIn();
+		// prevent default behavior
+		return false;
+	})
+	</script>
+
+
 	</body>
 </HTML>
 

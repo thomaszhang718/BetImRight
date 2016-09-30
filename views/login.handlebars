@@ -1,60 +1,80 @@
-<div class="row">
-    <div class="col-md-12">
-        <img src="https://i.ytimg.com/vi/k5e1HPeusiA/hqdefault.jpg" alt="Krabby Patty" id="burger-pic">
-        <h1>Eat-Da-Burger!</h1>
-    </div>
-</div>
+<!-- Page Content -->
+    <div class="container">
 
-<div class="row">
-
-    <div class="col-md-6">
-        <h2>Burgers that are delicious and waiting to be eated!</h2>
-
-        <ul class="left">
-            {{#each burgers}}
-                {{#unless this.devoured}}
-                    <li>
-                        <span class="burger-name">{{this.id}}. {{this.burger_name}}
-                            <form action="burgers/update/{{this.id}}?_method=PUT" method="POST" class="eat-button">
-                                <input type="hidden" name="devoured" value="true">
-                                <button type="submit" class="btn">EAT ME!</button>
-                            </form>
-                        </span>
-                    </li>
-                {{/unless}}
-            {{/each}}
-        </ul>
-    </div>
-
-    <div class="col-md-6">
-        <h2>Delicious burgers that have been eated!</h2>
-
-        <ul class="right">
-            {{#each burgers}}
-                {{#if this.devoured}}
-                    <li>
-                        <span class="burger-name">{{this.id}}. {{this.burger_name}}</span>
-                    </li>
-                {{/if}}
-            {{/each}}
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-
-    <h2>Add a Burger</h2>
-    <form class="create-update-form" action="burgers/create" method="POST">
-
-        <div class="form-group">
-            <label for="burger">Burger Name:</label>
-            <input type="text" id="burger" name="burger_name">
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <img src="./img/test-logo.jpg" alt="Bet I'm Right Logo" id="bir-logo">
+                </h1>
+            </div>
         </div>
+        <!-- /.row -->
 
-        <button type="submit" class="btn">Add Burger</button>
-    </form>
-</div>
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-md-12 login-box">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" class="login-form" required >
+                <br>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="login-form" required >
+                <br>
+                <button id="log-in">Log In</button>
+                <br>
+
+                <p>Don't have an account? Sign up <a href="/createUser">here!</a></p>
+
+            </div>
+        </div>
+        <!-- /.row -->
 
 
+        <hr>
 
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p> About Us | Careers | Contact Us | Support</p>
+                    <p>Copyright &copy; 2016 Bet I'm Right </p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
 
+    </div>
+    <!-- /.container -->
+
+    <script>
+    // define sign in function
+    function signIn(){
+
+        console.log("signIn func")
+
+        // grab data from form
+        var data = {
+            username: $('#username').val().trim(),
+            password: $('#password').val().trim()
+        }
+        //console.log(data)
+        // grab url to ajax call
+        var currentURL = window.location.origin + "/api/auth";
+
+        
+
+        // post our login data
+        $.post(currentURL, data, function(results){
+            console.log(results);
+        });
+
+    }
+
+    // define call on button
+    $(document).on('click', '#log-in', function(){
+        // sign in
+        signIn();
+        // prevent default behavior
+        return false;
+    })
+    </script>
