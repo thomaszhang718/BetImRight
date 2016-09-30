@@ -2,10 +2,27 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-.portfolio-item {
+footer {
+    margin: 50px 0;
+    text-align: center;
+}
+
+#bir-logo {
+	display: block;
+	margin: 30px auto;
+}
+
+.login-box {
+	text-align:center;
     margin-bottom: 25px;
 }
 
-footer {
-    margin: 50px 0;
+.login-form {
+	width: 250px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#log-in {
+	margin: 10px 0px;
 }
