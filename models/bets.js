@@ -1,6 +1,6 @@
 var orm = require('../config/orm.js');
 
-var burger = {
+var bets = {
 	selectAll: function(callback) {
 		orm.selectAll('products', function(res){
 			callback(res);
@@ -12,7 +12,7 @@ var burger = {
 		});
 	},
 	update: function(objColVals, condition, callback) {
-		orm.updateOne('products', objColVals, condition, function(res){
+		orm.updateOne('users', objColVals, condition, function(res){
 			callback(res);
 		});
 	},
@@ -23,4 +23,4 @@ var burger = {
 	}
 };
 
-module.exports = burger;
+module.exports = bets;
