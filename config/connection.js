@@ -1,18 +1,23 @@
 var mysql = require('mysql');
 
 var connection;
+
 //If JAWSDB present
+
 if (process.env.JAWSDB_URL) {
     connection = mysql.createConnection(process.env.JAWSDB_URL);
 }
+
 //Use local MySQL 
+
 else {
     connection = mysql.createConnection({
+		
         //Will need to change password to match your local MySQL settings
         port: 3306,
         host: 'localhost',
         user: 'root',
-        password: '',
+        password: '12345',
         database: 'bets_db'
     });
 }
