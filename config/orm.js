@@ -64,8 +64,8 @@ var orm = {
       });
     },
 	
-	userAuth: function(table, username, callback) {
-        var queryString = 'SELECT ' + username +' FROM ' + table + ';';
+	userAuth: function(table, callback) {
+        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin`, FROM bets_db`.`' + table + '`;';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);

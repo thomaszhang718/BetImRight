@@ -18,6 +18,7 @@ CREATE TABLE users
 	total_bets_made int(11) DEFAULT 0,
 	current_points int(11) DEFAULT 1000,
 	last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	admin BOOLEAN DEFAULT false,
 	PRIMARY KEY (user_id)
 );
 
@@ -47,15 +48,4 @@ CREATE TABLE history
 	user_id int(20) NOT NULL,
 	vote BOOLEAN DEFAULT NULL,
 	PRIMARY KEY (transaction_id)
-);
-
-CREATE TABLE admin
-(
-	user_id int NOT NULL AUTO_INCREMENT,
-	username varchar(20) NOT NULL,
-	first_name varchar(20) NOT NULL,
-	last_name varchar(20) NOT NULL,
-	password varchar(20) NOT NULL,
-	email varchar(40) NOT NULL,
-	PRIMARY KEY (user_id)
 );
