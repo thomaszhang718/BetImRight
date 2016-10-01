@@ -9,6 +9,8 @@ var app = express();
 
 app.set('jwtSecret', "CODINGROCKS");
 
+
+
 //Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(process.cwd() + '/public'));
 
@@ -24,8 +26,10 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 // Routes
-var routes = require('./controllers/bets_controller.js');
-app.use('/', routes);
+require('./controllers/bets_controller.js')(app);
+
+//var routes = require('./controllers/bets_controller.js');
+//app.use('/', routes);
 
 // Starts the server to begin listening
 var PORT = 8080;

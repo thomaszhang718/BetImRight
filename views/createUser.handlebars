@@ -14,16 +14,47 @@
         <!-- Projects Row -->
         <div class="row">
             <div class="col-md-12 login-box">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" class="login-form" required >
-                <br>
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="login-form" required >
-                <br>
-                <button id="log-in">Log In</button>
+                <label for="firstName">First Name</label>
+                <input type="text" name="firstName" id="firstName" class="signup-form" maxlength="20" autocomplete="off" required >
                 <br>
 
-                <p>Don't have an account? Sign up <a href="/createUser">here!</a></p>
+                <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName" class="signup-form" maxlength="20" autocomplete="off" required >
+                <br>
+
+                <label for="newUsername">newUsername</label>
+                <input type="text" name="newUsername" id="newUsername" class="signup-form" maxlength="20" autocomplete="off" required >
+                <br>
+
+                <label for="newPassword">Password</label>
+                <input type="password" name="newPassword" id="newPassword" class="signup-form" maxlength="20" autocomplete="off" required >
+                <br>
+
+                <label for="passwordAgain">Confirm Password</label>
+                <input type="password" name="passwordAgain" id="passwordAgain" class="signup-form" maxlength="20" autocomplete="off" required >
+                <br>
+
+                <label for="newEmail">Email</label>
+                <input type="text" name="newEmail" id="newEmail" class="signup-form" maxlength="40" autocomplete="off" required >
+                <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <button id="create-button">Create Account</button>
+                <br>
 
             </div>
         </div>
@@ -48,9 +79,9 @@
 
     <script>
     // define sign in function
-    function signIn(){
+    function createAccount(){
 
-        console.log("signIn func")
+        console.log("createAccount func")
 
         // grab data from form
         var data = {
@@ -71,10 +102,12 @@
     }
 
     // define call on button
-    $(document).on('click', '#log-in', function(){
+    $(document).on('click', '#create-button', function(){
         // sign in
-        signIn();
+        createAccount();
         // prevent default behavior
         return false;
     })
     </script>
+
+
