@@ -2,12 +2,12 @@ var orm = require('../config/orm.js');
 
 var bets = {
 	selectAll: function(callback) {
-		orm.selectAll('products', function(res){
+		orm.selectAll('users', function(res){
 			callback(res);
 		});
 	},
 	insertOne:  function(cols, vals, callback) {
-		orm.insertOne('products', cols, vals, function(res){
+		orm.insertOne('users', cols, vals, function(res){
 			callback(res);
 		});
 	},
@@ -16,8 +16,8 @@ var bets = {
 			callback(res);
 		});
 	},
-	auth: function(username, callback) {
-		orm.updateOne('users', username, function(res){
+	userAuth: function(callback) {
+		orm.userAuth('users', function(res){
 			callback(res);
 		});
 	}
