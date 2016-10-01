@@ -40,12 +40,13 @@ CREATE TABLE bets
 	PRIMARY KEY (bet_id)
 );
 
---Decider table to assign outcome
+-- Decider table to assign outcome
 CREATE TABLE decider 
 (
 	decider_id int NOT NULL AUTO_INCREMENT,
 	bet_id INT NOT NULL,
-	outcome BOOLEAN DEFAULT NULL
+	outcome BOOLEAN DEFAULT NULL,
+	PRIMARY KEY (decider_id)
 );
 
 
