@@ -47,12 +47,6 @@ CREATE TABLE decider
 	bet_id INT NOT NULL,
 	outcome BOOLEAN DEFAULT NULL
 );
--- Transactional table
--- CREATE TABLE history
--- (
--- 	transaction_id int(11) NOT NULL AUTO_INCREMENT,
--- 	bet_id int(11) NOT NULL,
--- 	user_id int(20) NOT NULL,
--- 	vote BOOLEAN DEFAULT NULL,
--- 	PRIMARY KEY (transaction_id)
--- );
+
+
+
