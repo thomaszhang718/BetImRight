@@ -142,9 +142,32 @@ module.exports = function(app){
 	});
 
 	app.post('/createUser/create', function(req,res) {
+		
+		console.log("Create Started.");
+		
+		var username = req.body.username;
+		var password = req.body.password;
+		
+		bets.userAuth("users", function(resData){
+			
+		console.log(resData);
+		
+		var checked = false;
+		for (i in resData){
+
+			if (resData[i].username == username){
+					checked == true;
+			}
+		}
+		
+		if (checked == false){
 		bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.username, req.body.first_name, req.body.last_name, req.body.password, req.body.email], function(data){
-			res.redirect('/createUser')
+		rest.json(true);		
 		});
+		}
+		else{
+			rest.json(false);
+		}
 	});
 
 	app.put('/bets/update/:itemID', function(req,res) {
