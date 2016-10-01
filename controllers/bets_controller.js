@@ -169,6 +169,7 @@ module.exports = function(app){
 			rest.json(false);
 		}
 	});
+	});
 
 	app.put('/bets/update/:itemID', function(req,res) {
 		var condition = 'itemID = ' + req.params.itemID;
