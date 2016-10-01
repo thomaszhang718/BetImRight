@@ -15,24 +15,27 @@
         <div class="row">
             <div class="col-md-12">
 
-            <form class="login-box">
+                <form class="login-box">
 
+                    <span class="login-span">
+                        <label for="username" class="login-label">Username</label>
+                        <input type="text" name="username" id="username" class="login-form" required >
+                    </span>
 
+                    <br>
 
+                    <span class="login-span">
+                        <label for="password" class="login-label">Pass</label>
+                        <input type="password" name="password" id="password" class="login-form" required >
+                    </span>
 
+                    <br>
+                    <button class ="btn-primary" id="log-in">Log In</button>
+                    <br>
 
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" class="login-form" required >
-                <br>
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="login-form" required >
-                <br>
-                <button class="login-form" id="log-in">Log In</button>
-                <br>
+                </form>
 
-            </form>
-
-            <p>Don't have an account? Sign up <a href="/createUser">here!</a></p>
+                <p id="createUserP">Don't have an account? Sign up <a href="/createUser">here!</a></p>
 
             </div>
         </div>
