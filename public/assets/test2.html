@@ -1,3 +1,31 @@
+<!--
+Here is the main HTML where handlebars will render to
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Require Bootstrap, the CSS style sheet, and fonts -->
+		<title>Bet I'm Right App</title>
+	    
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css"></link>
+		<link rel="stylesheet" href="./css/style.css" type="text/css" />
+
+	</head>
+	<body>
+		<!-- Add JQuery and Bootstrap -->
+		<script src="./js/jquery-3.1.1.min.js"></script>
+    	<script src="./js/bootstrap.js"></script>
+		
+
+
+
 <!-- Page Content -->
     <div class="container">
 
@@ -5,7 +33,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    <img src="/assets/img/test-logo.jpg" alt="Bet I'm Right Logo" id="bir-logo">
+                    <img src="./img/test-logo.jpg" alt="Bet I'm Right Logo" id="bir-logo">
                 </h1>
             </div>
         </div>
@@ -21,13 +49,14 @@
 
 
 
-                <label for="username">Username</label>
+                <span class="login-span"><label for="username">Username</label>
                 <input type="text" name="username" id="username" class="login-form" required >
+                </span>
                 <br>
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="login-form" required >
                 <br>
-                <button class="login-form" id="log-in">Log In</button>
+                <button id="log-in">Log In</button>
                 <br>
 
             </form>
@@ -70,7 +99,7 @@
         // grab url to ajax call
         var currentURL = window.location.origin + "/api/auth";
 
-        console.log(currentURL)
+        
 
         // post our login data
         $.post(currentURL, data, function(results){
@@ -87,3 +116,23 @@
         return false;
     })
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</body>
+</HTML>
+
