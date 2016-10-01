@@ -6,36 +6,55 @@ var jwt         = require('jsonwebtoken');
 
 module.exports = function(app){
 
-	app.post('/api/auth', function(req, res){
+	app.post('/api/auth', function(req, rest){
 		
-        console.log("Okay!");
+        console.log("Auth Started.");
 		
 		var username = req.body.username;
 		var password = req.body.password;
 		
-		bets.userAuth(function(res){
+		bets.userAuth("users", function(res){
 			
-		console.log(res.body);
+		console.log(res);
 		
 		var checked = false;
-		for (i in res.body){
+		for (i in res){
 
-			if (res.body.username == username && res.body.password == password){
+			if (res[i].username == username && res[i].password == password){
 
-				var token = jwt.sign(admin, app.get('jwtSecret'), {
+				var user = {
+					"username":username,
+					"password":password
+				}
+				
+				console.log(user);
+				
+				var token = jwt.sign(user, app.get('jwtSecret'), {
 					expiresIn: 1440
 				})
-
-				new Cookies(req, res).set('access_token', token, {
+				
+				new Cookies(req, rest).set('access_token', token, {
 					httpOnly: true,
 					secure: false
 					});
 			
 				console.log("Cookie Sent");
+				
 				checked = true;
+				
+				if (res[i].admin == "1"){
+					console.log('You are Admin');
+					rest.json('admin');
+				}
+				
+				else{
+					console.log('You are not Admin');
+					rest.json('user');
+					}
 			}
 		}
 		if (checked == false){
+			rest.json('fail');
             console.log("No Cookie Sent");
 			}
 		});
@@ -53,7 +72,7 @@ module.exports = function(app){
 		res.render('createUser');
 	});
 
-	app.get('/home', function(req,res, next) {
+	app.get('/home', function(req,res) {
 
         var token = new Cookies(req, res).get('access_token');
 
@@ -70,10 +89,10 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                next();
+                res.render('home');
             }
         })
-		res.render('home');
+		
 	});
 
 	app.get('/myBets', function(req,res, next) {
