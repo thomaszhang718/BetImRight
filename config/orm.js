@@ -22,7 +22,7 @@ function objToSql(ob){
 }
 
 var orm = {
-    selectAll: function(table, callback) {
+  selectAll: function(table, callback) {
         var queryString = 'SELECT * FROM ' + table + ';';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
@@ -71,6 +71,7 @@ var orm = {
             callback(result);
         });
     }
+
 };
 
 module.exports = orm;

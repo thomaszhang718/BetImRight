@@ -3,3 +3,5 @@ INSERT INTO users (username, first_name, last_name, password, email, admin) VALU
 INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('ZhangBang', 'Thomas', 'Zhang', 'zhang', 'thomas@zhang.com', true);
 INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('S_Cap', 'Sean', 'Capelle', 'capelle', 'sean@capelle.com', true);
 
+-- Bets
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (1, 2, 'Batman', 'Superman', true, 20, 'Who is better?', 'admin');
