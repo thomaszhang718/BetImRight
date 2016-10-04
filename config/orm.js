@@ -71,13 +71,15 @@ var orm = {
             callback(result);
         });
     }
-  openCommBets: function(table, callback) {
-        var queryString = 'SELECT * FROM bets;';
+
+	userData: function(table, callback) {
+        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`user_id`, `' + table + '`.`current_points` FROM `bets_db`.`' + table + '`;';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
         });
   }
+
 
 };
 
