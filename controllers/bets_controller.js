@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var bets = require('../models/bets.js');
-var Cookies     = require('cookies');
-var jwt         = require('jsonwebtoken'); 
+var Cookies = require('cookies');
+var jwt = require('jsonwebtoken'); 
 var path = require('path');
 
 module.exports = function(app){
@@ -50,7 +50,7 @@ module.exports = function(app){
 						type: "admin",
 						path: "/admin"
 					}
-
+					
 					rest.json(loginRedirectObj);
 					//rest.json('admin');
 				}
@@ -62,7 +62,7 @@ module.exports = function(app){
 						type: "user",
 						path: "/home"
 					}
-
+					
 					rest.json(loginRedirectObj);
 					//rest.json('user');
 					}
@@ -146,10 +146,7 @@ module.exports = function(app){
 
 	app.get('/myBets', function(req,res, next) {
 
-		console.log("This is my bets");
-		res.render('myBets');
-
-/*        var token = new Cookies(req, res).get('access_token');
+        var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
 
@@ -165,18 +162,13 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                next();
+                res.render('myBets');
             }
         })
-		res.render('myBets');*/
 	});
 
 	app.get('/newBet', function(req,res, next) {
 
-		console.log("This is new bet");
-		res.render('newBet');
-
-/*
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -192,10 +184,9 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                next();
+                res.render('newBets');
             }
         })
-		res.render('newBets');*/
 	});
 
 	app.get('/logout', function(req,res, next) {
@@ -242,14 +233,42 @@ module.exports = function(app){
 		});
 	});
 
-	app.put('/bets/update/:itemID', function(req,res) {
-		var condition = 'itemID = ' + req.params.itemID;
+	app.put('/api/addBet/', function(req,res) {
+		var usernameP1 = req.body.usernameP1;
+		var usernameP2 = req.body.usernameP2;
 
-		console.log('condition', condition);
+		bets.userData("users", function(resData){
+			console.log(resData);
 
-		bets.update({'devoured' : req.body.devoured}, condition, function(data){
-			res.redirect('/bets');
+			usernameExistsP1 = false;
+			usernameExistsP2 = false;
+			
+			for (i in resData) {
+				if (resData[i].username == usernameP1){
+					usernameExists = true;
+					var userIdP1 = resData[i].user_id;
+					var userPointsP1 = resData[i].current_points;
+				}
+				if (resData[i].username == usernameP2){
+					usernameExistsP2 = true;
+					var userIdP2 = resData[i].user_id;
+					var userPointsP2 = resData[i].current_points;
+				}
+			}
+
+			if (usernameExistsP1 == true && usernameExistsP2 == true) {
+				
+				if (userPointsP1 - req.body.points > 0 && userPointsP1 - req.body.points > 0){
+				
+				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'p2_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.P2answer, req.body.points, req.body.betText, req.body.judge], function(data){
+				
+				res.json(true);	
+				}	
+			}
+			else {
+					res.json(false);
+				});
+			}
 		});
 	});
-	
 }
