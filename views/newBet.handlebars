@@ -1,60 +1,272 @@
-<div class="row">
-    <div class="col-md-12">
-        <img src="https://i.ytimg.com/vi/k5e1HPeusiA/hqdefault.jpg" alt="Krabby Patty" id="burger-pic">
-        <h1>Eat-Da-Burger!</h1>
-    </div>
-</div>
+<link rel="stylesheet" type="text/css" href="/assets/css/styles2.css">
+<!-- Page Content -->
+<div class="wrapper">
+    <!--header-->
+    <header id="header">
 
-<div class="row">
+            <div class="menu">
+                <nav class="navbar navbar-wrapper">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        </div>
+                        <div id="main-nav" class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/home" class="scroll-link">Home</a>
+                                </li>
+                                <li><a href="/myBets" class="scroll-link">My Bets</a>
+                                </li>
+                                <li><a href="/newBet" class="scroll-link">New Bet</a>
+                                </li>
+                                <li><a href="/logout" class="scroll-link">Logout</a>
+                                </li>
 
-    <div class="col-md-6">
-        <h2>Burgers that are delicious and waiting to be eated!</h2>
 
-        <ul class="left">
-            {{#each burgers}}
-                {{#unless this.devoured}}
-                    <li>
-                        <span class="burger-name">{{this.id}}. {{this.burger_name}}
-                            <form action="burgers/update/{{this.id}}?_method=PUT" method="POST" class="eat-button">
-                                <input type="hidden" name="devoured" value="true">
-                                <button type="submit" class="btn">EAT ME!</button>
-                            </form>
-                        </span>
-                    </li>
-                {{/unless}}
-            {{/each}}
-        </ul>
-    </div>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
 
-    <div class="col-md-6">
-        <h2>Delicious burgers that have been eated!</h2>
 
-        <ul class="right">
-            {{#each burgers}}
-                {{#if this.devoured}}
-                    <li>
-                        <span class="burger-name">{{this.id}}. {{this.burger_name}}</span>
-                    </li>
-                {{/if}}
-            {{/each}}
-        </ul>
-    </div>
-</div>
 
-<div class="row">
+                        <hgroup>
+                            <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
+                            <h3>Social Betting Made Easy!</h3> 
+                        </hgroup>
 
-    <h2>Add a Burger</h2>
-    <form class="create-update-form" action="burgers/create" method="POST">
 
-        <div class="form-group">
-            <label for="burger">Burger Name:</label>
-            <input type="text" id="burger" name="burger_name">
+
+{{handlebar1}}{{handlebar2}}
+
+
+
+
+
+    </header>
+
+    <section class="service page-section" id="service">
+        <div class="container text-center">
+            <div class="heading">
+                <h2>Bet on anything with your friends</h2>
+                <h3>Win bragging rights when you finally decide who's right!<br>
+             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
+            </div>
+
         </div>
+    </section>
 
-        <button type="submit" class="btn">Add Burger</button>
-    </form>
+    <!--about us-->
+    <section class="aboutus page-section" id="aboutUs">
+        <div class="container">
+            <div class="heading">
+                <h2>Who we are</h2>
+                <h3>The Bet I'm Right Team is a trio of Fullstack Developers and Students at the University of Central Florida Developer Bootcamp.<br>
+             The team consists of Sean Capelle, Thomas Zhang, and John Bunner.</h3>
+            </div>
+
+            <div class="content">
+
+                <div class="team-div col-md-4">
+                    <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo" />
+                    <p class="team-name">Sean Capelle</p>
+                    <p class="team-title">Co-Founder/Project Manager</p>
+                </div>
+
+                <div class="team-div col-md-4">
+                    <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo" />
+                    <p class="team-name">Thomas Zhang</p>
+                    <p class="team-title">Co-Founder/Front-end Developer</p>
+                </div>
+
+                <div class="team-div col-md-4">
+                    <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo" />
+                    <p class="team-name">David Bunner</p>
+                    <p class="team-title">Co-Founder/Back-end Developer</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!--feedback-->
+    <section class="contact page-section" id="contact">
+        <div class="container">
+            <div class="heading">
+
+                <h2>Contact Us</h2>
+
+                <h3>We are here to answer any questions you may have about your Bet I'm Right experience. Reach out to us and we'll respond as soon as we can.<br>
+                 Even if there is something you have always wanted to experience and can't find it on our app, let us know and we promise to look into it!</h3>
+            </div>
+        </div>
+        <div class="container w960">
+            <div class="row">
+                <div class="done">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        Your message has been sent. Thank you!
+                    </div>
+                </div>
+                <form method="post" action="" id="contactform">
+                    <input name="name" id="contactName" type="text" class="contact col-md-6" placeholder="Your Name *">
+                    <input name="email" id="contactEmail" type="email" class="contact noMarr col-md-6" placeholder="E-mail address *">
+                    <textarea name="comment" id="contactMessage" class="contact col-md-12" placeholder="Message *"></textarea>
+                    <input type="submit" id="contactSubmit" class="contact submit" value="Send message">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--footer-->
+    <section class="footer" id="footer">
+        <p class="text-center">
+            <a href="#header" class="gototop"><i class="fa fa-angle-double-up fa-2x"></i></a>
+        </p>
+        <div class="container">
+            <!-- Commented out, but links for social media below -->
+            <!--         <ul>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+            <li><a href="#"><i class="fa fa-flickr"></i></a></li>
+        </ul> -->
+            <p>
+                Copyright &copy; 2016 Bet I'm Right
+            </p>
+        </div>
+    </section>
+
 </div>
+    <!--wrapper end-->
+
+<script type="text/javascript">
+    jQuery(function($) {
+    $(document).ready( function() {
+        $('.navbar-wrapper').stickUp();
+        });
+    });
+
+//------------------------------------- Login Functions -------------------------------------//
+
+    function loginFunc(){
+
+        console.log("login func");
+
+        // grab data from form
+        var data = {
+            username: $('#username').val().trim(),
+            password: $('#password').val().trim()
+        }
+        //console.log(data)
+        // grab url to ajax call
+        var currentURL = window.location.origin + "/api/auth";
+
+        // post our login data
+        $.post(currentURL, data, function(results){
+            console.log("THIS IS THE RESULTS: " + results);
+
+            if(results === "fail") {
+                $('#invalidUserOrPassModal').modal();
+            }
+            else if (results.type ==="admin") {
+                console.log("You are an admin")
+                window.location.replace(window.location.origin + results.path);
+            }
+            else if (results.type ==="user") {
+                console.log("you're user!");
+                window.location.replace(window.location.origin + results.path);
+            }
+
+        });
+    };
+
+    $("#loginForm").submit(function(e) {
+      e.preventDefault();
+      
+      loginFunc();
+
+      return false;
+
+    })
+
+
+
+//------------------------------------- Create Account Functions -------------------------------------//
+
+    function createAccount(){
+
+            console.log("createAccount func")
+
+            // grab data from form
+            var data = {
+                firstName: $('#firstName').val().trim(),
+                lastName: $('#lastName').val().trim(),
+                newUsername: $('#newUsername').val().trim(),
+                newPassword: $('#newPassword').val().trim(),
+                newEmail: $('#newEmail').val().trim()
+            }
+
+            //console.log(data)
+            // grab url to ajax call
+            var currentURL = window.location.origin + "/createUser/create";
+
+            console.log(currentURL);
+
+            // post our new user
+            $.post(currentURL, data, function(results){
+                console.log(results);
+                
+                //If the username was unique, redirect to login page on server side 
+
+                if(results === false) {
+                    $('#uniqueUsernameModal').modal();
+                }
+            });
+        }
+        
+    //Function to check if the passwords entered match
+    function bothPasswordsMatch() {
+
+        var isMatch = false;
+
+        if ($("#newPassword").val() === $("#passwordAgain").val()){
+            isMatch = true;
+        }
+        return isMatch;
+    }
+
+    $("#createAccountForm").submit(function(e) {
+      e.preventDefault();
+      
+      var isMatch = bothPasswordsMatch();
+
+      if(!isMatch) {
+        $('#passwordMatchModal').modal();
+      } else {
+        createAccount();
+      }
+      return false;
+    })
+
+//------------------------------------- Contact Us Functions -------------------------------------//
+
+    //This is fake, we don't have a contact email setup yet
+    $("#contactform").submit(function(e) {
+      e.preventDefault();
+      
+      $('#contactName, #contactEmail, #contactMessage').val('');
+
+
+      $('#contactSubmitModal').modal();
+      return false;
+
+    })
 
 
 
 
+
+
+</script>

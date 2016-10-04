@@ -76,7 +76,7 @@ module.exports = function(app){
 	});
 
 	app.get('/', function(req,res) {
-		res.redirect('/index')
+		res.redirect('/index');
 	});
 
 	app.get('/index', function(req,res) {
@@ -85,6 +85,9 @@ module.exports = function(app){
 
 	app.get('/home', function(req,res) {
 		console.log("got to home");
+
+		//ASK DAVID WHERE TO SAVE USERNAME ONCE LOGGED IN?
+
 
         var token = new Cookies(req, res).get('access_token');
 
@@ -102,7 +105,7 @@ module.exports = function(app){
                 console.log("good cookie");
 
                 var hbsObject = {
-                	handlebar1: "Test1",
+                	currentUsername: "John's",
                 	handlebar2: "Test2"
                 }
 
@@ -131,7 +134,7 @@ module.exports = function(app){
                 console.log("good cookie");
 
                 var hbsObject = {
-                	handlebar1: "Test1",
+                	username: "John's",
                 	handlebar2: "Test2"
                 }
 
@@ -143,7 +146,10 @@ module.exports = function(app){
 
 	app.get('/myBets', function(req,res, next) {
 
-        var token = new Cookies(req, res).get('access_token');
+		console.log("This is my bets");
+		res.render('myBets');
+
+/*        var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
 
@@ -162,11 +168,15 @@ module.exports = function(app){
                 next();
             }
         })
-		res.render('myBets');
+		res.render('myBets');*/
 	});
 
-	app.get('/newBets', function(req,res, next) {
+	app.get('/newBet', function(req,res, next) {
 
+		console.log("This is new bet");
+		res.render('newBet');
+
+/*
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -185,8 +195,19 @@ module.exports = function(app){
                 next();
             }
         })
-		res.render('newBets');
+		res.render('newBets');*/
 	});
+
+	app.get('/logout', function(req,res, next) {
+
+		console.log("This is logout bets");
+		res.redirect('/index'); //THIS DOESN'T END THE TOKEN THOUGH OR INVALIDATE THE COOKIE
+
+
+		//SEE IF JOHN CAN FIGURE OUT HOW TO SET COOKIE TIMER EXPIRE TO CURRENT TIME? 
+
+	});
+
 
 	app.post('/api/createUser', function(req,res) {
 		
