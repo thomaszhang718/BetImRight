@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/assets/css/styles2.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
 <!-- Page Content -->
 
 <!--wrapper start-->
@@ -24,7 +24,6 @@
         <hgroup>
          <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo"/>
             <h3>Social Betting Made Easy!</h3>
-            {{handlebar1}}{{handlebar2}}
         </hgroup>
         <a class="btn btn-hero btn-lg" href="#" data-toggle="modal" data-target="#login-modal">Login / Signup</a>
       </div>
@@ -50,6 +49,132 @@
       </div>
     </div>
   </div> 
+
+
+<!--                                                      START OF MODALS                                                -->
+
+
+<!-- LOGIN MODAL -->
+
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+          <div class="loginmodal-container">
+            <h1>Login to Your Account</h1><br>
+            <form id="loginForm">
+            <input type="text" name="username" id="username" class="login-form" placeholder="Username" maxlength="20" autocomplete="off" required >
+            <input type="password" name="password" id="password" class="login-form" placeholder="Password" maxlength="20" autocomplete="off" required >
+            <input type="submit" name="login" class="login loginmodal-submit" value="Login" id="log-in">
+
+            </form>
+            
+            <div class="login-help">
+            Don't have an account? <a href="#" data-toggle="modal" data-target="#signup-modal" data-dismiss="modal">Sign up here!</a>
+            </div>
+          </div>
+    </div>
+  </div>
+
+<!-- SIGNUP MODAL -->
+
+  <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+          <div class="signupmodal-container">
+            <h1>Signup for an Account</h1><br>
+            <form id="createAccountForm">
+
+              <input type="text" name="firstName" id="firstName" class="signup-form" placeholder="First Name" maxlength="20" autocomplete="off" required >
+              <input type="text" name="lastName" id="lastName" class="signup-form" placeholder="Last Name" maxlength="20" autocomplete="off" required >
+              <input type="text" name="newUsername" id="newUsername" class="signup-form" placeholder="Username" maxlength="20" autocomplete="off" required >
+              <input type="password" name="newPassword" id="newPassword" class="signup-form" placeholder="Password" maxlength="20" autocomplete="off" required >
+              <input type="password" name="passwordAgain" id="passwordAgain" class="signup-form" placeholder="Confirm Password" maxlength="20" autocomplete="off" required >
+              <input type="email" name="newEmail" id="newEmail" class="signup-form" placeholder="Email" maxlength="40" autocomplete="off" required >
+
+
+
+
+              <input type="submit" name="signup" class="signup signupmodal-submit" value="signup" id="signup-btn">
+
+            </form>
+            
+            <div class="signup-help">
+            Already Have an Account? <a href="#" data-toggle="modal" data-target="#login-modal" data-dismiss="modal">Login here!</a>
+            </div>
+          </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal for password match -->
+  <div id="passwordMatchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Your passwords do not match. Please make sure both passwords match completely</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for unique username -->
+  <div id="uniqueUsernameModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">That username is already taken, please choose another.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Modal for invalid username/password -->
+  <div id="invalidUserOrPassModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">The username or password you have entered is incorrect.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for invalid username/password -->
+  <div id="contactSubmitModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Thanks for contacting us! We'll get back to you as soon as possible.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for invalid username/password -->
+  <div id="accountCreatedModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Your new account is created! You can login at any time.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<!--                                                      END OF MODALS                                                -->
 
 
 
@@ -253,12 +378,13 @@
             if(results === "fail") {
                 $('#invalidUserOrPassModal').modal();
             }
-            else if (results.type ==="admin") {
+            else if (results.type === "admin") {
                 console.log("You are an admin")
                 window.location.replace(window.location.origin + results.path);
             }
-            else if (results.type ==="user") {
+            else if (results.type === "user") {
                 console.log("you're user!");
+                console.log(window.location.origin + results.path);
                 window.location.replace(window.location.origin + results.path);
             }
 
@@ -293,19 +419,25 @@
 
             //console.log(data)
             // grab url to ajax call
-            var currentURL = window.location.origin + "/createUser/create";
+            var currentURL = window.location.origin + "/api/createUser";
 
             console.log(currentURL);
 
             // post our new user
             $.post(currentURL, data, function(results){
-                console.log(results);
+                console.log("THIS IS THE RESULT BACK: " + results);
                 
                 //If the username was unique, redirect to login page on server side 
 
-                if(results === false) {
+                if(results == true) {
                     $('#uniqueUsernameModal').modal();
                 }
+                else if(results == false) {
+                    $('#signup-modal').modal('toggle');
+                    $('#login-modal').modal();
+                    $('#accountCreatedModal').modal();
+                }
+
             });
         }
         

@@ -3,6 +3,7 @@ var router = express.Router();
 var bets = require('../models/bets.js');
 var Cookies     = require('cookies');
 var jwt         = require('jsonwebtoken'); 
+var path = require('path');
 
 module.exports = function(app){
 
@@ -44,12 +45,26 @@ module.exports = function(app){
 				
 				if (res[i].admin == "1"){
 					console.log('You are Admin');
-					rest.json('admin');
+
+					var loginRedirectObj = {
+						type: "admin",
+						path: "/admin"
+					}
+
+					rest.json(loginRedirectObj);
+					//rest.json('admin');
 				}
 				
 				else{
 					console.log('You are not Admin');
-					rest.json('user');
+
+					var loginRedirectObj = {
+						type: "user",
+						path: "/home"
+					}
+
+					rest.json(loginRedirectObj);
+					//rest.json('user');
 					}
 			}
 		}
@@ -61,18 +76,15 @@ module.exports = function(app){
 	});
 
 	app.get('/', function(req,res) {
-		res.redirect('/login')
+		res.redirect('/index')
 	});
 
-	app.get('/login', function(req,res) {
-		res.render('login');
-	});
-
-	app.get('/createUser', function(req,res) {
-		res.render('createUser');
+	app.get('/index', function(req,res) {
+		res.render('index');
 	});
 
 	app.get('/home', function(req,res) {
+		console.log("got to home");
 
         var token = new Cookies(req, res).get('access_token');
 
@@ -89,7 +101,41 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                res.render('home');
+                var hbsObject = {
+                	handlebar1: "Test1",
+                	handlebar2: "Test2"
+                }
+
+                res.render("home", hbsObject);
+            }
+        })
+		
+	});
+
+	app.get('/admin', function(req,res) {
+		console.log("got to admin");
+
+        var token = new Cookies(req, res).get('access_token');
+
+        console.log(token);
+
+        jwt.verify(token, app.get('jwtSecret'), function(err, decoded) {
+            if (err) {
+
+                console.log("bad cookie");
+
+                return res.json({success: false, message: "access denied."})
+            }
+            else {
+
+                console.log("good cookie");
+
+                var hbsObject = {
+                	handlebar1: "Test1",
+                	handlebar2: "Test2"
+                }
+
+                res.render("admin", hbsObject);
             }
         })
 		
@@ -107,6 +153,7 @@ module.exports = function(app){
                 console.log("bad cookie");
 
                 return res.json({success: false, message: "access denied."})
+                //Maybe add a redirect to login page?
             }
             else {
 
@@ -141,34 +188,37 @@ module.exports = function(app){
 		res.render('newBets');
 	});
 
-	app.post('/createUser/create', function(req,res) {
+	app.post('/api/createUser', function(req,res) {
 		
 		console.log("Create Started.");
 		
-		var username = req.body.username;
-		var password = req.body.password;
-		
-		bets.userAuth("users", function(resData){
-			
-		console.log(resData);
-		
-		var checked = false;
-		for (i in resData){
+		var username = req.body.newUsername;
+		var password = req.body.newPassword;
 
-			if (resData[i].username == username){
-					checked == true;
+		var usernameExists = false;
+
+		bets.userAuth("users", function(resData){
+			console.log(resData);
+
+			
+			for (i in resData) {
+				if (resData[i].username == username){
+					usernameExists = true;
+				}				
 			}
-		}
-		
-		if (checked == false){
-		bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.username, req.body.first_name, req.body.last_name, req.body.password, req.body.email], function(data){
-		rest.json(true);		
+
+			if (usernameExists == true) {
+				//console.log("username was picked already");
+				res.json(true);
+			}
+			else {
+				//console.log("username is available");
+				bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.newUsername, req.body.firstName, req.body.lastName, req.body.newPassword, req.body.newEmail], function(data){
+					//console.log("added the user to the database");
+					res.json(false);
+				});
+			}
 		});
-		}
-		else{
-			rest.json(false);
-		}
-	});
 	});
 
 	app.put('/bets/update/:itemID', function(req,res) {
