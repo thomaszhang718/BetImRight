@@ -16,8 +16,8 @@ var bets = {
 			callback(res);
 		});
 	},
-	userAuth: function(callback) {
-		orm.userAuth('users', function(res){
+	userAuth: function(table, callback) {
+		orm.userAuth(table, function(res){
 			callback(res);
 		});
 	}

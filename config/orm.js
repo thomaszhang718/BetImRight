@@ -22,7 +22,7 @@ function objToSql(ob){
 }
 
 var orm = {
-    selectAll: function(table, callback) {
+  selectAll: function(table, callback) {
         var queryString = 'SELECT * FROM ' + table + ';';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
@@ -65,12 +65,13 @@ var orm = {
     },
 	
 	userAuth: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin`, FROM bets_db`.`' + table + '`;';
+        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin` FROM `bets_db`.`' + table + '`;';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
         });
     }
+
 };
 
 module.exports = orm;

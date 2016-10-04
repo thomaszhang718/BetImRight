@@ -36,16 +36,18 @@ CREATE TABLE bets
 	judge varchar(20) NOT NULL,
 	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	-- end_date ???,
-	result varchar(4) DEFAULT NULL,
+	result BOOLEAN DEFAULT NULL,
 	PRIMARY KEY (bet_id)
 );
 
--- Transactional table
-CREATE TABLE history
+-- Decider table to assign outcome
+CREATE TABLE decider 
 (
-	transaction_id int(11) NOT NULL AUTO_INCREMENT,
-	bet_id int(11) NOT NULL,
-	user_id int(20) NOT NULL,
-	vote BOOLEAN DEFAULT NULL,
-	PRIMARY KEY (transaction_id)
+	decider_id int NOT NULL AUTO_INCREMENT,
+	bet_id INT NOT NULL,
+	outcome BOOLEAN DEFAULT NULL,
+	PRIMARY KEY (decider_id)
 );
+
+
+
