@@ -85,12 +85,15 @@
 
         // grab data from form
         var data = {
-            username: $('#username').val().trim(),
-            password: $('#password').val().trim()
+			firstName: $('#firstName').val().trim(),
+			lastName: $('#lastName').val().trim(),
+            username: $('#newUsername').val().trim(),
+            password: $('#newPassword').val().trim(),
+			email: $('#newEmail').val().trim()
         }
         //console.log(data)
         // grab url to ajax call
-        var currentURL = window.location.origin + "/api/auth";
+        var currentURL = window.location.origin + "/createUser/create";
 
         
 

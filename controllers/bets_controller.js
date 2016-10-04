@@ -153,20 +153,23 @@ module.exports = function(app){
 		console.log(resData);
 		
 		var checked = false;
+		
 		for (i in resData){
-
-			if (resData[i].username == username){
-					checked == true;
+			console.log(resData[i].username + " " + username)
+			if (resData[i].username.toString == username.toString){
+					checked = true;
 			}
 		}
 		
+		console.log('Checked= ' + checked);
+		
 		if (checked == false){
-		bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.username, req.body.first_name, req.body.last_name, req.body.password, req.body.email], function(data){
-		rest.json(true);		
+		bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.username, req.body.firstName, req.body.lastName, req.body.password, req.body.email], function(data){
+		res.json(true);		
 		});
 		}
 		else{
-			rest.json(false);
+			res.json(false);
 		}
 	});
 	});
