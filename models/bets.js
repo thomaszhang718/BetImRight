@@ -11,6 +11,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	insertBet:  function(cols, vals, callback) {
+		orm.insertOne('bets', cols, vals, function(res){
+			callback(res);
+		});
+	},
 	update: function(objColVals, condition, callback) {
 		orm.updateOne('users', objColVals, condition, function(res){
 			callback(res);
@@ -20,7 +25,12 @@ var bets = {
 		orm.userAuth(table, function(res){
 			callback(res);
 		});
-	}
+	},
+	userData: function(table, callback) {
+		orm.userAuth(table, function(res){
+			callback(res);
+		});
+	}	
 };
 
 module.exports = bets;
