@@ -258,9 +258,9 @@ module.exports = function(app){
 
 			if (usernameExistsP1 == true && usernameExistsP2 == true) {
 				
-				if (userPointsP1 - req.body.points > 0 && userPointsP1 - req.body.points > 0){
+				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
 				
-				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'p2_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.P2answer, req.body.points, req.body.betText, req.body.judge], function(data){
+				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
 				
 				res.json(true);	
 				}	

@@ -12,7 +12,7 @@ var bets = {
 		});
 	},
 	insertBet:  function(cols, vals, callback) {
-		orm.insertOne('users', cols, vals, function(res){
+		orm.insertOne('bets', cols, vals, function(res){
 			callback(res);
 		});
 	},
