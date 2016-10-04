@@ -71,6 +71,13 @@ var orm = {
             callback(result);
         });
     }
+  openCommBets: function(table, callback) {
+        var queryString = 'SELECT * FROM bets;';
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            callback(result);
+        });
+  }
 
 };
 

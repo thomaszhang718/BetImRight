@@ -21,6 +21,9 @@ var bets = {
 			callback(res);
 		});
 	}
+	commBets: function(callback) {
+		orm.selectAll('bets')
+	}
 };
 
 module.exports = bets;
