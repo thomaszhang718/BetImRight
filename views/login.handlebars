@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    <img src="/assets/img/test-logo.jpg" alt="Bet I'm Right Logo" id="bir-logo">
+                    <img src="./img/test-logo.jpg" alt="Bet I'm Right Logo" id="bir-logo">
                 </h1>
             </div>
         </div>
@@ -19,14 +19,14 @@
 
                     <span class="login-span">
                         <label for="username" class="login-label">Username</label>
-                        <input type="text" name="username" id="username" class="login-form" required >
+                        <input type="text" name="username" id="username" class="login-form" maxlength="20" autocomplete="off" required >
                     </span>
 
                     <br>
 
                     <span class="login-span">
                         <label for="password" class="login-label">Pass</label>
-                        <input type="password" name="password" id="password" class="login-form" required >
+                        <input type="password" name="password" id="password" class="login-form" maxlength="20" autocomplete="off" required >
                     </span>
 
                     <br>
@@ -55,6 +55,19 @@
             <!-- /.row -->
         </footer>
 
+        <!-- Modal for form completion -->
+        <div id="formCompleteModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Please fill out all parts of the form!</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </div>
     <!-- /.container -->
 
@@ -73,8 +86,6 @@
         // grab url to ajax call
         var currentURL = window.location.origin + "/api/auth";
 
-        console.log(currentURL)
-
         // post our login data
         $.post(currentURL, data, function(results){
             console.log(results);
@@ -82,10 +93,33 @@
 
     }
 
+    //Function to validate if the form is completely filled out
+    function validateForm() {
+
+        var isValid = true;
+        $('.login-form').each(function() {
+
+            if ( $(this).val() === '' ){
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
     // define call on button
     $(document).on('click', '#log-in', function(){
         // sign in
-        signIn();
+
+        var isValid = validateForm();
+
+        if (isValid) {
+            console.log("Form complete");
+            signIn();
+        }
+        else {
+            //alert("Please fill out all parts of the form");
+            $('#formCompleteModal').modal();
+        }
         // prevent default behavior
         return false;
     })

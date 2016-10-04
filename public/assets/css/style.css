@@ -40,6 +40,8 @@ footer {
 	display: inline-block;
 	width: 140px;
 	text-align: right;
+	margin-top: 2px;
+	margin-bottom: 0px;
 }
 
 #log-in {
@@ -90,3 +92,4 @@ footer {
 	padding-top: 20px;
 	text-align: center;
 }
+
