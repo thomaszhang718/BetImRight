@@ -34,8 +34,18 @@ var bets = {
 	}
 	commBets: function(callback) {
 		orm.selectAll('bets', function(res){
-			callback(res);
-		})
+			
+			var community = {
+				bets: []
+			};
+
+			for (var i = 0; i < bets.length; i++){
+				if (bets.judge == "community" && bets.result == null){
+					community.bets.push(bets.bet_text);	
+				}
+			}
+			callback(community);
+		});
 	}	
 
 };
