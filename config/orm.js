@@ -65,7 +65,7 @@ var orm = {
     },
 	
 	userAuth: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin` FROM `bets_db`.`' + table + '`;';
+        var queryString = 'SELECT `' + table + '`.`user_id`,`' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin` FROM `bets_db`.`' + table + '`;';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);

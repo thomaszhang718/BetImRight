@@ -354,6 +354,8 @@
     $(document).ready( function() {
         $('.navbar-wrapper').stickUp();
         });
+    localStorage.clear();
+
     });
 
 //------------------------------------- Login Functions -------------------------------------//
@@ -380,12 +382,15 @@
             }
             else if (results.type === "admin") {
                 console.log("You are an admin");
-                localStorage.setItem("currentuser", data.username);
+                localStorage.setItem("currentUsername", results.currentUsername);
+                localStorage.setItem("currentUserID", results.currentUserID);
+
                 window.location.replace(window.location.origin + results.path);
             }
             else if (results.type === "user") {
                 console.log("you're user!");
-                localStorage.setItem("currentuser", data.username);
+                localStorage.setItem("currentUsername", results.currentUsername);
+                localStorage.setItem("currentUserID", results.currentUserID);
                 window.location.replace(window.location.origin + results.path);
             }
 

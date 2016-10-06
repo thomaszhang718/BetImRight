@@ -5,6 +5,7 @@ var Cookies = require('cookies');
 var jwt = require('jsonwebtoken'); 
 var path = require('path');
 
+ 
 module.exports = function(app){
 
 	app.post('/api/auth', function(req, rest){
@@ -13,6 +14,12 @@ module.exports = function(app){
 		
 		var username = req.body.username;
 		var password = req.body.password;
+		var currentUsername;
+		var currentUserID;
+
+
+
+
 		
 		bets.userAuth("users", function(res){
 			
@@ -27,7 +34,12 @@ module.exports = function(app){
 					"username":username,
 					"password":password
 				}
-				
+
+				currentUsername = res[i].username;
+				currentUserID = res[i].user_id;
+				//console.log(currentUsername);
+				//console.log(currentUserID);
+
 				console.log(user);
 				
 				var token = jwt.sign(user, app.get('jwtSecret'), {
@@ -48,9 +60,11 @@ module.exports = function(app){
 
 					var loginRedirectObj = {
 						type: "admin",
-						path: "/admin"
+						path: "/admin",
+						currentUsername: currentUsername,
+						currentUserID: currentUserID
 					}
-					
+
 					rest.json(loginRedirectObj);
 					//rest.json('admin');
 				}
@@ -60,9 +74,14 @@ module.exports = function(app){
 
 					var loginRedirectObj = {
 						type: "user",
-						path: "/home"
+						path: "/home",
+						currentUsername: currentUsername,
+						currentUserID: currentUserID
 					}
 					
+					//localStorage.setItem('currentUsername', currentUsername);
+					//localStorage.setItem('currentUserID', currentUserID);
+
 					rest.json(loginRedirectObj);
 					//rest.json('user');
 					}
@@ -110,7 +129,7 @@ module.exports = function(app){
                 bets.selectWhereBets('p1_id', 'p2_id', testUserID, function(data){
                 	console.log(data);
 
-
+                	res.render("home")
 
                 })
 

@@ -1,6 +1,3 @@
-bets.js
-
-
 var orm = require('../config/orm.js');
 
 var bets = {
@@ -66,10 +63,6 @@ var bets = {
 		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
 			callback(res);
 		});
-	}
-
-
-
 	}
 
 };

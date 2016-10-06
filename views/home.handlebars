@@ -172,11 +172,11 @@
             }
             else if (results.type ==="admin") {
                 console.log("You are an admin");
-                localStorage.setItem("currentuser", data.username);
+                //localStorage.setItem("currentuser", data.username);
                 window.location.replace(window.location.origin + results.path);
             }
             else if (results.type ==="user") {
-                localStorage.setItem("currentuser", data.username);
+                //localStorage.setItem("currentuser", data.username);
                 console.log("you're user!");
                 window.location.replace(window.location.origin + results.path);
             }
