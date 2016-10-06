@@ -31,7 +31,7 @@ var bets = {
 		orm.userAuth(table, function(res){
 			callback(res);
 		});
-	}
+	},
 	commBets: function(callback) {
 		orm.selectAll('bets', function(res){
 			
@@ -46,8 +46,7 @@ var bets = {
 			}
 			callback(community);
 		});
-	}	
-
+	}
 };
 
 module.exports = bets;
