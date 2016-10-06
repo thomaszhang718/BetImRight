@@ -50,6 +50,7 @@ var bets = {
 			}
 			callback(community);
 		});
+<<<<<<< HEAD
 	},
 
 	selectWhereUsers: function(colToSearch, valOfCol, callback) {
@@ -65,6 +66,9 @@ var bets = {
 	}
 
 
+=======
+	}
+>>>>>>> 3a3fb503e921ef225ba9b264fd913cbd78c796d8
 };
 
 module.exports = bets;
