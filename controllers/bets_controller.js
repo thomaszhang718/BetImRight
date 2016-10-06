@@ -86,9 +86,6 @@ module.exports = function(app){
 	app.get('/home', function(req,res) {
 		console.log("got to home");
 
-		//ASK DAVID WHERE TO SAVE USERNAME ONCE LOGGED IN?
-
-
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -104,12 +101,67 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                var hbsObject = {
-                	currentUsername: "John's",
-                	handlebar2: "Test2"
-                }
+				
+                var testObj = {};
 
-                res.render("home", hbsObject);
+
+                var testUserID = 1;
+
+                bets.selectWhereBets('p1_id', 'p2_id', testUserID, function(data){
+                	console.log(data);
+
+
+
+                })
+
+/*				bets.selectAllBets(function(data){
+					console.log("here")
+					console.log(data)
+
+					testObj.bets = data;
+
+					bets.selectAll(function(data2){
+						console.log("here")
+						console.log(data2)
+
+						testObj.users = data2;
+
+						bets.selectAll(function(data3){
+							console.log("here")
+							console.log(data3)
+
+							testObj.usersStats = data3;
+
+
+			                var hbsObject = {
+			                	currentUsername: "John's",
+			                	currentBets: "data", //testObj.bets.asdfsadfwre
+			                	currentPoints: "test",
+			                	communityBets: "test"
+			                }
+
+			                console.log(hbsObject)
+
+			                res.render("home", hbsObject);
+
+
+
+							
+						});
+					});
+				});*/
+
+
+
+
+
+
+
+
+
+
+
+
             }
         })
 		
@@ -184,7 +236,7 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                res.render('newBets');
+                res.render('newBet');
             }
         })
 	});
@@ -233,7 +285,10 @@ module.exports = function(app){
 		});
 	});
 
-	app.put('/api/addBet/', function(req,res) {
+	app.post('/api/addBet/', function(req,res) {
+
+		console.log("Get here")
+
 		var usernameP1 = req.body.usernameP1;
 		var usernameP2 = req.body.usernameP2;
 
@@ -243,9 +298,10 @@ module.exports = function(app){
 			usernameExistsP1 = false;
 			usernameExistsP2 = false;
 			
+
 			for (i in resData) {
 				if (resData[i].username == usernameP1){
-					usernameExists = true;
+					usernameExistsP1 = true;
 					var userIdP1 = resData[i].user_id;
 					var userPointsP1 = resData[i].current_points;
 				}
@@ -256,19 +312,36 @@ module.exports = function(app){
 				}
 			}
 
+
+
+
 			if (usernameExistsP1 == true && usernameExistsP2 == true) {
-				
+
 				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
-				
+
 				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
 				
-				res.json(true);	
-				}	
+					var redirectObj = {
+						isCreated: true,
+						path: "/home"
+					};
+
+
+					res.json(redirectObj);	
+				})	
 			}
 			else {
-					res.json(false);
-				});
+					var redirectObj = {
+						isCreated: false
+
+					};
+
+
+					res.json(redirectObj);
+				};
 			}
+
+
 		});
 	});
 }

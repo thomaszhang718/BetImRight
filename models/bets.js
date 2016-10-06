@@ -6,6 +6,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	selectAllBets: function(callback) {
+		orm.selectAll('bets', function(res){
+			callback(res);
+		});
+	},
 	insertOne:  function(cols, vals, callback) {
 		orm.insertOne('users', cols, vals, function(res){
 			callback(res);
@@ -25,13 +30,12 @@ var bets = {
 		orm.userAuth(table, function(res){
 			callback(res);
 		});
-
 	},
 	userData: function(table, callback) {
-		orm.userAuth(table, function(res){
+		orm.userData(table, function(res){
 			callback(res);
 		});
-	}
+	},
 	commBets: function(callback) {
 		orm.selectAll('bets', function(res){
 			
@@ -46,7 +50,20 @@ var bets = {
 			}
 			callback(community);
 		});
-	}	
+	},
+
+	selectWhereUsers: function(colToSearch, valOfCol, callback) {
+		orm.selectWhere('users', colToSearch, valOfCol, function(res){
+			callback(res);
+		});
+	},
+
+	selectWhereBets: function(colToSearch, colToSearch2, valOfCol, callback) {
+		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
+			callback(res);
+		});
+	}
+
 
 };
 

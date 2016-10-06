@@ -379,12 +379,13 @@
                 $('#invalidUserOrPassModal').modal();
             }
             else if (results.type === "admin") {
-                console.log("You are an admin")
+                console.log("You are an admin");
+                localStorage.setItem("currentuser", data.username);
                 window.location.replace(window.location.origin + results.path);
             }
             else if (results.type === "user") {
                 console.log("you're user!");
-                console.log(window.location.origin + results.path);
+                localStorage.setItem("currentuser", data.username);
                 window.location.replace(window.location.origin + results.path);
             }
 
