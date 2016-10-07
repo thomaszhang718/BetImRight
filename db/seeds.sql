@@ -15,17 +15,20 @@ INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_
 
 
 -- Community
-INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (4, 5, 'A', 'B', true, 20, 'Who is better?', 'community');
-INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (5, 6, 'B', 'C', true, 20, 'Who is better?', 'community');
-INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (6, 7, 'C', 'D', true, 20, 'Who is better?', 'community');
-INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (7, 4, 'D', 'A', true, 20, 'Who is better?', 'community');
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (4, 5, 'A', 'B', true, 20, 'Who is better1?', 'community');
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (5, 6, 'B', 'C', true, 20, 'Who is better2?', 'community');
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (6, 7, 'C', 'D', true, 20, 'Who is better3?', 'community');
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (7, 4, 'D', 'A', true, 20, 'Who is better4?', 'community');
+
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge, results) VALUES (1, 2, '1', '2', true, 20, 'Who is betterDraw?', 'community', 'draw');
 
 
 
 
 
 
-
+-- Votes
+INSERT INTO votes (bet_id, voter_id, voter_pick) VALUES (2, 4, "left");
 
 
 

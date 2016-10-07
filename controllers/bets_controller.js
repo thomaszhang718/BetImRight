@@ -126,12 +126,12 @@ module.exports = function(app){
                 	//console.log(userBetsData);
                 	homeDataObj.bets = userBetsData;
 
-                	bets.selectWhereBets("judge", "community", function(communityBetsData){
-                		console.log(communityBetsData);
+                	bets.selectWhereAndNull("judge", "'community'", "result", function(communityBetsData){
+                		//console.log(communityBetsData);
                 		homeDataObj.users = communityBetsData;
 
 	            		bets.selectWhereUsers("user_id", 1, function(userData){                			
-	        				console.log(userData);
+	        				//console.log(userData);
 
 	        				homeDataObj.usersStats = userData;
 
@@ -142,7 +142,7 @@ module.exports = function(app){
 			                	communityBets: communityBetsData
 			                }
 
-			                console.log(hbsObject)
+			                //console.log(hbsObject);
 
 			                res.render("home", hbsObject);
 	            		})
@@ -307,9 +307,6 @@ module.exports = function(app){
 				}
 			}
 
-
-
-
 			if (usernameExistsP1 == true && usernameExistsP2 == true) {
 
 				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
@@ -321,22 +318,17 @@ module.exports = function(app){
 						path: "/home"
 					};
 
-
 					res.json(redirectObj);	
 				})	
 			}
 			else {
 					var redirectObj = {
 						isCreated: false
-
 					};
-
 
 					res.json(redirectObj);
 				};
 			}
-
-
 		});
 	});
 	
@@ -344,7 +336,7 @@ module.exports = function(app){
 		var condition = 'bet_id = ' + req.params.id;
 		
 		if (req.body.agree == true){		
-		bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
+			bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
 				res.redirect('/home');
 			});
 		}
@@ -353,5 +345,39 @@ module.exports = function(app){
 				res.redirect('/home');
 			});
 		}
+	});
+
+	app.post('/api/checkVote', function(req,res) {
+		
+		console.log("Check Vote Started.");
+
+		var currentBetID = req.body.currentBetID;
+		var currentUserID = req.body.currentUserID;
+		var voterPick = req.body.voterPick;
+
+		var userAlreadyVoted = false;
+
+		bets.selectWhereVotes("bet_id", currentBetID, function(resData){
+			console.log(resData);
+
+			for (i in resData) {
+				if (resData[i].voter_id == currentUserID){
+					userAlreadyVoted = true;
+				}				
+			}
+
+			if (userAlreadyVoted) {
+				console.log("user already voted");
+				res.json(true);
+			}
+			else {
+				console.log("user has not voted yet");
+				bets.insertVote(['bet_id', 'voter_id', 'voter_pick'], [currentBetID, currentUserID, voterPick], function(data){
+					//console.log("added vote to the database");
+					res.json(false);
+				})
+			}
 		});
-	}
+	});
+
+}

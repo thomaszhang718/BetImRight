@@ -21,6 +21,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	insertVote:  function(cols, vals, callback) {
+		orm.insertOne('votes', cols, vals, function(res){
+			callback(res);
+		});
+	},
 	update: function(objColVals, condition, callback) {
 		orm.updateOne('users', objColVals, condition, function(res){
 			callback(res);
@@ -57,26 +62,37 @@ var bets = {
 		});
 
 	},
-
 	selectWhereUsers: function(colToSearch, valOfCol, callback) {
 		orm.selectWhere('users', colToSearch, valOfCol, function(res){
 			callback(res);
 		});
 	},
-
 	selectWhereBets: function(colToSearch, valOfCol, callback) {
 		orm.selectWhere('bets', colToSearch, valOfCol, function(res){
 			callback(res);
 		});
 	},
-
-
-
+  	selectWhereVotes: function(colToSearch, valOfCol, callback) {
+		orm.selectWhere('votes', colToSearch, valOfCol, function(res){
+			callback(res);
+		});
+    },
 	selectWhereBetsOr: function(colToSearch, colToSearch2, valOfCol, callback) {
 		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
 			callback(res);
 		});
+	},
+	selectWhereBetsAnd: function(colToSearch, valOfCol, colToSearch2, valOfCol2, callback) {
+		orm.selectWhereAnd('bets', colToSearch, valOfCol, colToSearch2, valOfCol2, function(res){
+			callback(res);
+		});
+	},
+	selectWhereAndNull: function(colToSearch, valOfCol, colToSearch2, callback) {
+		orm.selectWhereAndNull('bets', colToSearch, valOfCol, colToSearch2, function(res){
+			callback(res);
+		});
 	}
+
 
 };
 

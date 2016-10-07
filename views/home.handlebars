@@ -4,43 +4,34 @@
     <!--header-->
     <header id="header">
 
-            <div class="menu">
-                <nav class="navbar navbar-wrapper">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                        </div>
-                        <div id="main-nav" class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav">
-                                <li><a href="/home" class="scroll-link">Home</a>
-                                </li>
-                                <li><a href="/myBets" class="scroll-link">{{currentUsername}}'s Bets</a>
-                                </li>
-                                <li><a href="/newBet" class="scroll-link">New Bet</a>
-                                </li>
-                                <li><a href="/logout" class="scroll-link">Logout</a>
-                                </li>
-
-
-                            </ul>
-                        </div>
+        <div class="menu">
+            <nav class="navbar navbar-wrapper">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     </div>
-                </nav>
-            </div>
+                    <div id="main-nav" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/home" class="scroll-link">Home</a>
+                            </li>
+                            <li><a href="/myBets" class="scroll-link">{{currentUsername}}'s Bets</a>
+                            </li>
+                            <li><a href="/newBet" class="scroll-link">New Bet</a>
+                            </li>
+                            <li><a href="/logout" class="scroll-link">Logout</a>
+                            </li>
 
 
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
 
-                        <hgroup>
-                            <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
-                            <h3>Social Betting Made Easy!</h3> 
-                        </hgroup>
-
-
-
-
-
-
-
+        <hgroup class="logo-header">
+            <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
+            <h3>Social Betting Made Easy!</h3> 
+        </hgroup>
 
     </header>
 
@@ -57,10 +48,41 @@
     <section class="service page-section" id="service">
         <h2>Community Bets</h2>
         {{#each communityBets}}
-            <li>Bet: {{this.bet_text}}</li>
-            {{this.p1_answer}} vs {{this.p2_answer}}
+     
+            <div class="community-vote-div">
+                <h2>Bet: {{this.bet_text}}</h2>
+                <form class="community-vote-form" id="betID-{{this.bet_id}}">
+                    <!-- {{this.bet_id}} -->
+                    <label for="{{this.bet_id}}-leftOption">
+                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-leftOption" value="left"> <span>{{this.p1_answer}}</span>
+                    </label>
+
+                    <label for="{{this.bet_id}}-rightOption">
+                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-rightOption" value="right"> <span>{{this.p2_answer}}</span>
+                    </label>
+
+                    <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
+
+                    <p class="voteText" id="voting-{{this.bet_id}}"></p>
+
+                    <!-- <button type="submit" form="form1" value="Submit">Submit</button> -->
+
+                </form>
+
+                
+
+            </div>
+
+
+
         {{/each}}
     </section>
+
+
+
+
+
+
 
     <section class="service page-section" id="userStatsBox">
         <h2>User Statistics</h2>
@@ -105,11 +127,46 @@
         });
     });
 
-//------------------------------------- Login Functions -------------------------------------//
+//------------------------------------- Community Submit Functions -------------------------------------//
 
+    $(".communitySubmitButton").on("click", function(event) {
+        event.preventDefault();
 
+        console.log("The button was clicked");
 
+        var btn = $(this).find("input[type=submit]:focus" ); //Grabs the info of the button we clicked
+        //console.log(btn);
 
+        var betID = btn.context.id;
+        //console.log(betID);
+
+        var voterPick = $('input:radio[name='+ betID + ']:checked').val();
+        //console.log(voterPick)
+
+        //Create a data object to pass on to the checkVote route
+        var data = {
+            currentBetID: betID,
+            currentUserID: localStorage.getItem("currentUserID"),
+            voterPick: voterPick
+        }
+        //console.log(data);
+
+        var currentURL = window.location.origin + "/api/checkVote";
+
+        // post our voting data
+        $.post(currentURL, data, function(results){
+            //console.log("THIS IS THE RESULTS: " + results);
+
+            if (results) {
+                $("#voting-"+betID).text("You have already voted on this Community Bet.");
+            }
+            else {
+                $("#voting-"+betID).text("Thanks for voting!");
+            }
+        });
+
+        return false;
+    })
 
 
 

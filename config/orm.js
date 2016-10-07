@@ -80,36 +80,45 @@ var orm = {
         });
   },
 
-
   selectWhere: function(tableInput, colToSearch, valOfCol, callback) {
-
         var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ?';
-
         // console.log(queryString);
 
         connection.query(queryString, [valOfCol], function(err, result) {
-            // console.log(result);
             callback(result)
         });
 
     },
 
   selectWhereOr: function(tableInput, colToSearch, colToSearch2, valOfCol, callback) {
-        // console.log(tableInput);
-        // console.log(colToSearch);
-        // console.log(valOfCol);
-
-        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' or ' + colToSearch2 + ' = ' + valOfCol;
-
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' OR ' + colToSearch2 + ' = ' + valOfCol;
         // console.log(queryString);
 
         connection.query(queryString, function(err, result) {
-            // console.log(result);
+            callback(result)
+        });
+
+    },
+
+  selectWhereAnd: function(tableInput, colToSearch, valOfCol, colToSearch2, valOfCol2, callback) {
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' AND ' + colToSearch2 + ' = ' + valOfCol2;
+        // console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            callback(result)
+        });
+
+    },
+
+  selectWhereAndNull: function(tableInput, colToSearch, valOfCol, colToSearch2, callback) {
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' AND ' + colToSearch2 + ' IS NULL';
+        //console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
             callback(result)
         });
 
     }
-
 
 
 
