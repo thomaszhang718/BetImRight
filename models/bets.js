@@ -86,7 +86,7 @@ var bets = {
 		orm.selectWhereAndNull('bets', colToSearch, valOfCol, colToSearch2, function(res){
 			callback(res);
 		});
-	},
+	}
 
 
 };
