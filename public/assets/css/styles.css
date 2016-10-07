@@ -1059,6 +1059,7 @@ blockquote footer, blockquote small, blockquote .small {
   display: block;
   margin: auto;
   border-radius: 100px;
+  width: 100px;
   border: 2px solid black;
 }
 
