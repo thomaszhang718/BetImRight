@@ -164,10 +164,11 @@
 
         //Create a data object to pass on to the checkVote route
         var data = {
+            currentBetID: betID,
             currentUserID: localStorage.getItem("currentUserID"),
             voterPick: voterPick
         }
-        //console.log(data);
+        console.log(data);
 
         var currentURL = window.location.origin + "/api/checkVote";
 
@@ -175,48 +176,15 @@
         $.post(currentURL, data, function(results){
             console.log("THIS IS THE RESULTS: " + results);
 
-
-
+            if (results) {
+                $("#voting-"+betID).text("You have already voted on this Community Bet.");
+            }
+            else {
+                $("#voting-"+betID).text("Thanks for voting!");
+            }
         });
 
 
-/*            if(results === "fail") {
-                $('#invalidUserOrPassModal').modal();
-            }
-            else if (results.type === "admin") {
-                console.log("You are an admin");
-                localStorage.setItem("currentUsername", results.currentUsername);
-                localStorage.setItem("currentUserID", results.currentUserID);
-
-                window.location.replace(window.location.origin + results.path);
-            }
-            else if (results.type === "user") {
-                console.log("you're user!");
-                localStorage.setItem("currentUsername", results.currentUsername);
-                localStorage.setItem("currentUserID", results.currentUserID);
-                window.location.replace(window.location.origin + results.path);
-            }*/
-
-/*        if (alreadyVoted) {
-            $("#voting-"+betID).text("You have already voted on this Community Bet.");
-
-        } else {
-            alreadyVoted = true;
-            $("#voting-"+betID).text("Thanks for voting!");
-
-        }*/
-
-
-
-
-
-
-
-
-
-
-/*      console.log($(".community-vote-form").val())*/
-      //$(this).val()
       
       return false;
 

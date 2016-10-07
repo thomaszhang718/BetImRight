@@ -21,6 +21,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	insertVote:  function(cols, vals, callback) {
+		orm.insertOne('votes', cols, vals, function(res){
+			callback(res);
+		});
+	},
 	update: function(objColVals, condition, callback) {
 		orm.updateOne('users', objColVals, condition, function(res){
 			callback(res);

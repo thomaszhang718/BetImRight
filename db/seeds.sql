@@ -27,6 +27,9 @@ INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_
 
 
 
+-- Votes
+INSERT INTO votes (bet_id, voter_id, voter_pick) VALUES (2, 4, "left");
+
 
 
 

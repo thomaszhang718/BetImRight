@@ -350,33 +350,33 @@ module.exports = function(app){
 	app.post('/api/checkVote', function(req,res) {
 		
 		console.log("Check Vote Started.");
-		
+
+		var currentBetID = req.body.currentBetID;
 		var currentUserID = req.body.currentUserID;
 		var voterPick = req.body.voterPick;
 
-		var usernameExists = false;
+		var userAlreadyVoted = false;
 
-		bets.selectWhereVotes("bet_id", function(resData){
+		bets.selectWhereVotes("bet_id", currentBetID, function(resData){
 			console.log(resData);
 
-			
-/*			for (i in resData) {
-				if (resData[i].username == username){
-					usernameExists = true;
+			for (i in resData) {
+				if (resData[i].voter_id == currentUserID){
+					userAlreadyVoted = true;
 				}				
 			}
 
-			if (usernameExists == true) {
-				//console.log("username was picked already");
+			if (userAlreadyVoted) {
+				console.log("user already voted");
 				res.json(true);
 			}
 			else {
-				//console.log("username is available");
-				bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.newUsername, req.body.firstName, req.body.lastName, req.body.newPassword, req.body.newEmail], function(data){
-					//console.log("added the user to the database");
+				console.log("user has not voted yet");
+				bets.insertVote(['bet_id', 'voter_id', 'voter_pick'], [currentBetID, currentUserID, voterPick], function(data){
+					//console.log("added vote to the database");
 					res.json(false);
-				});
-			}*/
+				})
+			}
 		});
 	});
 
