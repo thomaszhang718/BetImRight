@@ -1341,7 +1341,7 @@ label {
 }
 
 /* Nothing to see here. */
-body {
+.community-vote-div {
   margin: 3em auto;
   max-width: 30em;
   font-family: Cabin, serif;
@@ -1352,4 +1352,10 @@ body {
   border: 2px solid #000;
   padding: 2em;
   border-radius: 0.5em;
+}
+
+.voteText {
+  font-family: 'Slabo 27px', serif;
+  padding-top: 10px;
+  margin: 0;
 }

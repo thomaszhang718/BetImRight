@@ -49,5 +49,12 @@ CREATE TABLE decider
 	PRIMARY KEY (decider_id)
 );
 
-
-
+-- Voting History table to calculate votes and who's already voted
+CREATE TABLE voting 
+(
+	voting_id int NOT NULL AUTO_INCREMENT,
+	bet_id int(11) NOT NULL,
+	voter_id int(11) NOT NULL,
+	voter_pick varchar(5) NOT NULL,
+	PRIMARY KEY (voting_id)
+);

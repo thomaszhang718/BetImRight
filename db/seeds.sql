@@ -20,7 +20,7 @@ INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_
 INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (6, 7, 'C', 'D', true, 20, 'Who is better3?', 'community');
 INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge) VALUES (7, 4, 'D', 'A', true, 20, 'Who is better4?', 'community');
 
-
+INSERT INTO bets (p1_id, p2_id, p1_answer, p2_answer, p2_agree, bet_amount, bet_text, judge, results) VALUES (1, 2, '1', '2', true, 20, 'Who is betterDraw?', 'community', 'draw');
 
 
 

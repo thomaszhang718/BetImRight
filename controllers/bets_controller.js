@@ -126,12 +126,12 @@ module.exports = function(app){
                 	//console.log(userBetsData);
                 	homeDataObj.bets = userBetsData;
 
-                	bets.selectWhereBets("judge", "community", function(communityBetsData){
-                		console.log(communityBetsData);
+                	bets.selectWhereAndNull("judge", "'community'", "result", function(communityBetsData){
+                		//console.log(communityBetsData);
                 		homeDataObj.users = communityBetsData;
 
 	            		bets.selectWhereUsers("user_id", 1, function(userData){                			
-	        				console.log(userData);
+	        				//console.log(userData);
 
 	        				homeDataObj.usersStats = userData;
 
@@ -142,7 +142,7 @@ module.exports = function(app){
 			                	communityBets: communityBetsData
 			                }
 
-			                console.log(hbsObject)
+			                //console.log(hbsObject);
 
 			                res.render("home", hbsObject);
 	            		})

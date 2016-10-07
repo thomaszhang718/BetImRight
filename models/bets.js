@@ -57,23 +57,28 @@ var bets = {
 		});
 
 	},
-
 	selectWhereUsers: function(colToSearch, valOfCol, callback) {
 		orm.selectWhere('users', colToSearch, valOfCol, function(res){
 			callback(res);
 		});
 	},
-
 	selectWhereBets: function(colToSearch, valOfCol, callback) {
 		orm.selectWhere('bets', colToSearch, valOfCol, function(res){
 			callback(res);
 		});
 	},
-
-
-
 	selectWhereBetsOr: function(colToSearch, colToSearch2, valOfCol, callback) {
 		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
+			callback(res);
+		});
+	},
+	selectWhereBetsAnd: function(colToSearch, valOfCol, colToSearch2, valOfCol2, callback) {
+		orm.selectWhereAnd('bets', colToSearch, valOfCol, colToSearch2, valOfCol2, function(res){
+			callback(res);
+		});
+	},
+	selectWhereAndNull: function(colToSearch, valOfCol, colToSearch2, callback) {
+		orm.selectWhereAndNull('bets', colToSearch, valOfCol, colToSearch2, function(res){
 			callback(res);
 		});
 	}
