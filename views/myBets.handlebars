@@ -4,51 +4,59 @@
     <!--header-->
     <header id="header">
 
-            <div class="menu">
-                <nav class="navbar navbar-wrapper">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                        </div>
-                        <div id="main-nav" class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav">
-                                <li><a href="/home" class="scroll-link">Home</a>
-                                </li>
-                                <li><a href="/myBets" class="scroll-link">{{currentUsername}}'s Bets</a>
-                                </li>
-                                <li><a href="/newBet" class="scroll-link">New Bet</a>
-                                </li>
-                                <li><a href="/logout" class="scroll-link">Logout</a>
-                                </li>
-
-
-                            </ul>
-                        </div>
+        <div class="menu">
+            <nav class="navbar navbar-wrapper">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     </div>
-                </nav>
-            </div>
+                    <div id="main-nav" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/home" class="scroll-link">Home</a>
+                            </li>
+                            <li><a href="/myBets" class="scroll-link">{{currentUsername}}'s Bets</a>
+                            </li>
+                            <li><a href="/newBet" class="scroll-link">New Bet</a>
+                            </li>
+                            <li><a href="/logout" class="scroll-link">Logout</a>
+                            </li>
 
 
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
 
-                        <hgroup class="logo-header">
-                            <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
-                            <h3>Social Betting Made Easy!</h3> 
-                        </hgroup>
+        <div class="secondMenu">
+            <nav id="secondNav">
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="#judgingBets">Bet's I'm Judging</a>
+                    <a href="#pendingBets">Pending Bets</a>
+                    <a href="#currentBets">Current Bets</a>
+                    <a href="#pastBets">Past Bets</a>
+                </div>
+                <div id="sideNavMain">
+                    <span style="font-size:30px;cursor:pointer;z-index:-1" onclick="openNav()">&#9776;</span>
+                </div>
+            </nav>
+        </div>
 
-
-
-{{handlebar1}}{{handlebar2}}
-
-
-
-
+        <hgroup class="logo-header" id="myBetsPageLogo">
+            <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
+            <h3>Social Betting Made Easy!</h3> 
+        </hgroup>
 
     </header>
 
-    <section class="service page-section" id="service">
+
+
+
+    <section class="service" id="judgingBets">
         <div class="container text-center">
-            <div class="heading">
-                <h2>Bet on anything with your friends</h2>
+            <div class="myBetsTextDivs">
+                <h2>Bet's I'm Judging</h2>
                 <h3>Win bragging rights when you finally decide who's right!<br>
              Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
             </div>
@@ -56,65 +64,38 @@
         </div>
     </section>
 
-    <!--about us-->
-    <section class="aboutus page-section" id="aboutUs">
-        <div class="container">
-            <div class="heading">
-                <h2>Who we are</h2>
-                <h3>The Bet I'm Right Team is a trio of Fullstack Developers and Students at the University of Central Florida Developer Bootcamp.<br>
-             The team consists of Sean Capelle, Thomas Zhang, and John Bunner.</h3>
+    <section class="service" id="pendingBets">
+        <div class="container text-center">
+            <div class="myBetsTextDivs">
+                <h2>Pending Bets</h2>
+                <h3>Win bragging rights when you finally decide who's right!<br>
+             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
             </div>
 
-            <div class="content">
-
-                <div class="team-div col-md-4">
-                    <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo" />
-                    <p class="team-name">Sean Capelle</p>
-                    <p class="team-title">Co-Founder/Project Manager</p>
-                </div>
-
-                <div class="team-div col-md-4">
-                    <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo" />
-                    <p class="team-name">Thomas Zhang</p>
-                    <p class="team-title">Co-Founder/Front-end Developer</p>
-                </div>
-
-                <div class="team-div col-md-4">
-                    <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo" />
-                    <p class="team-name">David Bunner</p>
-                    <p class="team-title">Co-Founder/Back-end Developer</p>
-                </div>
-
-            </div>
         </div>
     </section>
 
-    <!--feedback-->
-    <section class="contact page-section" id="contact">
-        <div class="container">
-            <div class="heading">
 
-                <h2>Contact Us</h2>
-
-                <h3>We are here to answer any questions you may have about your Bet I'm Right experience. Reach out to us and we'll respond as soon as we can.<br>
-                 Even if there is something you have always wanted to experience and can't find it on our app, let us know and we promise to look into it!</h3>
+    <section class="service" id="currentBets">
+        <div class="container text-center">
+            <div class="myBetsTextDivs">
+                <h2>Current Bets</h2>
+                <h3>Win bragging rights when you finally decide who's right!<br>
+             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
             </div>
+
         </div>
-        <div class="container w960">
-            <div class="row">
-                <div class="done">
-                    <div class="alert alert-success">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        Your message has been sent. Thank you!
-                    </div>
-                </div>
-                <form method="post" action="" id="contactform">
-                    <input name="name" id="contactName" type="text" class="contact col-md-6" placeholder="Your Name *">
-                    <input name="email" id="contactEmail" type="email" class="contact noMarr col-md-6" placeholder="E-mail address *">
-                    <textarea name="comment" id="contactMessage" class="contact col-md-12" placeholder="Message *"></textarea>
-                    <input type="submit" id="contactSubmit" class="contact submit" value="Send message">
-                </form>
+    </section>
+
+
+    <section class="service" id="pastBets">
+        <div class="container text-center">
+            <div class="myBetsTextDivs">
+                <h2>Past Bets</h2>
+                <h3>Win bragging rights when you finally decide who's right!<br>
+             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
             </div>
+
         </div>
     </section>
 
@@ -193,76 +174,16 @@
 
 
 
-//------------------------------------- Create Account Functions -------------------------------------//
+//------------------------------------- Side Nav Bar Functions -------------------------------------//
 
-    function createAccount(){
-
-            console.log("createAccount func")
-
-            // grab data from form
-            var data = {
-                firstName: $('#firstName').val().trim(),
-                lastName: $('#lastName').val().trim(),
-                newUsername: $('#newUsername').val().trim(),
-                newPassword: $('#newPassword').val().trim(),
-                newEmail: $('#newEmail').val().trim()
-            }
-
-            //console.log(data)
-            // grab url to ajax call
-            var currentURL = window.location.origin + "/createUser/create";
-
-            console.log(currentURL);
-
-            // post our new user
-            $.post(currentURL, data, function(results){
-                console.log(results);
-                
-                //If the username was unique, redirect to login page on server side 
-
-                if(results === false) {
-                    $('#uniqueUsernameModal').modal();
-                }
-            });
-        }
-        
-    //Function to check if the passwords entered match
-    function bothPasswordsMatch() {
-
-        var isMatch = false;
-
-        if ($("#newPassword").val() === $("#passwordAgain").val()){
-            isMatch = true;
-        }
-        return isMatch;
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "12em";
     }
 
-    $("#createAccountForm").submit(function(e) {
-      e.preventDefault();
-      
-      var isMatch = bothPasswordsMatch();
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
 
-      if(!isMatch) {
-        $('#passwordMatchModal').modal();
-      } else {
-        createAccount();
-      }
-      return false;
-    })
-
-//------------------------------------- Contact Us Functions -------------------------------------//
-
-    //This is fake, we don't have a contact email setup yet
-    $("#contactform").submit(function(e) {
-      e.preventDefault();
-      
-      $('#contactName, #contactEmail, #contactMessage').val('');
-
-
-      $('#contactSubmitModal').modal();
-      return false;
-
-    })
+    }
 
 
 
