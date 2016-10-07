@@ -59,7 +59,15 @@ var bets = {
 		});
 	},
 
-	selectWhereBets: function(colToSearch, colToSearch2, valOfCol, callback) {
+	selectWhereBets: function(colToSearch, valOfCol, callback) {
+		orm.selectWhere('bets', colToSearch, valOfCol, function(res){
+			callback(res);
+		});
+	},
+
+
+
+	selectWhereBetsOr: function(colToSearch, colToSearch2, valOfCol, callback) {
 		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
 			callback(res);
 		});

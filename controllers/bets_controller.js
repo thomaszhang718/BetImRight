@@ -4,7 +4,10 @@ var bets = require('../models/bets.js');
 var Cookies = require('cookies');
 var jwt = require('jsonwebtoken'); 
 var path = require('path');
-
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
  
 module.exports = function(app){
 
@@ -17,10 +20,6 @@ module.exports = function(app){
 		var currentUsername;
 		var currentUserID;
 
-
-
-
-		
 		bets.userAuth("users", function(res){
 			
 		console.log(res);
@@ -79,9 +78,6 @@ module.exports = function(app){
 						currentUserID: currentUserID
 					}
 					
-					//localStorage.setItem('currentUsername', currentUsername);
-					//localStorage.setItem('currentUserID', currentUserID);
-
 					rest.json(loginRedirectObj);
 					//rest.json('user');
 					}
@@ -120,70 +116,40 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-				
-                var testObj = {};
+                var currentUsername = localStorage.getItem("currentUsername");
+                var currentUserID = localStorage.getItem("currentUserID");
+                //console.log(currentUserID);
+                
+                var homeDataObj = {};
 
+                bets.selectWhereBetsOr("p1_id", "p2_id", currentUserID, function(userBetsData){
+                	//console.log(userBetsData);
+                	homeDataObj.bets = userBetsData;
 
-                var testUserID = 1;
+                	bets.selectWhereBets("judge", "community", function(communityBetsData){
+                		console.log(communityBetsData);
+                		homeDataObj.users = communityBetsData;
 
-                bets.selectWhereBets('p1_id', 'p2_id', testUserID, function(data){
-                	console.log(data);
+	            		bets.selectWhereUsers("user_id", 1, function(userData){                			
+	        				console.log(userData);
 
-                	res.render("home")
-
-                })
-
-/*				bets.selectAllBets(function(data){
-					console.log("here")
-					console.log(data)
-
-					testObj.bets = data;
-
-					bets.selectAll(function(data2){
-						console.log("here")
-						console.log(data2)
-
-						testObj.users = data2;
-
-						bets.selectAll(function(data3){
-							console.log("here")
-							console.log(data3)
-
-							testObj.usersStats = data3;
-
+	        				homeDataObj.usersStats = userData;
 
 			                var hbsObject = {
-			                	currentUsername: "John's",
-			                	currentBets: "data", //testObj.bets.asdfsadfwre
-			                	currentPoints: "test",
-			                	communityBets: "test"
+			                	currentUsername: currentUsername,
+			                	currentBets: userBetsData,
+			                	userData: userData,
+			                	communityBets: communityBetsData
 			                }
 
 			                console.log(hbsObject)
 
 			                res.render("home", hbsObject);
-
-
-
-							
-						});
-					});
-				});*/
-
-
-
-
-
-
-
-
-
-
-
-
+	            		})
+            		})
+                })
             }
         })
-		
 	});
 
 	app.get('/admin', function(req,res) {
@@ -233,7 +199,12 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                res.render('myBets');
+                var currentUsername = localStorage.getItem("currentUsername");
+				var hbsObject = {
+                	currentUsername: currentUsername
+                }
+
+                res.render("myBets", hbsObject);
             }
         })
 	});
@@ -255,7 +226,12 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                res.render('newBet');
+                var currentUsername = localStorage.getItem("currentUsername");
+				var hbsObject = {
+                	currentUsername: currentUsername
+                }
+
+                res.render("newBet", hbsObject);
             }
         })
 	});
