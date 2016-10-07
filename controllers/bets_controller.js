@@ -339,4 +339,19 @@ module.exports = function(app){
 
 		});
 	});
-}
+	
+	app.put('/api/acceptBet/:id', function(req,res) {
+		var condition = 'bet_id = ' + req.params.id;
+		
+		if (req.body.agree == true){		
+		bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
+				res.redirect('/home');
+			});
+		}
+		else{
+			bets.updateBet({'result' : 'draw', 'p2_agree' : req.body.agree}, condition, function(data){
+				res.redirect('/home');
+			});
+		}
+		});
+	}
