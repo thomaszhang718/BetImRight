@@ -45,55 +45,32 @@
     </header>
 
     <section class="service page-section" id="service">
-    <h2>User Bets</h2>
+        <h2>User Bets</h2>
         {{#each currentBets}}
             <li>{{this.bet_text}}</li>
+            Your Pick: {{this.p1_answer}}
         {{/each}}
-
-
-
-
-
-
-
-
     </section>
 
 
 
     <section class="service page-section" id="service">
-    <h2>Community Bets</h2>
+        <h2>Community Bets</h2>
         {{#each communityBets}}
             <li>Bet: {{this.bet_text}}</li>
             {{this.p1_answer}} vs {{this.p2_answer}}
         {{/each}}
-
-
-
-
-
-
-
-
     </section>
 
     <section class="service page-section" id="userStatsBox">
-    <h2>User Statistics</h2>
+        <h2>User Statistics</h2>
         {{#each userData}}
             <li>Wins: {{this.wins}}</li>
             <li>Losses: {{this.losses}}</li>
             <li>Current Points: {{this.current_points}}</li>
-            <li>Current Points: {{this.total_points_won}}</li>
-            <li>Current Points: {{this.total_points_lost}}</li>
+            <li>Lifetime Points Won: {{this.total_points_won}}</li>
+            <li>Lifetime Points Lost: {{this.total_points_lost}}</li>
         {{/each}}
-
-
-
-
-
-
-
-
     </section>
 
 
