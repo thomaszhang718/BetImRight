@@ -351,8 +351,8 @@ module.exports = function(app){
 		
 		console.log("Check Vote Started.");
 		
-		var username = req.body.newUsername;
-		var password = req.body.newPassword;
+		var currentUserID = req.body.currentUserID;
+		var voterPick = req.body.voterPick;
 
 		var usernameExists = false;
 
@@ -360,7 +360,7 @@ module.exports = function(app){
 			console.log(resData);
 
 			
-			for (i in resData) {
+/*			for (i in resData) {
 				if (resData[i].username == username){
 					usernameExists = true;
 				}				
@@ -376,7 +376,7 @@ module.exports = function(app){
 					//console.log("added the user to the database");
 					res.json(false);
 				});
-			}
+			}*/
 		});
 	});
 

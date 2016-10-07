@@ -61,7 +61,7 @@
             <div class="community-vote-div">
                 <h2>Bet: {{this.bet_text}}</h2>
                 <form class="community-vote-form" id="betID-{{this.bet_id}}">
-
+                    <!-- {{this.bet_id}} -->
                     <label for="{{this.bet_id}}-leftOption">
                     <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-leftOption" value="left"> <span>{{this.p1_answer}}</span>
                     </label>
@@ -149,21 +149,74 @@
         console.log("The button was clicked");
 
         var btn = $(this).find("input[type=submit]:focus" ); //Grabs the info of the button we clicked
-        console.log(btn);
+        //console.log(btn);
 
         var betID = btn.context.id;
-        console.log(betID);
+        //console.log(betID);
 
-        var betFormSelector = $("betID-"+betID);
-        console.log(betFormSelector);
-
-        var voterPick = betFormSelector.val();
-
-        console.log(voterPick)
-
-        
+        var voterPick = $('input:radio[name='+ betID + ']:checked').val();
+        //console.log(voterPick)
 
 
+
+
+
+
+        //Create a data object to pass on to the checkVote route
+        var data = {
+            currentUserID: localStorage.getItem("currentUserID"),
+            voterPick: voterPick
+        }
+        //console.log(data);
+
+        var currentURL = window.location.origin + "/api/checkVote";
+
+        // post our voting data
+        $.post(currentURL, data, function(results){
+            console.log("THIS IS THE RESULTS: " + results);
+
+
+
+        });
+
+
+/*            if(results === "fail") {
+                $('#invalidUserOrPassModal').modal();
+            }
+            else if (results.type === "admin") {
+                console.log("You are an admin");
+                localStorage.setItem("currentUsername", results.currentUsername);
+                localStorage.setItem("currentUserID", results.currentUserID);
+
+                window.location.replace(window.location.origin + results.path);
+            }
+            else if (results.type === "user") {
+                console.log("you're user!");
+                localStorage.setItem("currentUsername", results.currentUsername);
+                localStorage.setItem("currentUserID", results.currentUserID);
+                window.location.replace(window.location.origin + results.path);
+            }*/
+
+/*        if (alreadyVoted) {
+            $("#voting-"+betID).text("You have already voted on this Community Bet.");
+
+        } else {
+            alreadyVoted = true;
+            $("#voting-"+betID).text("Thanks for voting!");
+
+        }*/
+
+
+
+
+
+
+
+
+
+
+/*      console.log($(".community-vote-form").val())*/
+      //$(this).val()
       
       return false;
 
