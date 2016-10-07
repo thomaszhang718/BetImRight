@@ -307,9 +307,6 @@ module.exports = function(app){
 				}
 			}
 
-
-
-
 			if (usernameExistsP1 == true && usernameExistsP2 == true) {
 
 				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
@@ -321,22 +318,17 @@ module.exports = function(app){
 						path: "/home"
 					};
 
-
 					res.json(redirectObj);	
 				})	
 			}
 			else {
 					var redirectObj = {
 						isCreated: false
-
 					};
-
 
 					res.json(redirectObj);
 				};
 			}
-
-
 		});
 	});
 	
@@ -344,7 +336,7 @@ module.exports = function(app){
 		var condition = 'bet_id = ' + req.params.id;
 		
 		if (req.body.agree == true){		
-		bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
+			bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
 				res.redirect('/home');
 			});
 		}
@@ -353,5 +345,39 @@ module.exports = function(app){
 				res.redirect('/home');
 			});
 		}
+	});
+
+	app.post('/api/checkVote', function(req,res) {
+		
+		console.log("Check Vote Started.");
+		
+		var username = req.body.newUsername;
+		var password = req.body.newPassword;
+
+		var usernameExists = false;
+
+		bets.selectWhereVotes("bet_id", function(resData){
+			console.log(resData);
+
+			
+			for (i in resData) {
+				if (resData[i].username == username){
+					usernameExists = true;
+				}				
+			}
+
+			if (usernameExists == true) {
+				//console.log("username was picked already");
+				res.json(true);
+			}
+			else {
+				//console.log("username is available");
+				bets.insertOne(['username', 'first_name', 'last_name', 'password', 'email'], [req.body.newUsername, req.body.firstName, req.body.lastName, req.body.newPassword, req.body.newEmail], function(data){
+					//console.log("added the user to the database");
+					res.json(false);
+				});
+			}
 		});
-	}
+	});
+
+}

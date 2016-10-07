@@ -67,6 +67,11 @@ var bets = {
 			callback(res);
 		});
 	},
+  	selectWhereVotes: function(colToSearch, valOfCol, callback) {
+		orm.selectWhere('votes', colToSearch, valOfCol, function(res){
+			callback(res);
+		});
+    },
 	selectWhereBetsOr: function(colToSearch, colToSearch2, valOfCol, callback) {
 		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
 			callback(res);
@@ -81,7 +86,8 @@ var bets = {
 		orm.selectWhereAndNull('bets', colToSearch, valOfCol, colToSearch2, function(res){
 			callback(res);
 		});
-	}
+	},
+
 
 };
 

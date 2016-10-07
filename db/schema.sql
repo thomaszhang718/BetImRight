@@ -50,7 +50,7 @@ CREATE TABLE decider
 );
 
 -- Voting History table to calculate votes and who's already voted
-CREATE TABLE voting 
+CREATE TABLE votes
 (
 	voting_id int NOT NULL AUTO_INCREMENT,
 	bet_id int(11) NOT NULL,

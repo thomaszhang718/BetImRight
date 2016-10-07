@@ -140,41 +140,29 @@
 
     var alreadyVoted = false;
 
-    $(".community-vote-form").submit(function(e) {
-        e.preventDefault();
-          
-        
-          
+
+
+
+    $(".communitySubmitButton").on("click", function(event) {
+        event.preventDefault();
+
         console.log("The button was clicked");
 
-        var btn = $(this).find("input[type=submit]:focus" );
+        var btn = $(this).find("input[type=submit]:focus" ); //Grabs the info of the button we clicked
+        console.log(btn);
 
-        var betID = btn[0].id;
-
+        var betID = btn.context.id;
         console.log(betID);
 
-        $("#voting-"+betID).empty();
+        var betFormSelector = $("betID-"+betID);
+        console.log(betFormSelector);
 
-        if (alreadyVoted) {
-            $("#voting-"+betID).text("You have already voted on this Community Bet.");
+        var voterPick = betFormSelector.val();
 
-        } else {
-            alreadyVoted = true;
-            $("#voting-"+betID).text("Thanks for voting!");
+        console.log(voterPick)
 
-        }
+        
 
-
-
-
-
-
-
-
-
-
-/*      console.log($(".community-vote-form").val())*/
-      //$(this).val()
 
       
       return false;

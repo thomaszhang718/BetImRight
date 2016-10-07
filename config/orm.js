@@ -112,8 +112,7 @@ var orm = {
 
   selectWhereAndNull: function(tableInput, colToSearch, valOfCol, colToSearch2, callback) {
         var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' AND ' + colToSearch2 + ' IS NULL';
-
-         console.log(queryString);
+        //console.log(queryString);
 
         connection.query(queryString, function(err, result) {
             callback(result)
