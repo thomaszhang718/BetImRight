@@ -36,7 +36,7 @@ CREATE TABLE bets
 	judge varchar(20) NOT NULL,
 	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	-- end_date ???,
-	result BOOLEAN DEFAULT NULL,
+	result varchar(4) DEFAULT NULL,
 	PRIMARY KEY (bet_id)
 );
 

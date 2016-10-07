@@ -26,6 +26,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	updateBet: function(objColVals, condition, callback) {
+		orm.updateOne('bets', objColVals, condition, function(res){
+			callback(res);
+		});
+	},
 	userAuth: function(table, callback) {
 		orm.userAuth(table, function(res){
 			callback(res);
