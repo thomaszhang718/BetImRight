@@ -12,12 +12,12 @@ if (process.env.JAWSDB_URL) {
 
 else {
     connection = mysql.createConnection({
-		
+        
         //Will need to change password to match your local MySQL settings
         port: 3306,
         host: 'localhost',
         user: 'root',
-        password: '12345',
+        password: '', //12345
         database: 'bets_db'
     });
 }

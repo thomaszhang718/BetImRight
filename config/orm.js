@@ -65,20 +65,53 @@ var orm = {
     },
 	
 	userAuth: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin` FROM `bets_db`.`' + table + '`;';
+        var queryString = 'SELECT `' + table + '`.`user_id`,`' + table + '`.`username`,`' + table + '`.`password`, `' + table + '`.`admin` FROM `bets_db`.`' + table + '`;';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
         });
-    }
-	
+    },
+
 	userData: function(table, callback) {
         var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`user_id`, `' + table + '`.`current_points` FROM `bets_db`.`' + table + '`;';
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
         });
+  },
+
+
+  selectWhere: function(tableInput, colToSearch, valOfCol, callback) {
+
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ?';
+
+        // console.log(queryString);
+
+        connection.query(queryString, [valOfCol], function(err, result) {
+            // console.log(result);
+            callback(result)
+        });
+
+    },
+
+  selectWhereOr: function(tableInput, colToSearch, colToSearch2, valOfCol, callback) {
+        // console.log(tableInput);
+        // console.log(colToSearch);
+        // console.log(valOfCol);
+
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' or ' + colToSearch2 + ' = ' + valOfCol;
+
+        // console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            // console.log(result);
+            callback(result)
+        });
+
     }
+
+
+
 
 };
 

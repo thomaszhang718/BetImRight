@@ -6,6 +6,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	selectAllBets: function(callback) {
+		orm.selectAll('bets', function(res){
+			callback(res);
+		});
+	},
 	insertOne:  function(cols, vals, callback) {
 		orm.insertOne('users', cols, vals, function(res){
 			callback(res);
@@ -27,10 +32,47 @@ var bets = {
 		});
 	},
 	userData: function(table, callback) {
-		orm.userAuth(table, function(res){
+		orm.userData(table, function(res){
 			callback(res);
 		});
-	}	
+	},
+	commBets: function(callback) {
+		orm.selectAll('bets', function(res){
+			
+			var community = {
+				bets: []
+			};
+
+			for (var i = 0; i < bets.length; i++){
+				if (bets.judge == "community" && bets.result == null){
+					community.bets.push(bets.bet_text);	
+				}
+			}
+			callback(community);
+		});
+
+	},
+
+	selectWhereUsers: function(colToSearch, valOfCol, callback) {
+		orm.selectWhere('users', colToSearch, valOfCol, function(res){
+			callback(res);
+		});
+	},
+
+	selectWhereBets: function(colToSearch, valOfCol, callback) {
+		orm.selectWhere('bets', colToSearch, valOfCol, function(res){
+			callback(res);
+		});
+	},
+
+
+
+	selectWhereBetsOr: function(colToSearch, colToSearch2, valOfCol, callback) {
+		orm.selectWhereOr('bets', colToSearch, colToSearch2, valOfCol, function(res){
+			callback(res);
+		});
+	}
+
 };
 
 module.exports = bets;

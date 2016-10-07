@@ -202,8 +202,8 @@
       <div class="container text-center">
          <div class="heading">          
             <h2>Bet on anything with your friends</h2>         
-            <h3>Win bragging rights when you finally decide who's right!<br>
-             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
+            <h3>Think you know the winner of the next big game? What would win in a fight, a Star Destroyer of the Enterprise?<br> <strong>Why not bet on it?</strong><br> 
+            Bet I'm Right is a social betting app that lets you easily make bets with your friends, and hold them accountable for the results. The winner gets "Cool Points." The loser gets to lick their wounds. Pick between <strong>3</strong> different judges (friend, admin, or community), and they'll decide the winner.<br> Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
         </div>
 
           <div class="row">
@@ -213,7 +213,7 @@
                     <i class="fa fa-gavel"></i>
                   </div>
                   <h3>Pick Your Judge</h3>
-                  <div class="box-area-text">Bet I'm Right lets you choose whether you want a BIR admin, a community poll, or a friend (whether subjective or objective) decide the result of your bet.</div>
+                  <div class="box-area-text">Bet I'm Right lets you choose whether you want an admin, a community poll, or a friend (whether subjective or objective) to decide the result of your bet.</div>
               </div>
             </div>
             <div class="col-md-4">
@@ -222,7 +222,7 @@
                     <i class="fa fa-dollar"></i>
                   </div>
                   <h3>"Cool" Points</h3>
-                  <div class="box-area-text">Wager "Cool" Points on each bet depending on how sure you are of your answer. These give you a measurable currency to show off to your friends who's the best!</div>
+                  <div class="box-area-text">Wager "Cool Points" on each bet, depending how sure you are of the answer. These give you a measurable currency to show off to your friends who's the best!</div>
               </div>
             </div>
             <div class="col-md-4">
@@ -231,7 +231,7 @@
                     <i class="fa fa-bar-chart"></i>
                   </div>
                   <h3>Bet History & Statistics</h3>
-                  <div class="box-area-text">BIR keeps a record of all of your bets and tracks your Wins/Losses, Points Won, etc. Easily find out who won that bet you made last year with your friends.</div>
+                  <div class="box-area-text">Bet I'm Right keeps a record of all of your bets and tracks your Wins/Losses, Points Won, etc. Easily find out who won that bet you made last year with your friends.</div>
               </div>
             </div>
 <!--             <div class="col-md-4">
@@ -240,7 +240,7 @@
                     <i class="fa fa-users"></i>
                   </div>
                   <h3>Friends & Community</h3>
-                  <div class="box-area-text">Add your friends to BIR and make sure you're the best of them all</div>
+                  <div class="box-area-text">Add your friends to Bet I'm Right and make sure you're the best of them all.</div>
               </div>
             </div>
             <div class="col-md-4">
@@ -277,7 +277,7 @@
         <div class="content">
              
           <div class="team-div col-md-4">
-            <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo"/>
+            <img src="/assets/img/Team Photos/sean.jpg" width="100" alt="logo" class="team-photo"/>
             <p class="team-name">Sean Capelle</p>
             <p class="team-title">Co-Founder/Project Manager</p>
           </div>
@@ -289,8 +289,8 @@
           </div>
 
           <div class="team-div col-md-4">
-            <img src="/assets/img/Team Photos/thomas.jpg" width="100" alt="logo" class="team-photo"/>
-            <p class="team-name">David Bunner</p>
+            <img src="/assets/img/Team Photos/john.jpg" width="100" alt="logo" class="team-photo"/>
+            <p class="team-name">John Bunner</p>
             <p class="team-title">Co-Founder/Back-end Developer</p>
           </div>
 
@@ -354,6 +354,8 @@
     $(document).ready( function() {
         $('.navbar-wrapper').stickUp();
         });
+    localStorage.clear();
+
     });
 
 //------------------------------------- Login Functions -------------------------------------//
@@ -379,12 +381,16 @@
                 $('#invalidUserOrPassModal').modal();
             }
             else if (results.type === "admin") {
-                console.log("You are an admin")
+                console.log("You are an admin");
+                localStorage.setItem("currentUsername", results.currentUsername);
+                localStorage.setItem("currentUserID", results.currentUserID);
+
                 window.location.replace(window.location.origin + results.path);
             }
             else if (results.type === "user") {
                 console.log("you're user!");
-                console.log(window.location.origin + results.path);
+                localStorage.setItem("currentUsername", results.currentUsername);
+                localStorage.setItem("currentUserID", results.currentUserID);
                 window.location.replace(window.location.origin + results.path);
             }
 

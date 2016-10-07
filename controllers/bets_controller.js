@@ -4,7 +4,11 @@ var bets = require('../models/bets.js');
 var Cookies = require('cookies');
 var jwt = require('jsonwebtoken'); 
 var path = require('path');
-
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
+ 
 module.exports = function(app){
 
 	app.post('/api/auth', function(req, rest){
@@ -13,7 +17,9 @@ module.exports = function(app){
 		
 		var username = req.body.username;
 		var password = req.body.password;
-		
+		var currentUsername;
+		var currentUserID;
+
 		bets.userAuth("users", function(res){
 			
 		console.log(res);
@@ -27,7 +33,12 @@ module.exports = function(app){
 					"username":username,
 					"password":password
 				}
-				
+
+				currentUsername = res[i].username;
+				currentUserID = res[i].user_id;
+				//console.log(currentUsername);
+				//console.log(currentUserID);
+
 				console.log(user);
 				
 				var token = jwt.sign(user, app.get('jwtSecret'), {
@@ -48,9 +59,11 @@ module.exports = function(app){
 
 					var loginRedirectObj = {
 						type: "admin",
-						path: "/admin"
+						path: "/admin",
+						currentUsername: currentUsername,
+						currentUserID: currentUserID
 					}
-					
+
 					rest.json(loginRedirectObj);
 					//rest.json('admin');
 				}
@@ -60,7 +73,9 @@ module.exports = function(app){
 
 					var loginRedirectObj = {
 						type: "user",
-						path: "/home"
+						path: "/home",
+						currentUsername: currentUsername,
+						currentUserID: currentUserID
 					}
 					
 					rest.json(loginRedirectObj);
@@ -86,9 +101,6 @@ module.exports = function(app){
 	app.get('/home', function(req,res) {
 		console.log("got to home");
 
-		//ASK DAVID WHERE TO SAVE USERNAME ONCE LOGGED IN?
-
-
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -104,15 +116,40 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                var hbsObject = {
-                	currentUsername: "John's",
-                	handlebar2: "Test2"
-                }
+                var currentUsername = localStorage.getItem("currentUsername");
+                var currentUserID = localStorage.getItem("currentUserID");
+                //console.log(currentUserID);
+                
+                var homeDataObj = {};
 
-                res.render("home", hbsObject);
+                bets.selectWhereBetsOr("p1_id", "p2_id", currentUserID, function(userBetsData){
+                	//console.log(userBetsData);
+                	homeDataObj.bets = userBetsData;
+
+                	bets.selectWhereBets("judge", "community", function(communityBetsData){
+                		console.log(communityBetsData);
+                		homeDataObj.users = communityBetsData;
+
+	            		bets.selectWhereUsers("user_id", 1, function(userData){                			
+	        				console.log(userData);
+
+	        				homeDataObj.usersStats = userData;
+
+			                var hbsObject = {
+			                	currentUsername: currentUsername,
+			                	currentBets: userBetsData,
+			                	userData: userData,
+			                	communityBets: communityBetsData
+			                }
+
+			                console.log(hbsObject)
+
+			                res.render("home", hbsObject);
+	            		})
+            		})
+                })
             }
         })
-		
 	});
 
 	app.get('/admin', function(req,res) {
@@ -162,7 +199,12 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                res.render('myBets');
+                var currentUsername = localStorage.getItem("currentUsername");
+				var hbsObject = {
+                	currentUsername: currentUsername
+                }
+
+                res.render("myBets", hbsObject);
             }
         })
 	});
@@ -184,7 +226,12 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                res.render('newBets');
+                var currentUsername = localStorage.getItem("currentUsername");
+				var hbsObject = {
+                	currentUsername: currentUsername
+                }
+
+                res.render("newBet", hbsObject);
             }
         })
 	});
@@ -233,7 +280,10 @@ module.exports = function(app){
 		});
 	});
 
-	app.put('/api/addBet/', function(req,res) {
+	app.post('/api/addBet/', function(req,res) {
+
+		console.log("Get here")
+
 		var usernameP1 = req.body.usernameP1;
 		var usernameP2 = req.body.usernameP2;
 
@@ -243,9 +293,10 @@ module.exports = function(app){
 			usernameExistsP1 = false;
 			usernameExistsP2 = false;
 			
+
 			for (i in resData) {
 				if (resData[i].username == usernameP1){
-					usernameExists = true;
+					usernameExistsP1 = true;
 					var userIdP1 = resData[i].user_id;
 					var userPointsP1 = resData[i].current_points;
 				}
@@ -256,19 +307,36 @@ module.exports = function(app){
 				}
 			}
 
+
+
+
 			if (usernameExistsP1 == true && usernameExistsP2 == true) {
-				
+
 				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
-				
+
 				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
 				
-				res.json(true);	
-				}	
+					var redirectObj = {
+						isCreated: true,
+						path: "/home"
+					};
+
+
+					res.json(redirectObj);	
+				})	
 			}
 			else {
-					res.json(false);
-				});
+					var redirectObj = {
+						isCreated: false
+
+					};
+
+
+					res.json(redirectObj);
+				};
 			}
+
+
 		});
 	});
 }

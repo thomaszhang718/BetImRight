@@ -1058,6 +1058,9 @@ blockquote footer, blockquote small, blockquote .small {
 .team-photo {
   display: block;
   margin: auto;
+  border-radius: 100px;
+  width: 100px;
+  border: 2px solid black;
 }
 
 .team-name {
