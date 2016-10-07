@@ -138,11 +138,6 @@
 
 //------------------------------------- Community Submit Functions -------------------------------------//
 
-    var alreadyVoted = false;
-
-
-
-
     $(".communitySubmitButton").on("click", function(event) {
         event.preventDefault();
 
@@ -157,24 +152,19 @@
         var voterPick = $('input:radio[name='+ betID + ']:checked').val();
         //console.log(voterPick)
 
-
-
-
-
-
         //Create a data object to pass on to the checkVote route
         var data = {
             currentBetID: betID,
             currentUserID: localStorage.getItem("currentUserID"),
             voterPick: voterPick
         }
-        console.log(data);
+        //console.log(data);
 
         var currentURL = window.location.origin + "/api/checkVote";
 
         // post our voting data
         $.post(currentURL, data, function(results){
-            console.log("THIS IS THE RESULTS: " + results);
+            //console.log("THIS IS THE RESULTS: " + results);
 
             if (results) {
                 $("#voting-"+betID).text("You have already voted on this Community Bet.");
@@ -184,10 +174,7 @@
             }
         });
 
-
-      
-      return false;
-
+        return false;
     })
 
 
