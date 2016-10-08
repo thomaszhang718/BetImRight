@@ -332,49 +332,66 @@ module.exports = function(app){
 
 		console.log("Get here")
 
-		var usernameP1 = req.body.usernameP1;
-		var usernameP2 = req.body.usernameP2;
-		var usernameP3 = req.body.usernameP3;
+		
 
-		bets.userData("users", function(resData){
-			console.log(resData);
 
-			usernameExistsP1 = false;
-			usernameExistsP2 = false;
-			usernameExistsP3 = false;
+		if (req.body.judge == "friend") {
 
-			for (i in resData) {
-				if (resData[i].username == usernameP1){
-					usernameExistsP1 = true;
-					var userIdP1 = resData[i].user_id;
-					var userPointsP1 = resData[i].current_points;
+			var usernameP1 = req.body.usernameP1;
+			var usernameP2 = req.body.usernameP2;
+			var usernameP3 = req.body.usernameP3;
+
+			bets.userData("users", function(resData){
+				console.log(resData);
+
+				usernameExistsP1 = false;
+				usernameExistsP2 = false;
+				usernameExistsP3 = false;
+
+				for (i in resData) {
+					if (resData[i].username == usernameP1){
+						usernameExistsP1 = true;
+						var userIdP1 = resData[i].user_id;
+						var userPointsP1 = resData[i].current_points;
+					}
+					if (resData[i].username == usernameP2){
+						usernameExistsP2 = true;
+						var userIdP2 = resData[i].user_id;
+						var userPointsP2 = resData[i].current_points;
+					}
+					if (resData[i].username == usernameP3){
+						usernameExistsP3 = true;
+						var userIdP3 = resData[i].user_id;
+					}
 				}
-				if (resData[i].username == usernameP2){
-					usernameExistsP2 = true;
-					var userIdP2 = resData[i].user_id;
-					var userPointsP2 = resData[i].current_points;
+
+				if (usernameExistsP1 == true && usernameExistsP2 == true && usernameExistsP3 == true) {
+
+					if (userPointsP1 - req.body.points >= 0 && userPointsP2 - req.body.points >= 0){
+
+						bets.insertBet(['p1_id', 'p2_id', 'p3_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, userIdP3, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
+						
+							var redirectObj = {
+								isCreated: true,
+								path: "/home"
+							};
+
+							res.json(redirectObj);	
+						})
+					}
+					else {
+						var redirectObj = {
+							isCreated: false,
+							usernameExistsP1: usernameExistsP1,
+							usernameExistsP2: usernameExistsP2,
+							userPointsP1: userPointsP1,
+							userPointsP2: userPointsP2
+						}
+
+						res.json(redirectObj);
+					}
 				}
-				if (resData[i].username == usernameP3){
-					usernameExistsP3 = true;
-					var userIdP3 = resData[i].user_id;
-				}
-			}
-
-			if (usernameExistsP1 == true && usernameExistsP2 == true && usernameExistsP3 == true) {
-
-				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
-
-				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
-				
-					var redirectObj = {
-						isCreated: true,
-						path: "/home"
-					};
-
-					res.json(redirectObj);	
-				})	
-			}
-			else {
+				else {
 					var redirectObj = {
 						isCreated: false,
 						usernameExistsP1: usernameExistsP1,
@@ -382,14 +399,83 @@ module.exports = function(app){
 						usernameExistsP3: usernameExistsP3,
 						userPointsP1: userPointsP1,
 						userPointsP2: userPointsP2
-					};
+					}
 
 					res.json(redirectObj);
-				};
-			}
-		});
+				}
+			})
+		}
+
+		else {
+
+			console.log("This is without friend judge")
+			var usernameP1 = req.body.usernameP1;
+			var usernameP2 = req.body.usernameP2;
+
+			bets.userData("users", function(resData){
+				console.log(resData);
+
+				usernameExistsP1 = false;
+				usernameExistsP2 = false;
+
+				for (i in resData) {
+					if (resData[i].username == usernameP1){
+						usernameExistsP1 = true;
+						var userIdP1 = resData[i].user_id;
+						var userPointsP1 = resData[i].current_points;
+					}
+					if (resData[i].username == usernameP2){
+						usernameExistsP2 = true;
+						var userIdP2 = resData[i].user_id;
+						var userPointsP2 = resData[i].current_points;
+					}
+				}
+
+				if (usernameExistsP1 == true && usernameExistsP2 == true) {
+
+					if (userPointsP1 - req.body.points >= 0 && userPointsP2 - req.body.points >= 0){
+
+						bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
+						
+							var redirectObj = {
+								isCreated: true,
+								path: "/home"
+							};
+
+							res.json(redirectObj);	
+						})	
+					}
+					else {
+						var redirectObj = {
+							isCreated: false,
+							usernameExistsP1: usernameExistsP1,
+							usernameExistsP2: usernameExistsP2,
+							userPointsP1: userPointsP1,
+							userPointsP2: userPointsP2
+						}
+
+						res.json(redirectObj);
+					}
+				} 
+				else {
+					var redirectObj = {
+						isCreated: false,
+						usernameExistsP1: usernameExistsP1,
+						usernameExistsP2: usernameExistsP2,
+						userPointsP1: userPointsP1,
+						userPointsP2: userPointsP2
+					}
+
+					res.json(redirectObj);
+				}
+			})
+		}
 	});
 	
+
+
+
+
 	app.put('/api/acceptBet/:id', function(req,res) {
 		var condition = 'bet_id = ' + req.params.id;
 		

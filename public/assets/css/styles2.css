@@ -1276,11 +1276,16 @@ blockquote footer, blockquote small, blockquote .small {
   padding-top: 0px
 }
 
+#navbar-logo {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
 
 /*----------------------------------------------------   New Bet Form ------------------------------------------------------*/
 
 .newBet-form {
-  width: 200px;
+  width: 300px;
   margin: 10px;
 }
 #newBetForm {
@@ -1316,6 +1321,10 @@ blockquote footer, blockquote small, blockquote .small {
 div.text-center {
   border-top: 1px solid #EDEDED;
   padding-top: 10px;
+}
+
+#betText, #P1answer {
+padding: 0 5px 200px
 }
 
 /*----------------------------------------------------   Radio Buttons ------------------------------------------------------*/
@@ -1476,3 +1485,5 @@ label {
   /*border-bottom: 1px solid #EDEDED;*/
   margin-bottom: 30px;
 }
+
+
