@@ -86,6 +86,13 @@ var orm = {
             callback(result);
         });
   },
+  betJudge: function(table, callback) {
+        var queryString = 'SELECT `' + table + '`.`bet_id`,`' + table + '`.`p1_id`,`' + table + '`.`bet_amount`,`' + table +'`.`p2_id` FROM `bets_db`.`' + table + '`;';
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            callback(result);
+        });
+  },
 
   selectWhere: function(tableInput, colToSearch, valOfCol, callback) {
         var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ?';
