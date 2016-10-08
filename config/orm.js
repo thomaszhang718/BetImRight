@@ -125,7 +125,40 @@ var orm = {
             callback(result)
         });
 
+    },
+
+  selectWhereAndAndNull: function(tableInput, colToSearch, valOfCol, valOfCol2, colToSearch2, colToSearch3, callback) {
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE ' + colToSearch + ' = ' + valOfCol + ' AND ' + colToSearch2 + ' = ' + valOfCol2  + ' AND ' + colToSearch3 + ' IS NULL';
+        //console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            callback(result)
+        });
+
+    },
+
+  selectWhereOrAndAndNull: function(tableInput, colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, valOfCol3, colToSearch4, callback) {
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE (' + colToSearch + ' = ' + valOfCol + ' OR ' + colToSearch2 + ' = ' + valOfCol2 + ') AND ' + colToSearch3 + ' = ' + valOfCol3  + ' AND ' + colToSearch4 + ' IS NULL';
+        //console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            callback(result)
+        });
+
+    },
+
+  selectWhereOrAndNotNull: function(tableInput, colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, callback) {
+        var queryString = 'SELECT * FROM ' + tableInput + ' WHERE (' + colToSearch + ' = ' + valOfCol + ' OR ' + colToSearch2 + ' = ' + valOfCol2 + ') AND ' + colToSearch3 + ' IS NOT NULL';
+        //console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            callback(result)
+        });
+
     }
+
+
+
 
 
 

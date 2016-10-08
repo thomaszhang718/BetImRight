@@ -1276,21 +1276,43 @@ blockquote footer, blockquote small, blockquote .small {
   padding-top: 0px
 }
 
+#navbar-logo {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
 
 /*----------------------------------------------------   New Bet Form ------------------------------------------------------*/
 
 .newBet-form {
-  width: 200px;
+  width: 300px;
   margin: 10px;
 }
-
+#newBetForm {
+  background-color: #F0F0F0;
+  border-radius: 20px;
+  padding-top: 10px;
+  border-bottom: 10px solid #E2E2E2;
+  /*border: 4px solid #8e8651;*/
+ 
+}
+.bet-title{
+  width: 30%;
+  margin: auto;
+}
+.fa-plus{
+  margin-top: 10px;
+  float: left;
+}
 #createBet-btn {
   /* border: 1px solid #3079ed; */
   border: 0px;
+  border-radius: 20px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
   background-color: #a3190f;
-  padding: 17px 0px;
+  padding: 17px 10px;
+  margin-bottom: 10px;
   font-family: 'Slabo 27px', serif;
   font-size: 18px;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
@@ -1299,6 +1321,10 @@ blockquote footer, blockquote small, blockquote .small {
 div.text-center {
   border-top: 1px solid #EDEDED;
   padding-top: 10px;
+}
+
+#betText, #P1answer {
+padding: 0 5px 200px
 }
 
 /*----------------------------------------------------   Radio Buttons ------------------------------------------------------*/
@@ -1451,11 +1477,37 @@ label {
   text-transform: capitalize;
 }
 
-.myBetsTextDivs h3 {
-  font-size: 16px;
-  line-height: 1.7;
-  font-weight: normal;
-  padding-bottom: 30px;
-  /*border-bottom: 1px solid #EDEDED;*/
-  margin-bottom: 30px;
+.betTextHeader h3 {
+  font-size: 20px;
+}
+
+.opponentHeader {
+  font-size: 18px;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.judgingBetDiv, .pendingBetDiv {
+  border: 1px solid #000000;
+  margin-bottom: 10px;
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.radioBetLabel {
+  width: 100%;
+  float:left;
+  font-size: 18px;
+}
+
+[class="radioInputLabel"] + span {
+  display: block;
+  float:left;
+  margin-left: 20px;
+}
+
+#p2_answer {
+  display: none;
 }

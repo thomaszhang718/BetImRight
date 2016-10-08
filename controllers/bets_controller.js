@@ -100,10 +100,10 @@ module.exports = function(app){
 
 	app.get('/update', function(req,res) {
 	
-	bets.betData("bets", function(resData){
-		console.log(resData);
-		res.redirect('/home');
-	});
+		bets.betData("bets", function(resData){
+			console.log(resData);
+			res.redirect('/home');
+		});
 	});
 	
 	app.get('/home', function(req,res) {
@@ -125,13 +125,44 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
+
+                //UPDATE ANY COMMUNITY BETS AND EXPIRE THEM
+				bets.betData("bets", function(resData){
+					var date = new Date();
+					//console.log(resData);
+					for (i in resData){
+						var isValid = true;
+						if (resData[i].result == null){
+							if(resData[i].create_date.getYear() != date.getYear()) {
+								isValid = false;
+							}
+							else if (resData[i].create_date.getMonth() != date.getMonth()) {
+								isValid = false;
+							}
+							else if(date.getDate() - resData[i].create_date.getDate() > 2 ) {
+								isValid = false;
+							}
+
+							if (isValid == false){
+								isValid = true;
+								var condition = 'bet_id = ' + resData[i].bet_id;
+								bets.updateBet({'result' : "'draw'"}, condition, function(data){
+								});
+							}
+						}
+					}
+				});
+
+
+
+
                 var currentUsername = localStorage.getItem("currentUsername");
                 var currentUserID = localStorage.getItem("currentUserID");
                 //console.log(currentUserID);
                 
                 var homeDataObj = {};
 
-                bets.selectWhereBetsOr("p1_id", "p2_id", currentUserID, function(userBetsData){
+                bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(userBetsData){
                 	//console.log(userBetsData);
                 	homeDataObj.bets = userBetsData;
 
@@ -153,30 +184,7 @@ module.exports = function(app){
 
 			                //console.log(hbsObject);
 							
-							bets.betData("bets", function(resData){
-								var date = new Date();
-								for (i in resData){
-									var isValid = true;
-									if (resData[i].result == null){
-										if(resData[i].create_date.getYear() != date.getYear())
-										{isValid = false;}
-										else if (resData[i].create_date.getMonth() != date.getMonth())
-										{isValid = false;}
-										else if(date.getDay() - resData[i].create_date.getDate() > 2 )
-										{isValid = false;}
-										if (isValid == false){
-											isValid = true;
-											var condition = 'bet_id = ' + resData[i].bet_id;
-											bets.updateBet({'result' : "'draw'"}, condition, function(data){
-											});
-										}
-									}
-								}
-								res.render("home", hbsObject);
-							});
-							
-								
-							
+							res.render("home", hbsObject);								
 	            		})
             		})
                 })
@@ -234,11 +242,45 @@ module.exports = function(app){
                 console.log("good cookie");
 
                 var currentUsername = localStorage.getItem("currentUsername");
-				var hbsObject = {
-                	currentUsername: currentUsername
-                }
+                var currentUserID = localStorage.getItem("currentUserID");
+                //console.log(currentUserID);
+                
+                var myBetsDataObj = {};
 
-                res.render("myBets", hbsObject);
+                bets.selectWhereAndAndNull("p3_id", currentUserID, "p2_agree", 1, "result", function(judgingBetsData){
+                	//console.log(judgingBetsData);
+                	myBetsDataObj.judgingBets = judgingBetsData;
+                	
+                	bets.selectWhereAndNull("p2_id", currentUserID, "p2_agree", function(pendingBetsData){
+                		//console.log(pendingBetsData);
+                		myBetsDataObj.pendingBets = pendingBetsData;
+
+	            		bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(currentBetsData){             			
+	        				//console.log(currentBetsData);
+
+	        				myBetsDataObj.currentBets = currentBetsData;
+
+
+		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
+		        				//console.log(pastBetsData);
+
+		        				myBetsDataObj.currentBets = pastBetsData;
+
+				                var hbsObject = {
+				                	currentUsername: currentUsername,
+				                	judgingBets: judgingBetsData,
+				                	pendingBets: pendingBetsData,
+				                	currentBets: currentBetsData,
+				                	pastBets: pastBetsData
+				                }
+
+				                //console.log(hbsObject);
+								
+								res.render("myBets", hbsObject);	
+		            		})
+	            		})
+            		})
+                })
             }
         })
 	});
@@ -282,10 +324,7 @@ module.exports = function(app){
 					});
 
 		console.log("This is logout bets");
-		res.redirect('/index'); //THIS DOESN'T END THE TOKEN THOUGH OR INVALIDATE THE COOKIE
-
-
-		//SEE IF JOHN CAN FIGURE OUT HOW TO SET COOKIE TIMER EXPIRE TO CURRENT TIME? 
+		res.redirect('/index'); 
 
 	});
 
@@ -327,67 +366,178 @@ module.exports = function(app){
 
 		console.log("Get here")
 
-		var usernameP1 = req.body.usernameP1;
-		var usernameP2 = req.body.usernameP2;
+		if (req.body.judge == "friend") {
 
-		bets.userData("users", function(resData){
-			console.log(resData);
+			var usernameP1 = req.body.usernameP1;
+			var usernameP2 = req.body.usernameP2;
+			var usernameP3 = req.body.usernameP3;
 
-			usernameExistsP1 = false;
-			usernameExistsP2 = false;
-			
+			bets.userData("users", function(resData){
+				console.log(resData);
 
-			for (i in resData) {
-				if (resData[i].username == usernameP1){
-					usernameExistsP1 = true;
-					var userIdP1 = resData[i].user_id;
-					var userPointsP1 = resData[i].current_points;
+				usernameExistsP1 = false;
+				usernameExistsP2 = false;
+				usernameExistsP3 = false;
+
+				for (i in resData) {
+					if (resData[i].username == usernameP1){
+						usernameExistsP1 = true;
+						var userIdP1 = resData[i].user_id;
+						var userPointsP1 = resData[i].current_points;
+					}
+					if (resData[i].username == usernameP2){
+						usernameExistsP2 = true;
+						var userIdP2 = resData[i].user_id;
+						var userPointsP2 = resData[i].current_points;
+					}
+					if (resData[i].username == usernameP3){
+						usernameExistsP3 = true;
+						var userIdP3 = resData[i].user_id;
+					}
 				}
-				if (resData[i].username == usernameP2){
-					usernameExistsP2 = true;
-					var userIdP2 = resData[i].user_id;
-					var userPointsP2 = resData[i].current_points;
+
+				if (usernameExistsP1 == true && usernameExistsP2 == true && usernameExistsP3 == true) {
+
+					if (userPointsP1 - req.body.points >= 0 && userPointsP2 - req.body.points >= 0){
+
+						bets.insertBet(['p1_id', 'p2_id', 'p3_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, userIdP3, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
+						
+							var redirectObj = {
+								isCreated: true,
+								path: "/home"
+							};
+
+							res.json(redirectObj);	
+						})
+					}
+					else {
+						var redirectObj = {
+							isCreated: false,
+							usernameExistsP1: usernameExistsP1,
+							usernameExistsP2: usernameExistsP2,
+							userPointsP1: userPointsP1,
+							userPointsP2: userPointsP2
+						}
+
+						res.json(redirectObj);
+					}
 				}
-			}
-
-			if (usernameExistsP1 == true && usernameExistsP2 == true) {
-
-				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
-
-				bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
-				
+				else {
 					var redirectObj = {
-						isCreated: true,
-						path: "/home"
-					};
-
-					res.json(redirectObj);	
-				})	
-			}
-			else {
-					var redirectObj = {
-						isCreated: false
-					};
+						isCreated: false,
+						usernameExistsP1: usernameExistsP1,
+						usernameExistsP2: usernameExistsP2,
+						usernameExistsP3: usernameExistsP3,
+						userPointsP1: userPointsP1,
+						userPointsP2: userPointsP2
+					}
 
 					res.json(redirectObj);
-				};
-			}
-		});
+				}
+			})
+		}
+
+		else {
+
+			console.log("This is without friend judge")
+			var usernameP1 = req.body.usernameP1;
+			var usernameP2 = req.body.usernameP2;
+
+			bets.userData("users", function(resData){
+				console.log(resData);
+
+				usernameExistsP1 = false;
+				usernameExistsP2 = false;
+
+				for (i in resData) {
+					if (resData[i].username == usernameP1){
+						usernameExistsP1 = true;
+						var userIdP1 = resData[i].user_id;
+						var userPointsP1 = resData[i].current_points;
+					}
+					if (resData[i].username == usernameP2){
+						usernameExistsP2 = true;
+						var userIdP2 = resData[i].user_id;
+						var userPointsP2 = resData[i].current_points;
+					}
+				}
+
+				if (usernameExistsP1 == true && usernameExistsP2 == true) {
+
+					if (userPointsP1 - req.body.points >= 0 && userPointsP2 - req.body.points >= 0){
+
+						bets.insertBet(['p1_id', 'p2_id', 'p1_answer', 'bet_amount', 'bet_text','judge'], [userIdP1, userIdP2, req.body.P1answer, req.body.points, req.body.betText, req.body.judge], function(data){
+						
+							var redirectObj = {
+								isCreated: true,
+								path: "/home"
+							};
+
+							res.json(redirectObj);	
+						})	
+					}
+					else {
+						var redirectObj = {
+							isCreated: false,
+							usernameExistsP1: usernameExistsP1,
+							usernameExistsP2: usernameExistsP2,
+							userPointsP1: userPointsP1,
+							userPointsP2: userPointsP2
+						}
+
+						res.json(redirectObj);
+					}
+				} 
+				else {
+					var redirectObj = {
+						isCreated: false,
+						usernameExistsP1: usernameExistsP1,
+						usernameExistsP2: usernameExistsP2,
+						userPointsP1: userPointsP1,
+						userPointsP2: userPointsP2
+					}
+
+					res.json(redirectObj);
+				}
+			})
+		}
 	});
-	
+
 	app.put('/api/acceptBet/:id', function(req,res) {
 		var condition = 'bet_id = ' + req.params.id;
 		
-		if (req.body.agree == true){		
-			bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
-				res.redirect('/home');
+		console.log("GOT TO ACCEPT BET");
+
+		if (req.body.agree == "true"){
+			//console.log("they agreed to the bet");
+
+			bets.updateBet({'p2_answer' : "'" + req.body.P2answer + "'", 'p2_agree' : 1}, condition, function(data){
+				res.json("accepted");
+				//res.redirect('/home');
 			});
 		}
 		else{
-			bets.updateBet({'result' : 'draw', 'p2_agree' : req.body.agree}, condition, function(data){
-				res.redirect('/home');
+			//console.log("they declined the bet");
+
+			bets.updateBet({'result' : "'draw'", 'p2_agree' : 0}, condition, function(data){
+				res.json("declined");
+				//res.redirect('/home');
 			});
 		}
+
+	});
+
+
+	app.put('/api/judgeBet/:id', function(req,res) {
+		var condition = 'bet_id = ' + req.params.id;
+		
+		console.log("GOT TO JUDGE BET");
+		res.json("judged");
+
+		//JOHN CODE THIS ROUTE/AREA
+
+
+
 	});
 
 	app.post('/api/checkVote', function(req,res) {

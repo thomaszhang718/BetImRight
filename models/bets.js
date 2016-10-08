@@ -96,6 +96,21 @@ var bets = {
 		orm.selectWhereAndNull('bets', colToSearch, valOfCol, colToSearch2, function(res){
 			callback(res);
 		});
+	},
+	selectWhereAndAndNull: function(colToSearch, valOfCol, valOfCol2, colToSearch2, colToSearch3, callback) {
+		orm.selectWhereAndAndNull('bets', colToSearch, valOfCol, valOfCol2, colToSearch2, colToSearch3, function(res){
+			callback(res);
+		});
+	},
+	selectWhereOrAndAndNull: function(colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, valOfCol3, colToSearch4, callback) {
+		orm.selectWhereOrAndAndNull('bets', colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, valOfCol3, colToSearch4, function(res){
+			callback(res);
+		});
+	},
+	selectWhereOrAndNotNull: function(colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, callback) {
+		orm.selectWhereOrAndNotNull('bets', colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, function(res){
+			callback(res);
+		});
 	}
 
 

@@ -21,7 +21,6 @@
                                 <li><a href="/logout" class="scroll-link">Logout</a>
                                 </li>
 
-
                             </ul>
                         </div>
                     </div>
@@ -31,8 +30,7 @@
 
 
             <hgroup class="logo-header">
-                <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
-                <h3>Social Betting Made Easy!</h3> 
+                  <img src="/assets/img/BIR-Logo-v2.png" width="100" alt="logo">
             </hgroup>
 
 
@@ -48,13 +46,17 @@
     <section class="service page-section" id="service">
         <div class="container text-center">
             <div class="heading">
-                <h2>Create New Bet</h2>
+                <div class="box-area-icon bet-title">
+                    <i class="fa fa-plus"></i>
+                    <h2 class="create">Create New Bet</h2>
+                </div>
+                
 
 
             <form id="newBetForm">
 
               <input type="text" name="usernameP1" id="usernameP1" class="newBet-form" maxlength="20" autocomplete="off" readonly ><br>
-              <input type="text" name="usernameP2" id="usernameP2" class="newBet-form" placeholder="Username of Bet Opponent" maxlength="20" autocomplete="off" required ><br>
+              <input type="text" name="usernameP2" id="usernameP2" class="newBet-form" placeholder="Who Are You Betting?" maxlength="20" autocomplete="off" required ><br>
               <input type="number" name="points" id="points" class="newBet-form" value="20" maxlength="11" autocomplete="off" required ><br>
               <select name="judge" id="judge" class="newBet-form" required>
                   <option value="admin">Admin</option>
@@ -62,24 +64,17 @@
                   <option value="friend">Friend</option>
               </select><br>
 
-              <input type="text" name="betText" id="betText" class="newBet-form" placeholder="Terms of Bet" maxlength="500" autocomplete="off" required ><br>
-              <input type="text" name="P1answer" id="P1answer" class="newBet-form" placeholder="Your Bet Answer/Pick" maxlength="500" autocomplete="off" required ><br>
+              <!-- <input type="text" name="betText" id="betText" class="newBet-form" placeholder="Name The Bet" maxlength="500" autocomplete="off" required ><br> -->
+              <!-- <input type="text" name="P1answer" id="P1answer" class="newBet-form" placeholder="Your Answer" maxlength="500" autocomplete="off" required ><br> -->
+
+              <textarea name="betText" id="betText" class="newBet-form" placeholder="Name The Bet" maxlength="500" autocomplete="off" required ></textarea><br>
+              <textarea name="P1answer" id="P1answer" class="newBet-form" placeholder="Your Answer" maxlength="500" autocomplete="off" required ></textarea><br>
+
+              
 
               <input type="submit" name="createBetButton" class="createBet" value="Create Bet" id="createBet-btn">
 
             </form>
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
 
@@ -107,6 +102,23 @@
         </div>
     </section>
 
+
+
+
+  <!-- Modal for password match -->
+  <div id="errorInputModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="testID"></h4>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
     <!--wrapper end-->
 
@@ -127,14 +139,35 @@
 
         console.log("new bet func");
 
-        // grab data from form
-        var data = {
-            usernameP1: $('#usernameP1').val().trim(),
-            usernameP2: $('#usernameP2').val().trim(),
-            points: $('#points').val().trim(),
-            judge: $('#judge').val().trim(),
-            betText: $('#betText').val().trim(),
-            P1answer: $('#P1answer').val().trim()
+        var judgePicked = $('#judge').val().trim();
+        console.log(judgePicked);
+        var data;
+
+
+        if (judgePicked == "admin" || judgePicked == "community") {
+            console.log("Judge is an admin or community");
+            // grab data from form
+            data = {
+                usernameP1: $('#usernameP1').val().trim(),
+                usernameP2: $('#usernameP2').val().trim(),
+                points: $('#points').val().trim(),
+                judge: $('#judge').val().trim(),
+                betText: $('#betText').val().trim(),
+                P1answer: $('#P1answer').val().trim()
+            }
+        }
+
+        else if (judgePicked == "friend") {
+            console.log("Judge is a friend");
+            data = {
+                usernameP1: $('#usernameP1').val().trim(),
+                usernameP2: $('#usernameP2').val().trim(),
+                usernameP3: $('#usernameP3').val().trim(),
+                points: $('#points').val().trim(),
+                judge: $('#judge').val().trim(),
+                betText: $('#betText').val().trim(),
+                P1answer: $('#P1answer').val().trim()
+            }            
         }
 
         //console.log(data)
@@ -151,6 +184,36 @@
             }
             else if (results.isCreated == false) {
                 console.log("Bet Not Created");
+                console.log(results.usernameExistsP1);
+                console.log(results.usernameExistsP2);
+                console.log(results.usernameExistsP3);
+                console.log(results.userPointsP1);
+                console.log(results.userPointsP2);
+
+                var errorText = "PLEASE FIX THE FOLLOWING FIELDS:<br>";
+
+                if (results.usernameExistsP1  == false) {
+                    errorText += "&#8226 Your Username does not exist.<br>"; //THIS SHOULD NEVER HAPPEN. 
+                }
+                if (results.usernameExistsP2  == false) {
+                    errorText += "&#8226 Your Opponent's Username does not exist.<br>"; //THIS SHOULD NEVER HAPPEN. 
+                }
+                if (results.usernameExistsP3  == false) {
+                    errorText += "&#8226 The Username you entered as a Judge does not exist.<br>"; //THIS SHOULD NEVER HAPPEN. 
+                }
+                if (results.userPointsP1 - data.points < 0) {
+                    errorText += "&#8226 You do not have sufficient points to bet.<br>"; //THIS SHOULD NEVER HAPPEN. 
+                }
+                if (results.userPointsP2 - data.points < 0) {
+                    errorText += "&#8226 Your opponent does not have sufficient points to bet.<br>"; //THIS SHOULD NEVER HAPPEN. 
+                }                
+
+
+
+                $("#errorInputModal").modal("show");
+                $("#testID").html(errorText);
+
+
                 //Modal popup for reason why
                 //window.location.replace(window.location.origin + results.path);
             }
@@ -164,11 +227,15 @@
       newBetFunc();
 
       return false;
+    });
 
-    })
-
-
-
-
+    $('select').change(function(){
+       if($('select option:selected').text() == "Friend"){
+            $('html select').after("<span id='hiddenFriendInput'><br><input type=text' name='usernameP3' id='usernameP3' class='newBet-form' placeholder='Username of Friend Judge' maxlength='20' autocomplete='off' required></input></span>");
+       }
+       else{
+            $('#hiddenFriendInput').remove();
+       }
+    });
 
 </script>
