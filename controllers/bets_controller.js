@@ -98,9 +98,18 @@ module.exports = function(app){
 		res.render('index');
 	});
 
+	app.get('/update', function(req,res) {
+	
+	bets.betData("bets", function(resData){
+		console.log(resData);
+		res.redirect('/home');
+	});
+	});
+	
 	app.get('/home', function(req,res) {
 		console.log("got to home");
-
+		
+		
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -143,14 +152,39 @@ module.exports = function(app){
 			                }
 
 			                //console.log(hbsObject);
-
-			                res.render("home", hbsObject);
+							
+							bets.betData("bets", function(resData){
+								var date = new Date();
+								for (i in resData){
+									var isValid = true;
+									if (resData[i].result == null){
+										if(resData[i].create_date.getYear() != date.getYear())
+										{isValid = false;}
+										else if (resData[i].create_date.getMonth() != date.getMonth())
+										{isValid = false;}
+										else if(date.getDay() - resData[i].create_date.getDate() > 2 )
+										{isValid = false;}
+										if (isValid == false){
+											isValid = true;
+											var condition = 'bet_id = ' + resData[i].bet_id;
+											bets.updateBet({'result' : "'draw'"}, condition, function(data){
+											});
+										}
+									}
+								}
+								res.render("home", hbsObject);
+							});
+							
+								
+							
 	            		})
             		})
                 })
             }
         })
 	});
+	
+	
 
 	app.get('/admin', function(req,res) {
 		console.log("got to admin");
