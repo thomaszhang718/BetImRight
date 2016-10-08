@@ -51,14 +51,19 @@
     </header>
 
 
-
-
     <section class="service" id="judgingBets">
         <div class="container text-center">
             <div class="myBetsTextDivs">
                 <h2>Bet's I'm Judging</h2>
-                <h3>Win bragging rights when you finally decide who's right!<br>
-             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
+                <br>
+
+                {{#each judgingBets}}
+                    <li>{{this.bet_text}}</li>
+                    P1 Answer: {{this.p1_answer}}<br>
+                    P2 Answer: {{this.p2_answer}}<br>
+
+                    Add in something to vote here? P1, P2, Draw<br>
+                {{/each}}
             </div>
 
         </div>
@@ -68,8 +73,15 @@
         <div class="container text-center">
             <div class="myBetsTextDivs">
                 <h2>Pending Bets</h2>
-                <h3>Win bragging rights when you finally decide who's right!<br>
-             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
+                <br>
+
+                {{#each pendingBets}}
+                    <li>{{this.bet_text}}</li>
+                    P1 Answer: {{this.p1_answer}}<br>
+                    P2 Answer: {{this.p2_answer}}<br>
+
+                    Add in something to acceptance, maybe radio button. Then add in something to add in your answer<br>
+                {{/each}}
             </div>
 
         </div>
@@ -80,8 +92,15 @@
         <div class="container text-center">
             <div class="myBetsTextDivs">
                 <h2>Current Bets</h2>
-                <h3>Win bragging rights when you finally decide who's right!<br>
-             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
+                <br>
+
+                {{#each currentBets}}
+                    <li>{{this.bet_text}}</li>
+                    P1 Answer: {{this.p1_answer}}<br>
+                    P2 Answer: {{this.p2_answer}}<br>
+
+                    Figure out some way to display it as your answer and opponent's answer<br>
+                {{/each}}
             </div>
 
         </div>
@@ -92,8 +111,15 @@
         <div class="container text-center">
             <div class="myBetsTextDivs">
                 <h2>Past Bets</h2>
-                <h3>Win bragging rights when you finally decide who's right!<br>
-             Bet I'm Right (BIR) is an online application that let's you easily bet with your friends, and hold them accountable for their results. BIR lets you to pick between <strong>3</strong> different judges (friend, admin, or community) depending on your bet and allowing them to decide the winner. You can bet on who'll win in the upcoming game (CFB Winner), who's better (Batman vs Superman), or anything else you can think of (I can definitely do a handstand for a full minute!). Accumulate Street Cred as you prove to your friends once and for all who's Right and who's Wrong.</h3>
+                <br>
+
+                {{#each pastBets}}
+                    <li>{{this.bet_text}}</li>
+                    P1 Answer: {{this.p1_answer}}<br>
+                    P2 Answer: {{this.p2_answer}}<br>
+
+                    Add in something to show who won? Maybe Win or Lost Bet<br>
+                {{/each}}
             </div>
 
         </div>
@@ -127,13 +153,26 @@
     $(document).ready( function() {
         $('.navbar-wrapper').stickUp();
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
     });
 
-//------------------------------------- Login Functions -------------------------------------//
+//------------------------------------- Grab Data Functions -------------------------------------//
 
-    function loginFunc(){
+    function pendingBetsFunc(){
 
-        console.log("login func");
+        console.log("pendingBets func");
 
         // grab data from form
         var data = {
@@ -162,6 +201,30 @@
 
         });
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $("#loginForm").submit(function(e) {
       e.preventDefault();

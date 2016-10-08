@@ -100,10 +100,10 @@ module.exports = function(app){
 
 	app.get('/update', function(req,res) {
 	
-	bets.betData("bets", function(resData){
-		console.log(resData);
-		res.redirect('/home');
-	});
+		bets.betData("bets", function(resData){
+			console.log(resData);
+			res.redirect('/home');
+		});
 	});
 	
 	app.get('/home', function(req,res) {
@@ -162,7 +162,7 @@ module.exports = function(app){
                 
                 var homeDataObj = {};
 
-                bets.selectWhereBetsOr("p1_id", "p2_id", currentUserID, function(userBetsData){
+                bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(userBetsData){
                 	//console.log(userBetsData);
                 	homeDataObj.bets = userBetsData;
 
@@ -242,11 +242,45 @@ module.exports = function(app){
                 console.log("good cookie");
 
                 var currentUsername = localStorage.getItem("currentUsername");
-				var hbsObject = {
-                	currentUsername: currentUsername
-                }
+                var currentUserID = localStorage.getItem("currentUserID");
+                //console.log(currentUserID);
+                
+                var myBetsDataObj = {};
 
-                res.render("myBets", hbsObject);
+                bets.selectWhereAndAndNull("p3_id", currentUserID, "p2_agree", 1, "result", function(judgingBetsData){
+                	//console.log(judgingBetsData);
+                	myBetsDataObj.judgingBets = judgingBetsData;
+                	
+                	bets.selectWhereAndNull("p2_id", currentUserID, "p2_agree", function(pendingBetsData){
+                		//console.log(pendingBetsData);
+                		myBetsDataObj.pendingBets = pendingBetsData;
+
+	            		bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(currentBetsData){             			
+	        				//console.log(currentBetsData);
+
+	        				myBetsDataObj.currentBets = currentBetsData;
+
+
+		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
+		        				console.log(pastBetsData);
+
+		        				myBetsDataObj.currentBets = pastBetsData;
+
+				                var hbsObject = {
+				                	currentUsername: currentUsername,
+				                	judgingBets: judgingBetsData,
+				                	pendingBets: pendingBetsData,
+				                	currentBets: currentBetsData,
+				                	pastBets: pastBetsData
+				                }
+
+				                //console.log(hbsObject);
+								
+								res.render("myBets", hbsObject);	
+		            		})
+	            		})
+            		})
+                })
             }
         })
 	});
@@ -331,9 +365,6 @@ module.exports = function(app){
 	app.post('/api/addBet/', function(req,res) {
 
 		console.log("Get here")
-
-		
-
 
 		if (req.body.judge == "friend") {
 
@@ -471,10 +502,6 @@ module.exports = function(app){
 			})
 		}
 	});
-	
-
-
-
 
 	app.put('/api/acceptBet/:id', function(req,res) {
 		var condition = 'bet_id = ' + req.params.id;
