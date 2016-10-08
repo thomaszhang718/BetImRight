@@ -1283,6 +1283,13 @@ blockquote footer, blockquote small, blockquote .small {
   width: 200px;
   margin: 10px;
 }
+#newBetForm {
+  background-color: #a3190f;
+  border-radius: 20px;
+  padding-top: 10px;
+  border: 4px solid #8e8651;
+ 
+}
 
 #createBet-btn {
   /* border: 1px solid #3079ed; */
