@@ -127,14 +127,35 @@
 
         console.log("new bet func");
 
-        // grab data from form
-        var data = {
-            usernameP1: $('#usernameP1').val().trim(),
-            usernameP2: $('#usernameP2').val().trim(),
-            points: $('#points').val().trim(),
-            judge: $('#judge').val().trim(),
-            betText: $('#betText').val().trim(),
-            P1answer: $('#P1answer').val().trim()
+        var judgePicked = $('#judge').val().trim();
+        console.log(judgePicked);
+        var data;
+
+
+        if (judgePicked == "admin" || judgePicked == "community") {
+            console.log("Judge is an admin or community");
+            // grab data from form
+            data = {
+                usernameP1: $('#usernameP1').val().trim(),
+                usernameP2: $('#usernameP2').val().trim(),
+                points: $('#points').val().trim(),
+                judge: $('#judge').val().trim(),
+                betText: $('#betText').val().trim(),
+                P1answer: $('#P1answer').val().trim()
+            }
+        }
+
+        else if (judgePicked == "friend") {
+            console.log("Judge is a friend");
+            data = {
+                usernameP1: $('#usernameP1').val().trim(),
+                usernameP2: $('#usernameP2').val().trim(),
+                points: $('#points').val().trim(),
+                judge: $('#judge').val().trim(),
+                judgeUsername: $('#friendInput').val().trim(),
+                betText: $('#betText').val().trim(),
+                P1answer: $('#P1answer').val().trim()
+            }            
         }
 
         //console.log(data)
@@ -147,7 +168,7 @@
 
             if(results.isCreated == true) {
                 console.log("should redirect");
-                window.location.replace(window.location.origin + results.path);
+                //window.location.replace(window.location.origin + results.path);
             }
             else if (results.isCreated == false) {
                 console.log("Bet Not Created");
@@ -164,11 +185,15 @@
       newBetFunc();
 
       return false;
+    });
 
-    })
-
-
-
-
+    $('select').change(function(){
+       if($('select option:selected').text() == "Friend"){
+            $('html select').after("<span id='hiddenFriendInput'><br><input type=text' name='friendInput' id='friendInput' class='newBet-form' placeholder='Username of Friend Judge' maxlength='20' autocomplete='off' required></input></span>");
+       }
+       else{
+            $('#hiddenFriendInput').remove();
+       }
+    });
 
 </script>
