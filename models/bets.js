@@ -46,6 +46,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	betData: function(table, callback) {
+		orm.betData(table, function(res){
+			callback(res);
+		});
+	},
 	commBets: function(callback) {
 		orm.selectAll('bets', function(res){
 			

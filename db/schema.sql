@@ -34,6 +34,7 @@ CREATE TABLE bets
 	bet_amount int(11) NOT NULL,
 	bet_text varchar(500) NOT NULL, 
 	judge varchar(20) NOT NULL,
+	p3_id int(11) DEFAULT NULL,
 	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	-- end_date ???,
 	result varchar(4) DEFAULT NULL,

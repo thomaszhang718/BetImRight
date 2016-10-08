@@ -98,9 +98,18 @@ module.exports = function(app){
 		res.render('index');
 	});
 
+	app.get('/update', function(req,res) {
+	
+	bets.betData("bets", function(resData){
+		console.log(resData);
+		res.redirect('/home');
+	});
+	});
+	
 	app.get('/home', function(req,res) {
 		console.log("got to home");
-
+		
+		
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -115,6 +124,37 @@ module.exports = function(app){
             else {
 
                 console.log("good cookie");
+
+
+                //UPDATE ANY COMMUNITY BETS AND EXPIRE THEM
+				bets.betData("bets", function(resData){
+					var date = new Date();
+					//console.log(resData);
+					for (i in resData){
+						var isValid = true;
+						if (resData[i].result == null){
+							if(resData[i].create_date.getYear() != date.getYear()) {
+								isValid = false;
+							}
+							else if (resData[i].create_date.getMonth() != date.getMonth()) {
+								isValid = false;
+							}
+							else if(date.getDate() - resData[i].create_date.getDate() > 2 ) {
+								isValid = false;
+							}
+
+							if (isValid == false){
+								isValid = true;
+								var condition = 'bet_id = ' + resData[i].bet_id;
+								bets.updateBet({'result' : "'draw'"}, condition, function(data){
+								});
+							}
+						}
+					}
+				});
+
+
+
 
                 var currentUsername = localStorage.getItem("currentUsername");
                 var currentUserID = localStorage.getItem("currentUserID");
@@ -143,14 +183,16 @@ module.exports = function(app){
 			                }
 
 			                //console.log(hbsObject);
-
-			                res.render("home", hbsObject);
+							
+							res.render("home", hbsObject);								
 	            		})
             		})
                 })
             }
         })
 	});
+	
+	
 
 	app.get('/admin', function(req,res) {
 		console.log("got to admin");
@@ -248,10 +290,7 @@ module.exports = function(app){
 					});
 
 		console.log("This is logout bets");
-		res.redirect('/index'); //THIS DOESN'T END THE TOKEN THOUGH OR INVALIDATE THE COOKIE
-
-
-		//SEE IF JOHN CAN FIGURE OUT HOW TO SET COOKIE TIMER EXPIRE TO CURRENT TIME? 
+		res.redirect('/index'); 
 
 	});
 
@@ -295,13 +334,14 @@ module.exports = function(app){
 
 		var usernameP1 = req.body.usernameP1;
 		var usernameP2 = req.body.usernameP2;
+		var usernameP3 = req.body.usernameP3;
 
 		bets.userData("users", function(resData){
 			console.log(resData);
 
 			usernameExistsP1 = false;
 			usernameExistsP2 = false;
-			
+			usernameExistsP3 = false;
 
 			for (i in resData) {
 				if (resData[i].username == usernameP1){
@@ -314,9 +354,13 @@ module.exports = function(app){
 					var userIdP2 = resData[i].user_id;
 					var userPointsP2 = resData[i].current_points;
 				}
+				if (resData[i].username == usernameP3){
+					usernameExistsP3 = true;
+					var userIdP3 = resData[i].user_id;
+				}
 			}
 
-			if (usernameExistsP1 == true && usernameExistsP2 == true) {
+			if (usernameExistsP1 == true && usernameExistsP2 == true && usernameExistsP3 == true) {
 
 				if (userPointsP1 - req.body.points >= 0 && userPointsP1 - req.body.points >= 0){
 
@@ -332,7 +376,12 @@ module.exports = function(app){
 			}
 			else {
 					var redirectObj = {
-						isCreated: false
+						isCreated: false,
+						usernameExistsP1: usernameExistsP1,
+						usernameExistsP2: usernameExistsP2,
+						usernameExistsP3: usernameExistsP3,
+						userPointsP1: userPointsP1,
+						userPointsP2: userPointsP2
 					};
 
 					res.json(redirectObj);
