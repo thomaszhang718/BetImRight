@@ -237,6 +237,15 @@ module.exports = function(app){
 	});
 
 	app.get('/logout', function(req,res, next) {
+			
+				var token = jwt.sign({logout : "Logout"}, app.get('jwtSecret'), {
+					expiresIn: 0
+				})
+				
+				new Cookies(req, res).set('access_token', token, {
+					httpOnly: true,
+					secure: false
+					});
 
 		console.log("This is logout bets");
 		res.redirect('/index'); //THIS DOESN'T END THE TOKEN THOUGH OR INVALIDATE THE COOKIE
