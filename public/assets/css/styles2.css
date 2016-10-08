@@ -1477,13 +1477,37 @@ label {
   text-transform: capitalize;
 }
 
-.myBetsTextDivs h3 {
-  font-size: 16px;
-  line-height: 1.7;
-  font-weight: normal;
-  padding-bottom: 30px;
-  /*border-bottom: 1px solid #EDEDED;*/
-  margin-bottom: 30px;
+.betTextHeader h3 {
+  font-size: 20px;
 }
 
+.opponentHeader {
+  font-size: 18px;
+  text-align: left;
+  margin-left: 20px;
+}
 
+.judgingBetDiv, .pendingBetDiv {
+  border: 1px solid #000000;
+  margin-bottom: 10px;
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.radioBetLabel {
+  width: 100%;
+  float:left;
+  font-size: 18px;
+}
+
+[class="radioInputLabel"] + span {
+  display: block;
+  float:left;
+  margin-left: 20px;
+}
+
+#p2_answer {
+  display: none;
+}

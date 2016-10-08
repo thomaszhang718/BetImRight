@@ -139,7 +139,7 @@ var orm = {
 
   selectWhereOrAndAndNull: function(tableInput, colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, valOfCol3, colToSearch4, callback) {
         var queryString = 'SELECT * FROM ' + tableInput + ' WHERE (' + colToSearch + ' = ' + valOfCol + ' OR ' + colToSearch2 + ' = ' + valOfCol2 + ') AND ' + colToSearch3 + ' = ' + valOfCol3  + ' AND ' + colToSearch4 + ' IS NULL';
-         console.log(queryString);
+        //console.log(queryString);
 
         connection.query(queryString, function(err, result) {
             callback(result)
@@ -149,7 +149,7 @@ var orm = {
 
   selectWhereOrAndNotNull: function(tableInput, colToSearch, valOfCol, colToSearch2, valOfCol2, colToSearch3, callback) {
         var queryString = 'SELECT * FROM ' + tableInput + ' WHERE (' + colToSearch + ' = ' + valOfCol + ' OR ' + colToSearch2 + ' = ' + valOfCol2 + ') AND ' + colToSearch3 + ' IS NOT NULL';
-         console.log(queryString);
+        //console.log(queryString);
 
         connection.query(queryString, function(err, result) {
             callback(result)

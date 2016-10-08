@@ -53,19 +53,17 @@
                 <h2>Bet: {{this.bet_text}}</h2>
                 <form class="community-vote-form" id="betID-{{this.bet_id}}">
                     <!-- {{this.bet_id}} -->
-                    <label for="{{this.bet_id}}-leftOption">
-                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-leftOption" value="left"> <span>{{this.p1_answer}}</span>
+                    <label for="{{this.bet_id}}-p1-Option">
+                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1"> <span>{{this.p1_answer}}</span>
                     </label>
 
-                    <label for="{{this.bet_id}}-rightOption">
-                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-rightOption" value="right"> <span>{{this.p2_answer}}</span>
+                    <label for="{{this.bet_id}}-p2-Option">
+                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2"> <span>{{this.p2_answer}}</span>
                     </label>
 
                     <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
 
                     <p class="voteText" id="voting-{{this.bet_id}}"></p>
-
-                    <!-- <button type="submit" form="form1" value="Submit">Submit</button> -->
 
                 </form>
 

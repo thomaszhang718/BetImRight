@@ -262,7 +262,7 @@ module.exports = function(app){
 
 
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
-		        				console.log(pastBetsData);
+		        				//console.log(pastBetsData);
 
 		        				myBetsDataObj.currentBets = pastBetsData;
 
@@ -506,7 +506,59 @@ module.exports = function(app){
 	app.put('/api/acceptBet/:id', function(req,res) {
 		var condition = 'bet_id = ' + req.params.id;
 		
-		if (req.body.agree == true){		
+		console.log("GOT TO ACCEPT BET");
+
+		if (req.body.agree == "true"){
+			//console.log("they agreed to the bet");
+
+			bets.updateBet({'p2_answer' : "'" + req.body.P2answer + "'", 'p2_agree' : 1}, condition, function(data){
+				res.json("accepted");
+				//res.redirect('/home');
+			});
+		}
+		else{
+			//console.log("they declined the bet");
+
+			bets.updateBet({'result' : "'draw'", 'p2_agree' : 0}, condition, function(data){
+				res.json("declined");
+				//res.redirect('/home');
+			});
+		}
+
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	app.put('/api/judgeBet/:id', function(req,res) {
+		var condition = 'bet_id = ' + req.params.id;
+		
+		console.log("GOT TO JUDGE BET");
+		res.json("judged");
+
+
+
+
+
+/*		if (req.body.agree == true){		
 			bets.updateBet({'p2_answer' : req.body.P2answer, 'p2_agree' : req.body.agree}, condition, function(data){
 				res.redirect('/home');
 			});
@@ -515,7 +567,7 @@ module.exports = function(app){
 			bets.updateBet({'result' : 'draw', 'p2_agree' : req.body.agree}, condition, function(data){
 				res.redirect('/home');
 			});
-		}
+		}*/
 	});
 
 	app.post('/api/checkVote', function(req,res) {

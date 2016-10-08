@@ -58,11 +58,36 @@
                 <br>
 
                 {{#each judgingBets}}
-                    <li>{{this.bet_text}}</li>
-                    P1 Answer: {{this.p1_answer}}<br>
-                    P2 Answer: {{this.p2_answer}}<br>
+                    <div class="judgingBetDiv" id="betID-{{this.bet_id}}-div">
+                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
 
-                    Add in something to vote here? P1, P2, Draw<br>
+                        <form class="judging-bet-form" id="betID-{{this.bet_id}}">
+                            <!-- {{this.bet_id}} -->
+                            <div class="radioBetDiv">
+                            <label for="{{this.bet_id}}-p1-Option" class="radioBetLabel">
+                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1" required> <span>{{this.p1_answer}}</span>
+                            </label>
+                            </div>
+
+                            <div class="radioBetDiv">
+                            <label for="{{this.bet_id}}-p2-Option" class="radioBetLabel">
+                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2" required> <span>{{this.p2_answer}}</span>
+                            </label>
+                            </div>
+
+                            <div class="radioBetDiv">
+                            <label for="{{this.bet_id}}-draw-Option" class="radioBetLabel">
+                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-draw-Option" value="draw" required> <span>Draw/Neither Is Correct</span>
+                            </label>
+                            </div>
+
+
+                            <input type="submit" value="Submit" class="judgingSubmitButton" id="{{this.bet_id}}">
+
+                            <p class="judgingText" id="judging-{{this.bet_id}}"></p>
+
+                        </form>
+                    </div>
                 {{/each}}
             </div>
 
@@ -76,11 +101,30 @@
                 <br>
 
                 {{#each pendingBets}}
-                    <li>{{this.bet_text}}</li>
-                    P1 Answer: {{this.p1_answer}}<br>
-                    P2 Answer: {{this.p2_answer}}<br>
+                    <div class="pendingBetDiv" id="betID-{{this.bet_id}}-div">
+                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+                        <h4 class="opponentHeader">Opponent Answer: {{this.p1_answer}}{{this.p2_answer}}</h4>
 
-                    Add in something to acceptance, maybe radio button. Then add in something to add in your answer<br>
+                        <form class="pending-bet-form" id="betID-{{this.bet_id}}">
+                            <!-- {{this.bet_id}} -->
+                            <div class="radioBetDiv" id="uponAccept-{{this.bet_id}}">
+                            <label for="{{this.bet_id}}-accept" class="radioBetLabel">
+                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-accept" value="accept" required> <span>Accept Bet</span>
+                            </label>
+                            </div>
+
+                            <div class="radioBetDiv">
+                            <label for="{{this.bet_id}}-decline" class="radioBetLabel">
+                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-decline" value="decline" required> <span>Decline Bet</span>
+                            </label>
+                            </div>
+
+                            <input type="submit" value="Submit" class="judgingSubmitButton" id="{{this.bet_id}}">
+
+                            <p class="pendingText" id="pending-{{this.bet_id}}"></p>
+
+                        </form>
+                    </div>
                 {{/each}}
             </div>
 
@@ -153,88 +197,142 @@
     $(document).ready( function() {
         $('.navbar-wrapper').stickUp();
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
     });
 
-//------------------------------------- Grab Data Functions -------------------------------------//
+//------------------------------------- myBets Functions -------------------------------------//
 
-    function pendingBetsFunc(){
+    //Submit function for when you judge a bet
+    $(".judging-bet-form").submit(function(e) {
+        e.preventDefault();
 
-        console.log("pendingBets func");
+        //console.log("The button was clicked");      
 
-        // grab data from form
+        var btn = $(this).find("input[type=submit]:focus" ); //Grabs the info of the button we clicked
+        //console.log(btn);
+
+        var betIDString = btn.context.id;
+        var betIDArray = betIDString.split("-");
+        var betID = betIDArray[betIDArray.length-1];
+        //console.log(betID);
+
+        var judgePick = $('input:radio[name='+ betID + ']:checked').val();
+        //console.log(voterPick)
+
+        //Create a data object to pass on to the checkVote route
         var data = {
-            username: $('#username').val().trim(),
-            password: $('#password').val().trim()
+            currentBetID: betID,
+            currentUserID: localStorage.getItem("currentUserID"),
+            judgePick: judgePick
         }
-        //console.log(data)
-        // grab url to ajax call
-        var currentURL = window.location.origin + "/api/auth";
+        //console.log(data);
 
-        // post our login data
-        $.post(currentURL, data, function(results){
-            console.log("THIS IS THE RESULTS: " + results);
+        var currentURL = window.location.origin + "/api/judgeBet/" + betID;
+        console.log(currentURL);
 
-            if(results === "fail") {
-                $('#invalidUserOrPassModal').modal();
+        // put our judging data
+        $.ajax({
+            url: currentURL,
+            type: "put",
+            data: data,
+            success: function(results) {
+                console.log("THIS IS THE RESULTS: " + results);
+
+                if (results == "judged") {
+                    $("#judging-" + betID).text("Accepted/Declined");
+                    //instead of remove, maybe refresh page. Add in judged bets section?
+                    //$("#betID-"+betID+"-div").remove();
+
+                }
             }
-            else if (results.type ==="admin") {
-                console.log("You are an admin")
-                window.location.replace(window.location.origin + results.path);
+        })
+
+        return false;
+    });
+
+
+
+    //Submit function for when you accept or decline a bet
+    $(".pending-bet-form").submit(function(e) {
+        e.preventDefault();
+
+        console.log("The button was clicked");      
+
+        var btn = $(this).find("input[type=submit]:focus" ); //Grabs the info of the button we clicked
+        //console.log(btn);
+
+        var betIDString = btn.context.id;
+        var betIDArray = betIDString.split("-");
+        var betID = betIDArray[betIDArray.length-1];
+        //console.log(betID);
+
+        var pendingChoice = $('input:radio[name='+ betID + ']:checked').val();
+        //console.log(pendingPick);
+
+        var data;
+
+        if (pendingChoice == "accept") {
+            data = {
+                currentBetID: betID,
+                agree: true,
+                P2answer: $("#"+ betID + "-p2_answer").val()
             }
-            else if (results.type ==="user") {
-                console.log("you're user!");
-                window.location.replace(window.location.origin + results.path);
+        }
+        else if (pendingChoice == "decline") {
+            data = {
+                currentBetID: betID,
+                agree: false
             }
+        }
+        //console.log(data);
 
-        });
-    };
+        var currentURL = window.location.origin + "/api/acceptBet/" + betID;
+        console.log(currentURL);
+
+        // put our accept or decline data
+        $.ajax({
+            url: currentURL,
+            type: "put",
+            data: data,
+            success: function(results) {
+                console.log("THIS IS THE RESULTS: " + results);
+
+                if (results == "accepted") {
+                    $("#pending-" + betID).text("Accepted");
+                    //instead of remove, maybe refresh page. Add in current bets section?
+                    //$("#betID-"+betID+"-div").remove();
+                }
+                else if (results == "declined") {
+                    $("#pending-" + betID).text("Declined");
+                    //instead of remove, maybe refresh page. Add in current bets section?
+                    //$("#betID-"+betID+"-div").remove();
+                }
+            }
+        })
+
+        return false;
+    });
 
 
 
 
+    //Dynamically created text field to input your p2 answer should you decide to accept the bet. Removes the text field if you decline.
+    $('input:radio').change(function(){
 
+        var btn = $(this).find("input[type=radio]:focus");
+        console.log(btn);
 
+        var betIDString = btn.context.id;
+        var betIDArray = betIDString.split("-");
+        var betID = betIDArray[0];
+        //console.log(betID);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $("#loginForm").submit(function(e) {
-      e.preventDefault();
-      
-      loginFunc();
-
-      return false;
-
-    })
-
+       if($(this).val() == "accept"){
+            $('#uponAccept-' + betID).after("<div class='radioBetDiv' id='hiddenAcceptInput-" + betID +"'><label for='{{this.bet_id}}-p2_answer' class='radioBetLabel'><textarea name='p2_answer' id='" + betID + "-p2_answer' class='newBet-form' placeholder='Your Answer' maxlength='500' autocomplete='off' required ></textarea><br></label></div>");
+       }
+       else{
+            $('#hiddenAcceptInput-' + betID).remove();
+       }
+    });
 
 
 //------------------------------------- Side Nav Bar Functions -------------------------------------//
