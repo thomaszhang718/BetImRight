@@ -31,8 +31,7 @@
 
 
             <hgroup class="logo-header">
-                <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
-                <h3>Social Betting Made Easy!</h3> 
+                  <img src="/assets/img/BIR-Logo-v2.png" width="100" alt="logo">
             </hgroup>
 
 
@@ -48,13 +47,17 @@
     <section class="service page-section" id="service">
         <div class="container text-center">
             <div class="heading">
-                <h2>Create New Bet</h2>
+                <div class="box-area-icon bet-title">
+                    <i class="fa fa-plus"></i>
+                    <h2 class="create">Create New Bet</h2>
+                </div>
+                
 
 
             <form id="newBetForm">
 
               <input type="text" name="usernameP1" id="usernameP1" class="newBet-form" maxlength="20" autocomplete="off" readonly ><br>
-              <input type="text" name="usernameP2" id="usernameP2" class="newBet-form" placeholder="Username of Bet Opponent" maxlength="20" autocomplete="off" required ><br>
+              <input type="text" name="usernameP2" id="usernameP2" class="newBet-form" placeholder="Who Are You Betting?" maxlength="20" autocomplete="off" required ><br>
               <input type="number" name="points" id="points" class="newBet-form" value="20" maxlength="11" autocomplete="off" required ><br>
               <select name="judge" id="judge" class="newBet-form" required>
                   <option value="admin">Admin</option>
@@ -62,8 +65,8 @@
                   <option value="friend">Friend</option>
               </select><br>
 
-              <input type="text" name="betText" id="betText" class="newBet-form" placeholder="Terms of Bet" maxlength="500" autocomplete="off" required ><br>
-              <input type="text" name="P1answer" id="P1answer" class="newBet-form" placeholder="Your Bet Answer/Pick" maxlength="500" autocomplete="off" required ><br>
+              <input type="text" name="betText" id="betText" class="newBet-form" placeholder="Name The Bet" maxlength="500" autocomplete="off" required ><br>
+              <input type="text" name="P1answer" id="P1answer" class="newBet-form" placeholder="Your Answer" maxlength="500" autocomplete="off" required ><br>
 
               <input type="submit" name="createBetButton" class="createBet" value="Create Bet" id="createBet-btn">
 

@@ -17,7 +17,7 @@ else {
         port: 3306,
         host: 'localhost',
         user: 'root',
-        password: '', //12345
+        password: '12345', 
         database: 'bets_db'
     });
 }

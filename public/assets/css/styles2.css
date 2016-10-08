@@ -1284,20 +1284,30 @@ blockquote footer, blockquote small, blockquote .small {
   margin: 10px;
 }
 #newBetForm {
-  background-color: #a3190f;
+  background-color: #F0F0F0;
   border-radius: 20px;
   padding-top: 10px;
-  border: 4px solid #8e8651;
+  border-bottom: 10px solid #E2E2E2;
+  /*border: 4px solid #8e8651;*/
  
 }
-
+.bet-title{
+  width: 30%;
+  margin: auto;
+}
+.fa-plus{
+  margin-top: 10px;
+  float: left;
+}
 #createBet-btn {
   /* border: 1px solid #3079ed; */
   border: 0px;
+  border-radius: 20px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
   background-color: #a3190f;
-  padding: 17px 0px;
+  padding: 17px 10px;
+  margin-bottom: 10px;
   font-family: 'Slabo 27px', serif;
   font-size: 18px;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
