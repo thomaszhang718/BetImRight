@@ -1022,6 +1022,18 @@ blockquote footer, blockquote small, blockquote .small {
     font-weight: 500;
     font-family: 'Slabo 27px', serif;
   }
+    .logo-corner {
+    margin: auto;
+    display: block;
+  }
+  .heading h2{
+    border: 2px solid green;
+    font-size: 28px;
+    display: inline;
+  }
+  .fa-plus {
+    border: 2px solid blue;
+  }
 }
 
 @media (max-width: 655px) {
@@ -1281,7 +1293,9 @@ blockquote footer, blockquote small, blockquote .small {
   top: 5px;
   left: 5px;
 }
-
+.logo-corner {
+  margin-top: 5px;
+}
 /*----------------------------------------------------   New Bet Form ------------------------------------------------------*/
 
 .newBet-form {
