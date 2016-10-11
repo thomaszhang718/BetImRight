@@ -532,12 +532,44 @@ module.exports = function(app){
 		var condition = 'bet_id = ' + req.params.id;
 		
 		console.log("GOT TO JUDGE BET");
-		res.json("judged");
-
-		//JOHN CODE THIS ROUTE/AREA
-
-
-
+		
+		var Judgement = req.body.judgement;
+		
+		if (Judgement == "draw"){
+		bets.updateBet({'result' : Judgement}, condition, function(data){
+				res.json("judged");
+				//res.redirect('/home');
+			});	
+		}
+		else {
+			bets.betJudge("bets", function(resData){
+				
+				var conditionP1 = 'user_id = ' + resData.p1_id;
+				var conditionP2 = 'user_id = ' + resDate.p2_id;
+				var points = resDate.bet_amount;
+				
+				if (Judgement == "p1"){	
+					bets.updateBet({'result' : Judgement}, condition, function(data){			
+						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP1, function(data){
+							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP2, function(data){
+								res.json("judged");
+							});
+						});
+					});	
+				}
+				else if (Judgement == "p2"){
+					bets.updateBet({'result' : Judgement}, condition, function(data){
+						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP2, function(data){
+							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP1, function(data){
+								res.json("judged");
+							});
+						});
+					});	
+				}
+			
+			});
+		}
+		
 	});
 
 	app.post('/api/checkVote', function(req,res) {
