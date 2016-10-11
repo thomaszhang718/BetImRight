@@ -128,6 +128,7 @@ module.exports = function(app){
 
                 //UPDATE ANY COMMUNITY BETS AND EXPIRE THEM
 				bets.betData("bets", function(resData){
+					bets.betCommunity("votes", function(resCData){
 					var date = new Date();
 					//console.log(resData);
 					for (i in resData){
@@ -146,11 +147,72 @@ module.exports = function(app){
 							if (isValid == false){
 								isValid = true;
 								var condition = 'bet_id = ' + resData[i].bet_id;
+								if (resData[i].judge == "community"){
+									var p1 = 0;
+									var p2 = 0;
+									for(e in resCData){
+										if (resData[i].bet_id == resCData[e].bet_id && "p1" == resCData[e].voter_pick){
+											p1 += 1;
+										}
+										else if (resData[i].bet_id == resCData[e].bet_id && "p2" == resCData[e].voter_pick){
+											p2 += 1;
+										}
+									}
+									
+									if (p1 == p2){var Judgement = "draw";}
+									else if (p1 > p2){var Judgement = "p1";}
+									else if (p1 < p2){var Judgement = "p2";}
+									
+		if (Judgement == "draw"){
+		bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
+				res.json("judged");
+				//res.redirect('/home');
+			});	
+		}
+		else {
+			bets.betJudge("bets", function(resBData){
+				
+				var conditionP1;
+				var conditionP2;
+				
+				var points;
+
+				for (i = 0; i < resData.length; i++) {
+					if (resBData[i].bet_id == resData[i].bet_id) {
+						points = resBData[i].bet_amount;
+						conditionP1 = 'user_id = ' + resBData[i].p1_id;
+						conditionP2 = 'user_id = ' + resBData[i].p2_id;
+					}
+				}
+				
+				if (Judgement == "p1"){	
+					bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){			
+						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP1, function(data){
+							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP2, function(data){
+							});
+						});
+					});	
+				}
+				else if (Judgement == "p2"){
+					bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
+						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP2, function(data){
+							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP1, function(data){
+							});
+						});
+					});	
+				}
+			
+			});
+		}
+								}
+								else{
 								bets.updateBet({'result' : "'draw'"}, condition, function(data){
 								});
+								}
 							}
 						}
 					}
+					});
 				});
 
 
