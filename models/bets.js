@@ -56,6 +56,11 @@ var bets = {
 			callback(res);
 		});
 	},
+	betCommunity: function(table, callback) {
+		orm.betCommunity(table, function(res){
+			callback(res);
+		});
+	},
 	commBets: function(callback) {
 		orm.selectAll('bets', function(res){
 			
