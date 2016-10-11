@@ -736,7 +736,7 @@ textarea.contact {
   text-align: center;
   margin: 0px auto;
   border: none !important;
-  border-radius: 0;
+  border-radius: 20px;
   float: none;
   display: block;
 }
