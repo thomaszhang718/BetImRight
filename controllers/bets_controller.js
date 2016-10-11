@@ -170,8 +170,8 @@ module.exports = function(app){
                 		//console.log(communityBetsData);
                 		homeDataObj.users = communityBetsData;
 
-	            		bets.selectWhereUsers("user_id", 1, function(userData){                			
-	        				//console.log(userData);
+	            		bets.selectWhereUsers("user_id", currentUserID, function(userData){                			
+	        				console.log(userData);
 
 	        				homeDataObj.usersStats = userData;
 
@@ -536,7 +536,7 @@ module.exports = function(app){
 		var Judgement = req.body.judgement;
 		
 		if (Judgement == "draw"){
-		bets.updateBet({'result' : Judgement}, condition, function(data){
+		bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
 				res.json("judged");
 				//res.redirect('/home');
 			});	
@@ -544,12 +544,21 @@ module.exports = function(app){
 		else {
 			bets.betJudge("bets", function(resData){
 				
-				var conditionP1 = 'user_id = ' + resData.p1_id;
-				var conditionP2 = 'user_id = ' + resDate.p2_id;
-				var points = resDate.bet_amount;
+				var conditionP1;
+				var conditionP2;
+				
+				var points;
+
+				for (i = 0; i < resData.length; i++) {
+					if (resData[i].bet_id == req.params.id) {
+						points = resData[i].bet_amount;
+						conditionP1 = 'user_id = ' + resData[i].p1_id;
+						conditionP2 = 'user_id = ' + resData[i].p2_id;
+					}
+				}
 				
 				if (Judgement == "p1"){	
-					bets.updateBet({'result' : Judgement}, condition, function(data){			
+					bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){			
 						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP1, function(data){
 							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP2, function(data){
 								res.json("judged");
@@ -558,7 +567,7 @@ module.exports = function(app){
 					});	
 				}
 				else if (Judgement == "p2"){
-					bets.updateBet({'result' : Judgement}, condition, function(data){
+					bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
 						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP2, function(data){
 							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP1, function(data){
 								res.json("judged");

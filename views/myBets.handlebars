@@ -213,14 +213,14 @@
         var betID = betIDArray[betIDArray.length-1];
         //console.log(betID);
 
-        var judgePick = $('input:radio[name='+ betID + ']:checked').val();
+        var judgement = $('input:radio[name='+ betID + ']:checked').val();
         //console.log(voterPick)
 
         //Create a data object to pass on to the checkVote route
         var data = {
             currentBetID: betID,
             currentUserID: localStorage.getItem("currentUserID"),
-            judgePick: judgePick
+            judgement: judgement
         }
         //console.log(data);
 
