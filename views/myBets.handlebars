@@ -8,9 +8,10 @@
             <nav class="navbar navbar-wrapper">
                 <div class="container">
                     <div class="navbar-header">
+                    <img src="/assets/img/BIR-Logo-v2.png" width="100" alt="logo" class="logo-corner">
                         <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     </div>
-                    <img src="/assets/img/BIR-Logo-v2.png" id="navbar-logo" width="100" alt="logo">
+                    
                     <div id="main-nav" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="/home" class="scroll-link">Home</a>
@@ -43,10 +44,7 @@
             </nav>
         </div>
 
-        <hgroup class="logo-header" id="myBetsPageLogo">
-            <img src="/assets/img/BIR-Logo-v2.png" width="500" alt="logo" />
-            <h3>Social Betting Made Easy!</h3> 
-        </hgroup>
+
 
     </header>
 
@@ -215,14 +213,14 @@
         var betID = betIDArray[betIDArray.length-1];
         //console.log(betID);
 
-        var judgePick = $('input:radio[name='+ betID + ']:checked').val();
+        var judgement = $('input:radio[name='+ betID + ']:checked').val();
         //console.log(voterPick)
 
         //Create a data object to pass on to the checkVote route
         var data = {
             currentBetID: betID,
             currentUserID: localStorage.getItem("currentUserID"),
-            judgePick: judgePick
+            judgement: judgement
         }
         //console.log(data);
 
