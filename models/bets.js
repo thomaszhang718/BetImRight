@@ -77,6 +77,11 @@ var bets = {
 		});
 
 	},
+	selectNegativeJoinBetsVotes: function(valOfCol, callback) {
+		orm.selectNegativeJoin(valOfCol, function(res){
+			callback(res);
+		});
+	},
 	selectWhereUsers: function(colToSearch, valOfCol, callback) {
 		orm.selectWhere('users', colToSearch, valOfCol, function(res){
 			callback(res);
