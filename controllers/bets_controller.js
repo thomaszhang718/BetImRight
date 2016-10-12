@@ -131,6 +131,8 @@ module.exports = function(app){
 					bets.betCommunity("votes", function(resCData){
 					var date = new Date();
 					//console.log(resData);
+					var betID;
+
 					for (i in resData){
 						var isValid = true;
 						if (resData[i].result == null){
@@ -147,6 +149,9 @@ module.exports = function(app){
 							if (isValid == false){
 								isValid = true;
 								var condition = 'bet_id = ' + resData[i].bet_id;
+
+								betID = resData[i].bet_id;
+
 								if (resData[i].judge == "community"){
 									var p1 = 0;
 									var p2 = 0;
@@ -163,25 +168,26 @@ module.exports = function(app){
 									else if (p1 > p2){var Judgement = "p1";}
 									else if (p1 < p2){var Judgement = "p2";}
 									
+									
 		if (Judgement == "draw"){
 		bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
-				res.json("judged");
 				//res.redirect('/home');
 			});	
 		}
 		else {
 			bets.betJudge("bets", function(resBData){
-				
+
 				var conditionP1;
 				var conditionP2;
 				
 				var points;
 
-				for (i = 0; i < resData.length; i++) {
-					if (resBData[i].bet_id == resData[i].bet_id) {
-						points = resBData[i].bet_amount;
-						conditionP1 = 'user_id = ' + resBData[i].p1_id;
-						conditionP2 = 'user_id = ' + resBData[i].p2_id;
+				for (r = 0; r < resBData.length; r++) {
+					if (resBData[r].bet_id == betID) {
+
+						points = resBData[r].bet_amount;
+						conditionP1 = 'user_id = ' + resBData[r].p1_id;
+						conditionP2 = 'user_id = ' + resBData[r].p2_id;
 					}
 				}
 				
@@ -212,11 +218,6 @@ module.exports = function(app){
 							}
 						}
 					}
-					});
-				});
-
-
-
 
                 var currentUsername = localStorage.getItem("currentUsername");
                 var currentUserID = localStorage.getItem("currentUserID");
@@ -231,6 +232,11 @@ module.exports = function(app){
                 	bets.selectWhereAndNull("judge", "'community'", "result", function(communityBetsData){
                 		//console.log(communityBetsData);
                 		homeDataObj.users = communityBetsData;
+
+
+
+
+                		
 
 	            		bets.selectWhereUsers("user_id", currentUserID, function(userData){                			
 	        				console.log(userData);
@@ -250,6 +256,13 @@ module.exports = function(app){
 	            		})
             		})
                 })
+
+					});
+				});
+
+
+
+
             }
         })
 	});
