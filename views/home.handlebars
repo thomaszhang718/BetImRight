@@ -26,65 +26,60 @@
         
 
     </header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5"
+            <section class="service page-section" id="service">
+                <h2>User Bets</h2>
+                {{#each currentBets}}
+                    <li>{{this.bet_text}}</li>
+                    Your Pick: {{this.p1_answer}}
+                {{/each}}
+            </section>
+        </div>
 
-    <section class="service page-section" id="service">
-        <h2>User Bets</h2>
-        {{#each currentBets}}
-            <li>{{this.bet_text}}</li>
-            Your Pick: {{this.p1_answer}}
-        {{/each}}
-    </section>
+        <div class="col-md-5">
+            <section class="service page-section" id="service">
+                <h2>Community Bets</h2>
+                {{#each communityBets}}
+             
+                    <div class="community-vote-div">
+                        <h2>Bet: {{this.bet_text}}</h2>
+                        <form class="community-vote-form" id="betID-{{this.bet_id}}">
+                            <!-- {{this.bet_id}} -->
+                            <label for="{{this.bet_id}}-p1-Option">
+                            <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1"> <span>{{this.p1_answer}}</span>
+                            </label>
 
+                            <label for="{{this.bet_id}}-p2-Option">
+                            <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2"> <span>{{this.p2_answer}}</span>
+                            </label>
 
+                            <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
 
-    <section class="service page-section" id="service">
-        <h2>Community Bets</h2>
-        {{#each communityBets}}
-     
-            <div class="community-vote-div">
-                <h2>Bet: {{this.bet_text}}</h2>
-                <form class="community-vote-form" id="betID-{{this.bet_id}}">
-                    <!-- {{this.bet_id}} -->
-                    <label for="{{this.bet_id}}-p1-Option">
-                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1"> <span>{{this.p1_answer}}</span>
-                    </label>
+                            <p class="voteText" id="voting-{{this.bet_id}}"></p>
 
-                    <label for="{{this.bet_id}}-p2-Option">
-                    <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2"> <span>{{this.p2_answer}}</span>
-                    </label>
+                        </form>
+                    </div>
+                {{/each}}
+            </section>
+        </div>
 
-                    <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
+        <div class="col-md-2">
+            <section class="service page-section" id="userStatsBox">
+                <h2>User Statistics</h2>
+                {{#each userData}}
+                    <li>Wins: {{this.wins}}</li>
+                    <li>Losses: {{this.losses}}</li>
+                    <li>Current Points: {{this.current_points}}</li>
+                    <li>Lifetime Points Won: {{this.total_points_won}}</li>
+                    <li>Lifetime Points Lost: {{this.total_points_lost}}</li>
+                {{/each}}
+            </section>
+        </div>    
 
-                    <p class="voteText" id="voting-{{this.bet_id}}"></p>
-
-                </form>
-
-                
-
-            </div>
-
-
-
-        {{/each}}
-    </section>
-
-
-
-
-
-
-
-    <section class="service page-section" id="userStatsBox">
-        <h2>User Statistics</h2>
-        {{#each userData}}
-            <li>Wins: {{this.wins}}</li>
-            <li>Losses: {{this.losses}}</li>
-            <li>Current Points: {{this.current_points}}</li>
-            <li>Lifetime Points Won: {{this.total_points_won}}</li>
-            <li>Lifetime Points Lost: {{this.total_points_lost}}</li>
-        {{/each}}
-    </section>
-
+    </div>
+</div>
 
 
     <!--footer-->

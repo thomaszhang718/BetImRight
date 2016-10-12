@@ -1323,7 +1323,7 @@ blockquote footer, blockquote small, blockquote .small {
 #createBet-btn {
   /* border: 1px solid #3079ed; */
   border: 0px;
-  border-radius: 20px;
+  border-radius: 10px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
   background-color: #a3190f;
