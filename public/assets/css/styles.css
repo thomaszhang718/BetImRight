@@ -121,7 +121,7 @@ img {
   outline: none;
   padding: 12px 32px;
   margin: 20px auto;
-  border-radius: 0px;
+  border-radius: 10px;
   border-bottom: 4px solid #8a140c;
 }
 /********************************/
@@ -736,7 +736,7 @@ textarea.contact {
   text-align: center;
   margin: 0px auto;
   border: none !important;
-  border-radius: 20px;
+  border-radius: 10px;
   float: none;
   display: block;
 }
@@ -1054,6 +1054,11 @@ blockquote footer, blockquote small, blockquote .small {
 }
 
 /*----------------------------------------------------   9. About Us Section ------------------------------------------------------*/
+.aboutus {
+  background-color: #F0F0F0;
+  border-top: 1px solid #E2E2E2;
+  border-bottom: 1px solid #E2E2E2;
+}
 
 .team-photo {
   display: block;
