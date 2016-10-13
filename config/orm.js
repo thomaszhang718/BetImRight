@@ -105,7 +105,7 @@ var orm = {
   },
 
   selectNegativeJoin: function(valOfCol, callback) {
-        var queryString = "SELECT * FROM bets WHERE bets.judge='community' AND bets.result IS NULL AND NOT EXISTS (SELECT * FROM votes WHERE votes.bet_id = bets.bet_id AND votes.voter_id=" + valOfCol;
+        var queryString = "SELECT * FROM bets WHERE bets.judge='community' AND bets.result IS NULL AND NOT EXISTS (SELECT * FROM votes WHERE votes.bet_id = bets.bet_id AND votes.voter_id=" + valOfCol + ")";
          console.log(queryString);
 
         connection.query(queryString, function(err, result) {
