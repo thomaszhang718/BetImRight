@@ -415,6 +415,19 @@ img {
   transition: all .5s;
 } 
 
+@font-face {
+    font-family: appleton;
+    src: url("../fonts/Appleton.otf");
+}
+
+.title {
+    font-family: appleton;
+    margin-left: 40px;
+    font-size: 2em;
+    color: #9a8f5c;
+    margin-top: 5px;
+    text-shadow: 2px 2px black;
+}
 
 /*------Intro----------*/
 header {
@@ -1025,6 +1038,9 @@ blockquote footer, blockquote small, blockquote .small {
     .logo-corner {
     margin-left: 45%;
   }
+  .title {
+    display: none;
+}
   .heading h2{
     border: 2px solid green;
     font-size: 28px;
