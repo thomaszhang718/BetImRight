@@ -6,6 +6,7 @@ body {
   color: #777;
   font-weight: 400;
   overflow-x: hidden;
+  background-image: url("../img/pattern.jpg");
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -32,7 +33,24 @@ a,a:hover {
 img {
   max-width: 100%;
 }
- 
+.left,.center,.right {
+  border: 1px solid black;
+  /*border: 2px solid #a3190f;*/
+  border-radius: 10px;
+  background-color: #F0F0F0;
+    border-radius: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #a3190f;
+    border-bottom: 10px solid #E2E2E2;
+}
+.fancy-title {
+  color: white;
+  text-shadow: 2px 2px black;
+  background-color: #a3190f;
+  text-align: center;
+  padding-left: 0px;
+}
+
 
 /********************************/
 /*       Fade Bs-carousel       */
@@ -943,6 +961,7 @@ blockquote footer, blockquote small, blockquote .small {
 /**
   MEDIA QUERIES
 --------------------------------*/ 
+
 @media screen and (min-width: 980px) {
   .hero {
     width: 980px;
@@ -1042,13 +1061,10 @@ blockquote footer, blockquote small, blockquote .small {
     display: none;
 }
   .heading h2{
-    border: 2px solid green;
     font-size: 28px;
     display: inline;
   }
-  .fa-plus {
-    border: 2px solid blue;
-  }
+ 
 }
 
 @media (max-width: 655px) {
@@ -1502,20 +1518,39 @@ label {
 .myBetsTextDivs h2 {
   font-weight: 700;
   font-size: 35px;
-  color: #a3190f;
+  color: white;
   margin: 0;
   padding: 5px;
   text-transform: capitalize;
+  text-shadow: 2px 2px black;
 }
 
 .betTextHeader h3 {
   font-size: 20px;
+  color: white;
+  
+}
+
+.betTextHeader {
+    background-color: #a3190f;
+    color: white;
+    text-shadow: 2px 2px black;
+    margin-top: 0px;
+    border-radius: 8px 8px 0px 0px;
+   /* border: 1px solid black;*/
+    border-top: 0px;
 }
 
 .opponentHeader {
   font-size: 18px;
   text-align: left;
   margin-left: 20px;
+}
+.judgingSubmitButton {
+  border-radius: 10px;
+  background-color: #a3190f;
+  color: white;
+  border: none;
 }
 
 .judgingBetDiv, .pendingBetDiv {
@@ -1525,6 +1560,10 @@ label {
   margin: auto;
   margin-bottom: 20px;
   width: 50%;
+  background-color: #F0F0F0;
+  border-bottom: 10px solid #E2E2E2;
+  border-radius: 10px;
+  /*border-radius-top: 0px;*/
 }
 
 .radioBetLabel {

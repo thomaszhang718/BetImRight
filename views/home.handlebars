@@ -30,9 +30,9 @@
     </header>
 <div class="container">
     <div class="row">
-        <div class="col-md-5"
+        <div class="col-md-5 left">
             <section class="service page-section" id="service">
-                <h2>User Bets</h2>
+                <h2 class="fancy-title">User Bets</h2>
                 {{#each currentBets}}
                     <li>{{this.bet_text}}</li>
                     Your Pick: {{this.p1_answer}}
@@ -40,13 +40,16 @@
             </section>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-5 center">
             <section class="service page-section" id="service">
+
+                <h2 class="fancy-title">Community Bets</h2>
+
                 <h2>Community Bets</h2>
 
-<!--                             {{#each expireDateArr}}
+                         {{#each expireDateArr}}
                               {{this}}<br>
-                            {{/each}} -->
+                            {{/each}}
 
 
 
@@ -56,7 +59,7 @@
                         
                         <form class="community-vote-form" id="betID-{{this.bet_id}}">
                         {{this.expireDate}}
-<!--                             <div class="countdown-timer" value="{{this.expireDate}}">
+                             <div class="countdown-timer" value="{{this.expireDate}}">
                         
                             </div> -->
 
@@ -83,9 +86,9 @@
             </section>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2 right">
             <section class="service page-section" id="userStatsBox">
-                <h2>User Statistics</h2>
+                <h2 class="fancy-title">User Statistics</h2>
                 {{#each userData}}
                     <li>Wins: {{this.wins}}</li>
                     <li>Losses: {{this.losses}}</li>
