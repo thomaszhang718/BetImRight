@@ -141,7 +141,7 @@
                         </h4>
 
                     {{#if this.isCommunity}}
-                        <div class="countdowntimer-div" id="{{this.bet_id}}" data-expire="{{this.expireDate}}">
+                        <div class="countdowntimer-div" data-num="{{this.bet_id}}" data-expire="{{this.expireDate}}">
                             <span class="countdownLegend">Ends In: <span id="expire-{{this.bet_id}}"><span></span>
                         </div>
                     {{/if}}
@@ -252,10 +252,8 @@
                 console.log("THIS IS THE RESULTS: " + results);
 
                 if (results == "judged") {
-                    $("#judging-" + betID).text("Accepted/Declined");
-                    //instead of remove, maybe refresh page. Add in judged bets section?
-                    //$("#betID-"+betID+"-div").remove();
-
+                    $("#" + betID).remove();
+                    $("#judging-" + betID).html("<p class='actionMessage'>Thanks for being a judge!</p>");
                 }
             }
         })
@@ -311,14 +309,12 @@
                 console.log("THIS IS THE RESULTS: " + results);
 
                 if (results == "accepted") {
-                    $("#pending-" + betID).text("Accepted");
-                    //instead of remove, maybe refresh page. Add in current bets section?
-                    //$("#betID-"+betID+"-div").remove();
+                    $("#" + betID).remove();
+                    $("#pending-" + betID).html("<p class='actionMessage'>Bet Accepted</p>");
                 }
                 else if (results == "declined") {
-                    $("#pending-" + betID).text("Declined");
-                    //instead of remove, maybe refresh page. Add in current bets section?
-                    //$("#betID-"+betID+"-div").remove();
+                    $("#" + betID).remove();
+                    $("#pending-" + betID).html("<p class='actionMessage'>Bet Declined</p>");
                 }
             }
         })
@@ -355,13 +351,13 @@
 
             var expireStr = $(this).data("expire");
 
-            $('#expire-' + this.id).countdowntimer({
+            var betID = $(this).data("num");
+
+            $('#expire-' + betID).countdowntimer({
               dateAndTime : expireStr,
               size : "sm"
-            });
-
-        });
-
+            })
+        })
     }
 
 

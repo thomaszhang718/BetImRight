@@ -291,7 +291,7 @@ module.exports = function(app){
 				                    communityBetsData[j].expireDate = expireDate;
 				                }
 
-				                console.log(communityBetsData);
+				                //console.log(communityBetsData);
 
 				                bets.selectWhereUsers("user_id", currentUserID, function(userData) {
 				                    //console.log(userData);
@@ -415,7 +415,7 @@ module.exports = function(app){
 	        					}
 	        				}
 
-	        				console.log(currentBetsData)
+	        				//console.log(currentBetsData);
 
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
 		        				//console.log(pastBetsData);

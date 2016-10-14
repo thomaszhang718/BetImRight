@@ -78,7 +78,7 @@
 
                                 <p class="voteText" id="voting-{{this.bet_id}}"></p>
 
-                                <div class="countdowntimer-div" id="{{this.bet_id}}" data-expire="{{this.expireDate}}">
+                                <div class="countdowntimer-div" data-num="{{this.bet_id}}" data-expire="{{this.expireDate}}">
                                     <span class="countdownLegend">Ends In: <span id="expire-{{this.bet_id}}"><span></span>
                                 </div>
 
@@ -140,22 +140,23 @@
     createCountdownTimer();
     });
 
+
+//------------------------------------- Community Submit Functions -------------------------------------//
+
     function createCountdownTimer() {
 
         $('.countdowntimer-div').each(function() {
 
             var expireStr = $(this).data("expire");
 
-            $('#expire-' + this.id).countdowntimer({
+            var betID = $(this).data("num");
+
+            $('#expire-' + betID).countdowntimer({
               dateAndTime : expireStr,
               size : "sm"
-            });
-
-        });
-
+            })
+        })
     }
-
-//------------------------------------- Community Submit Functions -------------------------------------//
 
     $(".communitySubmitButton").on("click", function(event) {
         event.preventDefault();
@@ -186,10 +187,13 @@
             //console.log("THIS IS THE RESULTS: " + results);
 
             if (results) {
-                $("#voting-"+betID).text("You have already voted on this Community Bet.");
+                $("#voting-" + betID).text("You have already voted on this Community Bet.");
             }
             else {
-                $("#voting-"+betID).text("Thanks for voting!");
+/*                $("#" + betID + "-Submit").remove();*/
+                console.log("here")
+                $("#" + betID).remove();
+                $("#voting-" + betID).html("<p class='actionMessage'>Thanks for voting!</p>");
             }
         });
 
