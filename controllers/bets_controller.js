@@ -341,6 +341,13 @@ module.exports = function(app){
                 //console.log(currentUserID);
                 
                 var myBetsDataObj = {};
+                var tempArr =[];
+
+
+				bets.userData("users", function(resData){
+					console.log(resData);
+					myBetsDataObj.userData = resData;
+				});
 
                 bets.selectWhereAndAndNull("p3_id", currentUserID, "p2_agree", 1, "result", function(judgingBetsData){
                 	//console.log(judgingBetsData);
@@ -351,10 +358,34 @@ module.exports = function(app){
                 		myBetsDataObj.pendingBets = pendingBetsData;
 
 	            		bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(currentBetsData){             			
-	        				//console.log(currentBetsData);
+	        				console.log(currentBetsData);
+
+	        				for (k = 0; k < currentBetsData.length; k++) {
+
+	        					if (currentBetsData[k].p1_id == currentUserID) {
+	        						currentBetsData[k].yourAnswer = currentBetsData[k].p1_answer;
+	        						currentBetsData[k].opponentAnswer = currentBetsData[k].p2_answer;
+	        					}
+	        					else if (currentBetsData[k].p2_id == currentUserID) {
+	        						currentBetsData[k].yourAnswer = currentBetsData[k].p2_answer;
+	        						currentBetsData[k].opponentAnswer = currentBetsData[k].p1_answer;
+	        					}
+
+	        					if (currentBetsData[k].judge == "friend") {
+	        						for (l = 0; l < myBetsDataObj.userData.length; l++) {
+	        							if (currentBetsData[k].p3_id == myBetsDataObj.userData[l].user_id) {
+	        								currentBetsData[k].judgeText = myBetsDataObj.userData[l].username + " (Friend)";
+	        							}
+	        						}
+	        							
+	        					} else if (currentBetsData[k].judge == "admin"){
+	        						currentBetsData[k].judgeText = "Admin";
+	        					} else if (currentBetsData[k].judge == "community"){
+	        						currentBetsData[k].judgeText = "Community";
+	        					}
+	        				}
 
 	        				myBetsDataObj.currentBets = currentBetsData;
-
 
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
 		        				//console.log(pastBetsData);

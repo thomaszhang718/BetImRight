@@ -132,12 +132,29 @@
                 <br>
 
                 {{#each currentBets}}
-                    <li>{{this.bet_text}}</li>
-                    P1 Answer: {{this.p1_answer}}<br>
-                    P2 Answer: {{this.p2_answer}}<br>
-
-                    Figure out some way to display it as your answer and opponent's answer<br>
+                    <div class="pendingBetDiv" id="betID-{{this.bet_id}}-div">
+                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+                        <h4 class="opponentHeader">
+                                            Your Answer: {{this.yourAnswer}}<br>
+                                            Opponent Answer: {{this.opponentAnswer}}<br>
+                                            Opponent Answer: {{this.judgeText}}<br>
+                        </h4>
+                        </form>
+                    </div>
                 {{/each}}
+
+                
+
+
+
+
+
+
+
+
+
+
+
             </div>
 
         </div>
