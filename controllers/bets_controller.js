@@ -4,10 +4,16 @@ var bets = require('../models/bets.js');
 var Cookies = require('cookies');
 var jwt = require('jsonwebtoken'); 
 var path = require('path');
+var moment = require('moment');
+
+
 if (typeof localStorage === "undefined" || localStorage === null) {
   var LocalStorage = require('node-localstorage').LocalStorage;
   localStorage = new LocalStorage('./scratch');
 }
+
+
+
  
 module.exports = function(app){
 
@@ -231,10 +237,28 @@ module.exports = function(app){
 
                 	bets.selectNegativeJoinBetsVotes(currentUserID, function(communityBetsData){
                 		//console.log(communityBetsData);
+
+                		var expireDateArr = [];
+
+                		for (j = 0; j < communityBetsData.length; j++) {
+	                		//console.log(communityBetsData[0].create_date);
+	                		var createDateSQL = (communityBetsData[j].create_date);
+	                		//console.log(createDateSQL);
+	                		//console.log(createDateSQL.toISOString());
+
+	                		var createDateISO = createDateSQL.toISOString();
+	                		var createDateMoment = moment(createDateISO);
+	                		var expireDate = moment(createDateISO).add(2, 'day').format("YYYY/MM/DD HH:mm:ss");
+	                		//console.log(expireDate);
+	                		expireDateArr.push(expireDate);
+                		}
+
+                		console.log(expireDateArr);
+
                 		homeDataObj.users = communityBetsData;
 
 	            		bets.selectWhereUsers("user_id", currentUserID, function(userData){                			
-	        				console.log(userData);
+	        				//console.log(userData);
 
 	        				homeDataObj.usersStats = userData;
 
@@ -242,7 +266,8 @@ module.exports = function(app){
 			                	currentUsername: currentUsername,
 			                	currentBets: userBetsData,
 			                	userData: userData,
-			                	communityBets: communityBetsData
+			                	communityBets: communityBetsData,
+			                	expireDateArr: expireDateArr
 			                }
 
 			                //console.log(hbsObject);
