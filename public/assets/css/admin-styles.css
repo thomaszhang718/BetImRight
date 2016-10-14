@@ -288,14 +288,14 @@ img {
   margin-top: 0px;
   position: absolute;
   z-index: 999;
-	 /* margin-top:20px; */
+   /* margin-top:20px; */
   left: 0px;
   right: 0px;
-	 /* bottom:0; */;
+   /* bottom:0; */;
 }
 
 .navArea {
-	/*float:right;*/;
+  /*float:right;*/;
 }
 
 .navwrapper .container {
@@ -490,7 +490,7 @@ img#site-title {
 }
  
  
-/*------- 	Gallery Events-------------*/
+/*-------   Gallery Events-------------*/
 /* General style */
 .grid-gallery ul {
   list-style: none;
@@ -792,7 +792,7 @@ textarea.contact {
 }
 
 
-/*----------------------------------------------------	 8. Footer Style------------------------------------------------------*/
+/*----------------------------------------------------   8. Footer Style------------------------------------------------------*/
 .footer {
   background: #5e0f09;
   position: relative;
@@ -829,7 +829,7 @@ textarea.contact {
   background: #5A230E;
 }
 
-.footer ul li:hover	a {
+.footer ul li:hover a {
   color: #fff;
 }
 
@@ -860,7 +860,7 @@ textarea.contact {
   background: #3F3F3F;
   position: absolute;
   margin-left: -30px;
-	/* top:-35px; */
+  /* top:-35px; */
   border-radius: 0;
   bottom: 14px;
   right: 0px;
@@ -958,7 +958,7 @@ blockquote footer, blockquote small, blockquote .small {
 
 .page-section {
   padding: 50px 0 20px 0;
-}	
+} 
 
 /**
   MEDIA QUERIES
@@ -1669,4 +1669,11 @@ label {
     font-size: 20px;
     color: #a3190f;
   }
+}
+
+/*---------------------------------------------------- Admin Page ------------------------------------------------------*/
+
+#adminBets {
+  padding-top:100px;
+  min-height: 1080px;
 }

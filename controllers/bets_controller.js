@@ -315,6 +315,8 @@ module.exports = function(app){
         })
 	});
 
+
+
 	app.get('/admin', function(req,res) {
 		console.log("got to admin");
 
@@ -333,16 +335,34 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-                var hbsObject = {
-                	username: "John's",
-                	handlebar2: "Test2"
-                }
+		        var currentUsername = localStorage.getItem("currentUsername");
+		        var currentUserID = localStorage.getItem("currentUserID");
 
-                res.render("admin", hbsObject);
+                bets.selectWhereAndNull("judge", "'admin'", "result", function(adminBetsData){
+                	console.log(adminBetsData);
+
+	                var hbsObject = {
+	                	currentUsername: currentUsername,
+	                	adminBets: adminBetsData
+	                }
+
+                	res.render("admin", hbsObject);
+            	})
             }
         })
 		
 	});
+
+
+
+
+
+
+
+
+
+
+
 
 	app.get('/myBets', function(req,res, next) {
 
