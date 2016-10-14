@@ -46,7 +46,7 @@
                         </div>
                     {{/each}}
 
-                    <h5>For a full list of all bets you're involved in, go to <i class="fa fa-exchange" aria-hidden="true"></i> {{currentUsername}}'s Bets</h5>
+                    <h5>For a full list of all bets you're involved in, go to <a href="/myBets"><i class="fa fa-exchange" aria-hidden="true"></i> {{currentUsername}}'s Bets</a></h5>
                 </section>
             </div>
 
@@ -80,7 +80,6 @@
 
                                 <div class="countdowntimer-div" id="{{this.bet_id}}" data-expire="{{this.expireDate}}">
                                     <span class="countdownLegend">Ends In: <span id="expire-{{this.bet_id}}"><span></span>
-
                                 </div>
 
                             </form>
@@ -92,13 +91,15 @@
 
             <div class="col-md-2 right">
                 <section class="service page-section" id="userStatsBox">
-                    <h2 class="fancy-title">User Statistics</h2>
+                    <h2 class="fancy-title">User Stats</h2>
                     {{#each userData}}
-                        <li>Wins: {{this.wins}}</li>
-                        <li>Losses: {{this.losses}}</li>
-                        <li>Current Points: {{this.current_points}}</li>
-                        <li>Lifetime Points Won: {{this.total_points_won}}</li>
-                        <li>Lifetime Points Lost: {{this.total_points_lost}}</li>
+                        <div>
+                            <p class="userStats">Current Points: {{this.current_points}}</p>
+                            <p class="userStats">Wins: {{this.wins}}</p>
+                            <p class="userStats">Losses: {{this.losses}}</p>                            
+                            <p class="userStats">Lifetime Points Won: {{this.total_points_won}}</p>
+                            <p class="userStats">Lifetime Points Lost: {{this.total_points_lost}}</p>
+                        </div>
                     {{/each}}
                 </section>
             </div>    
@@ -137,28 +138,6 @@
         });
 
     createCountdownTimer();
-
-
-
-/*        $(function(){
-
-            console.log($('countdowntimer-div').val())
-
-
-
-
-
-
-
-
-            $('#future_date').countdowntimer({
-              dateAndTime : "2018/01/01 00:00:00",
-              size : "lg"
-            });
-
-        });*/
-
-
     });
 
     function createCountdownTimer() {

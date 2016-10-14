@@ -1455,7 +1455,13 @@ label {
 .countdownLegend {
     font-size: 20px;
     color: #000;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
+    display: block;
+    text-align: center;
+}
+
+.userStats {
+  color: #000;
 }
 
 

@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/styles2.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery.countdownTimer.css">
 <!-- Page Content -->
 <div class="wrapper">
     <!--header-->
@@ -138,10 +139,19 @@
                             Opponent Answer: {{this.opponentAnswer}}<br>
                             Judge Selected: {{this.judgeText}}<br>
                         </h4>
-                        </form>
+
+                    {{#if this.isCommunity}}
+                        <div class="countdowntimer-div" id="{{this.bet_id}}" data-expire="{{this.expireDate}}">
+                            <span class="countdownLegend">Ends In: <span id="expire-{{this.bet_id}}"><span></span>
+                        </div>
+                    {{/if}}
+
+
+
+
+
                     </div>
                 {{/each}}
-
             </div>
 
         </div>
@@ -199,6 +209,8 @@
     $(document).ready( function() {
         $('.navbar-wrapper').stickUp();
         });
+
+    createCountdownTimer();
     });
 
 //------------------------------------- myBets Functions -------------------------------------//
@@ -335,6 +347,23 @@
             $('#hiddenAcceptInput-' + betID).remove();
        }
     });
+
+
+    function createCountdownTimer() {
+
+        $('.countdowntimer-div').each(function() {
+
+            var expireStr = $(this).data("expire");
+
+            $('#expire-' + this.id).countdowntimer({
+              dateAndTime : expireStr,
+              size : "sm"
+            });
+
+        });
+
+    }
+
 
 
 //------------------------------------- Side Nav Bar Functions -------------------------------------//

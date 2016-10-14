@@ -404,8 +404,18 @@ module.exports = function(app){
 	        						currentBetsData[k].judgeText = "Admin";
 	        					} else if (currentBetsData[k].judge == "community"){
 	        						currentBetsData[k].judgeText = "Community";
+	        						currentBetsData[k].isCommunity = true;
+
+				                    var createDateSQL = (currentBetsData[k].create_date);
+				                    var createDateISO = createDateSQL.toISOString();
+				                    var createDateMoment = moment(createDateISO);
+				                    var expireDate = moment(createDateISO).add(2, 'day').format("YYYY/MM/DD HH:mm:ss");
+
+				                    currentBetsData[k].expireDate = expireDate;
 	        					}
 	        				}
+
+	        				console.log(currentBetsData)
 
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
 		        				//console.log(pastBetsData);
