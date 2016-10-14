@@ -1,4 +1,10 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/styles2.css">
+
+
+<!-- <script type="text/javascript" src="../node_modules/countdowntimer/LIB/jquery-2.0.3.js"></script> -->
+<!-- <script type="text/javascript" src="jquery.countdownTimer.js"></script>
+<link rel="stylesheet" type="text/css" href="/node_modules/countdowntimer/css/jquery.countdownTimer.css" /> -->
+
 <!-- Page Content -->
 <div class="wrapper">
     <!--header-->
@@ -43,12 +49,28 @@
         <div class="col-md-5">
             <section class="service page-section" id="service">
                 <h2>Community Bets</h2>
+
+<!--                             {{#each expireDateArr}}
+                              {{this}}<br>
+                            {{/each}} -->
+
+
+
                 {{#each communityBets}}
-             
+                    
                     <div class="community-vote-div">
-                        <h2>Bet: {{this.bet_text}}</h2>
+                        
                         <form class="community-vote-form" id="betID-{{this.bet_id}}">
-                            <!-- {{this.bet_id}} -->
+                        {{this.expireDate}}
+<!--                             <div class="countdown-timer" value="{{this.expireDate}}">
+                        
+                            </div> -->
+
+                            <div id="countdowntimer"><span id="future_date"><span></div>
+
+
+                            <h2>Bet: {{this.bet_text}}</h2>
+                            
                             <label for="{{this.bet_id}}-p1-Option">
                             <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1"> <span>{{this.p1_answer}}</span>
                             </label>
@@ -112,6 +134,21 @@
     $(document).ready( function() {
         $('.navbar-wrapper').stickUp();
         });
+
+
+
+
+
+          $(function(){
+            $('#future_date').countdowntimer({
+              dateAndTime : "2018/01/01 00:00:00",
+              size : "lg"
+            });
+          });
+
+
+
+
     });
 
 //------------------------------------- Community Submit Functions -------------------------------------//
