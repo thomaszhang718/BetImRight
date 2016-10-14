@@ -281,22 +281,17 @@ module.exports = function(app){
 				            bets.selectNegativeJoinBetsVotes(currentUserID, function(communityBetsData) {
 				                //console.log(communityBetsData);
 
-				                var expireDateArr = [];
-
 				                for (j = 0; j < communityBetsData.length; j++) {
-				                    //console.log(communityBetsData[0].create_date);
-				                    var createDateSQL = (communityBetsData[j].create_date);
-				                    //console.log(createDateSQL);
-				                    //console.log(createDateSQL.toISOString());
 
+				                    var createDateSQL = (communityBetsData[j].create_date);
 				                    var createDateISO = createDateSQL.toISOString();
 				                    var createDateMoment = moment(createDateISO);
 				                    var expireDate = moment(createDateISO).add(2, 'day').format("YYYY/MM/DD HH:mm:ss");
-				                    //console.log(expireDate);
-				                    expireDateArr.push(expireDate);
+
+				                    communityBetsData[j].expireDate = expireDate;
 				                }
 
-				                console.log(expireDateArr);
+				                console.log(communityBetsData);
 
 				                bets.selectWhereUsers("user_id", currentUserID, function(userData) {
 				                    //console.log(userData);
@@ -305,8 +300,7 @@ module.exports = function(app){
 				                        currentUsername: currentUsername,
 				                        currentBets: userBetsData,
 				                        userData: userData,
-				                        communityBets: communityBetsData,
-				                        expireDateArr: expireDateArr
+				                        communityBets: communityBetsData
 				                    }
 
 				                    //console.log(hbsObject);

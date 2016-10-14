@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/styles2.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery.countdownTimer.css">
 <!-- Page Content -->
 <div class="wrapper">
     <!--header-->
@@ -25,87 +26,85 @@
             </nav>
         </div>
 
-        
-
     </header>
-<div class="container">
-    <div class="row">
-        <div class="col-md-5 left">
-            <section class="service page-section" id="service">
-                <h2 class="fancy-title">Bets Snapshot</h2>
-                
-                {{#each currentBets}}
-                    <div class="homeCurrentBetDiv" id="betID-{{this.bet_id}}-div">
-                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
-                        <h4 class="betInfoHeader">
-                            Your Answer: {{this.yourAnswer}}<br>
-                            Opponent Answer: {{this.opponentAnswer}}<br>
-                            Judge Selected: {{this.judgeText}}<br>
-                        </h4>
-                        </form>
-                    </div>
-                {{/each}}
 
-                <h5>For a full list of all bets you're involved in, go to <i class="fa fa-exchange" aria-hidden="true"></i> {{currentUsername}}'s Bets</h5>
-            </section>
-        </div>
-
-        <div class="col-md-5 center">
-            <section class="service page-section" id="service">
-
-                <h2 class="fancy-title">Community Bets</h2>
-
-                         {{#each expireDateArr}}
-                              {{this}}<br>
-                            {{/each}}
-
-
-
-                {{#each communityBets}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 left">
+                <section class="service page-section" id="service">
+                    <h2 class="fancy-title">Bets Snapshot</h2>
                     
-                    <div class="community-vote-div" id="betID-{{this.bet_id}}-div">
-                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+                    {{#each currentBets}}
+                        <div class="homeCurrentBetDiv" id="betID-{{this.bet_id}}-div">
+                            <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+                            <h4 class="betInfoHeader">
+                                Your Answer: {{this.yourAnswer}}<br>
+                                Opponent Answer: {{this.opponentAnswer}}<br>
+                                Judge Selected: {{this.judgeText}}<br>
+                            </h4>
+                            </form>
+                        </div>
+                    {{/each}}
 
-                        <form class="community-vote-form" id="betID-{{this.bet_id}}">
+                    <h5>For a full list of all bets you're involved in, go to <i class="fa fa-exchange" aria-hidden="true"></i> {{currentUsername}}'s Bets</h5>
+                </section>
+            </div>
 
-                            <div class="radioBetDiv">
-                                <label for="{{this.bet_id}}-p1-Option" class="radioBetLabel">
-                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1" required> <span>{{this.p1_answer}}</span>
-                                </label>
-                            </div>
+            <div class="col-md-5 center">
+                <section class="service page-section" id="service">
 
-                            <div class="radioBetDiv">
-                                <label for="{{this.bet_id}}-p2-Option" class="radioBetLabel">
-                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2" required> <span>{{this.p2_answer}}</span>
-                                </label>
-                            </div>
+                    <h2 class="fancy-title">Community Bets</h2>
 
-                            <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
+                    {{#each communityBets}}
+                        
+                        <div class="community-vote-div" id="betID-{{this.bet_id}}-div">
+                            <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
 
-                            <p class="voteText" id="voting-{{this.bet_id}}"></p>
+                            <form class="community-vote-form" id="betID-{{this.bet_id}}">
 
-                        </form>
-                    </div>
-                {{/each}}
+                                <div class="radioBetDiv">
+                                    <label for="{{this.bet_id}}-p1-Option" class="radioBetLabel">
+                                    <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1" required> <span>{{this.p1_answer}}</span>
+                                    </label>
+                                </div>
 
-            </section>
+                                <div class="radioBetDiv">
+                                    <label for="{{this.bet_id}}-p2-Option" class="radioBetLabel">
+                                    <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2" required> <span>{{this.p2_answer}}</span>
+                                    </label>
+                                </div>
+
+                                <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
+
+                                <p class="voteText" id="voting-{{this.bet_id}}"></p>
+
+                                <div class="countdowntimer-div" id="{{this.bet_id}}" data-expire="{{this.expireDate}}">
+                                    <span class="countdownLegend">Ends In: <span id="expire-{{this.bet_id}}"><span></span>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    {{/each}}
+
+                </section>
+            </div>
+
+            <div class="col-md-2 right">
+                <section class="service page-section" id="userStatsBox">
+                    <h2 class="fancy-title">User Statistics</h2>
+                    {{#each userData}}
+                        <li>Wins: {{this.wins}}</li>
+                        <li>Losses: {{this.losses}}</li>
+                        <li>Current Points: {{this.current_points}}</li>
+                        <li>Lifetime Points Won: {{this.total_points_won}}</li>
+                        <li>Lifetime Points Lost: {{this.total_points_lost}}</li>
+                    {{/each}}
+                </section>
+            </div>    
+
         </div>
-
-        <div class="col-md-2 right">
-            <section class="service page-section" id="userStatsBox">
-                <h2 class="fancy-title">User Statistics</h2>
-                {{#each userData}}
-                    <li>Wins: {{this.wins}}</li>
-                    <li>Losses: {{this.losses}}</li>
-                    <li>Current Points: {{this.current_points}}</li>
-                    <li>Lifetime Points Won: {{this.total_points_won}}</li>
-                    <li>Lifetime Points Lost: {{this.total_points_lost}}</li>
-                {{/each}}
-            </section>
-        </div>    
-
     </div>
-</div>
 
 
     <!--footer-->
@@ -137,21 +136,45 @@
         $('.navbar-wrapper').stickUp();
         });
 
+    createCountdownTimer();
+
+
+
+/*        $(function(){
+
+            console.log($('countdowntimer-div').val())
 
 
 
 
-          $(function(){
+
+
+
+
             $('#future_date').countdowntimer({
               dateAndTime : "2018/01/01 00:00:00",
               size : "lg"
             });
-          });
 
-
+        });*/
 
 
     });
+
+    function createCountdownTimer() {
+
+        $('.countdowntimer-div').each(function() {
+
+            var expireStr = $(this).data("expire");
+
+            $('#expire-' + this.id).countdowntimer({
+              dateAndTime : expireStr,
+              size : "sm"
+            });
+
+        });
+
+    }
 
 //------------------------------------- Community Submit Functions -------------------------------------//
 

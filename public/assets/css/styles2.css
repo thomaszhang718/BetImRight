@@ -1452,8 +1452,11 @@ label {
     border-radius: 10px;
 }
 
-
-
+.countdownLegend {
+    font-size: 20px;
+    color: #000;
+    margin-left: 10px;
+}
 
 
 /*---------------------------------------------------- My Bets Page ------------------------------------------------------*/
