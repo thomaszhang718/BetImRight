@@ -34,7 +34,7 @@
                     <a href="#pastBets">Past Bets</a>
                 </div>
                 <div id="sideNavMain">
-                    <span style="font-size:30px;cursor:pointer;z-index:-1" onclick="openNav()">&#9776;</span>
+                    <span style="font-size:30px;cursor:pointer;z-index:-1" onclick="openNav()" id="openNav">&#9776;</span>
                 </div>
             </nav>
         </div>
@@ -57,23 +57,22 @@
                         <form class="judging-bet-form" id="betID-{{this.bet_id}}">
                             <!-- {{this.bet_id}} -->
                             <div class="radioBetDiv">
-                            <label for="{{this.bet_id}}-p1-Option" class="radioBetLabel">
-                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1" required> <span>{{this.p1_answer}}</span>
-                            </label>
+                                <label for="{{this.bet_id}}-p1-Option" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1" required> <span>{{this.p1_answer}}</span>
+                                </label>
                             </div>
 
                             <div class="radioBetDiv">
-                            <label for="{{this.bet_id}}-p2-Option" class="radioBetLabel">
-                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2" required> <span>{{this.p2_answer}}</span>
-                            </label>
+                                <label for="{{this.bet_id}}-p2-Option" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2" required> <span>{{this.p2_answer}}</span>
+                                </label>
                             </div>
 
                             <div class="radioBetDiv">
-                            <label for="{{this.bet_id}}-draw-Option" class="radioBetLabel">
-                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-draw-Option" value="draw" required> <span>Draw/Neither Is Correct</span>
-                            </label>
+                                <label for="{{this.bet_id}}-draw-Option" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-draw-Option" value="draw" required> <span>Draw/Neither Is Correct</span>
+                                </label>
                             </div>
-
 
                             <input type="submit" value="Submit" class="judgingSubmitButton" id="{{this.bet_id}}">
 
@@ -90,7 +89,7 @@
     <section class="service" id="pendingBets">
         <div class="container text-center">
             <div class="myBetsTextDivs">
-                <h2>Pending Bets</h2>
+                <h2><i class="fa fa-question" aria-hidden="true"></i> Pending Bets</h2>
                 <br>
 
                 {{#each pendingBets}}
@@ -101,15 +100,15 @@
                         <form class="pending-bet-form" id="betID-{{this.bet_id}}">
                             <!-- {{this.bet_id}} -->
                             <div class="radioBetDiv" id="uponAccept-{{this.bet_id}}">
-                            <label for="{{this.bet_id}}-accept" class="radioBetLabel">
-                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-accept" value="accept" required> <span>Accept Bet</span>
-                            </label>
+                                <label for="{{this.bet_id}}-accept" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-accept" value="accept" required> <span>Accept Bet</span>
+                                </label>
                             </div>
 
                             <div class="radioBetDiv">
-                            <label for="{{this.bet_id}}-decline" class="radioBetLabel">
-                            <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-decline" value="decline" required> <span>Decline Bet</span>
-                            </label>
+                                <label for="{{this.bet_id}}-decline" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-decline" value="decline" required> <span>Decline Bet</span>
+                                </label>
                             </div>
 
                             <input type="submit" value="Submit" class="judgingSubmitButton" id="{{this.bet_id}}">
@@ -128,32 +127,20 @@
     <section class="service" id="currentBets">
         <div class="container text-center">
             <div class="myBetsTextDivs">
-                <h2>Current Bets</h2>
+                <h2><i class="fa fa-star" aria-hidden="true"></i> Current Bets</h2>
                 <br>
 
                 {{#each currentBets}}
-                    <div class="pendingBetDiv" id="betID-{{this.bet_id}}-div">
+                    <div class="currentBetDiv" id="betID-{{this.bet_id}}-div">
                         <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
-                        <h4 class="opponentHeader">
-                                            Your Answer: {{this.yourAnswer}}<br>
-                                            Opponent Answer: {{this.opponentAnswer}}<br>
-                                            Opponent Answer: {{this.judgeText}}<br>
+                        <h4 class="betInfoHeader">
+                            Your Answer: {{this.yourAnswer}}<br>
+                            Opponent Answer: {{this.opponentAnswer}}<br>
+                            Judge Selected: {{this.judgeText}}<br>
                         </h4>
                         </form>
                     </div>
                 {{/each}}
-
-                
-
-
-
-
-
-
-
-
-
-
 
             </div>
 
@@ -164,15 +151,20 @@
     <section class="service" id="pastBets">
         <div class="container text-center">
             <div class="myBetsTextDivs">
-                <h2>Past Bets</h2>
+                <h2><i class="fa fa-clock-o" aria-hidden="true"></i> Past Bets</h2>
                 <br>
 
                 {{#each pastBets}}
-                    <li>{{this.bet_text}}</li>
-                    P1 Answer: {{this.p1_answer}}<br>
-                    P2 Answer: {{this.p2_answer}}<br>
+                    <div class="pastBetDiv" id="betID-{{this.bet_id}}-div">
+                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+                        <h4 class="betInfoHeader">
+                            Your Answer: {{this.yourAnswer}}<br>
+                            Opponent Answer: {{this.opponentAnswer}}<br>
+                            Result: {{this.resultText}}<br>
 
-                    Add in something to show who won? Maybe Win or Lost Bet<br>
+                        </h4>
+                        </form>
+                    </div>
                 {{/each}}
             </div>
 

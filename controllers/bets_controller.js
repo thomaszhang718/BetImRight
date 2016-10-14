@@ -6,15 +6,11 @@ var jwt = require('jsonwebtoken');
 var path = require('path');
 var moment = require('moment');
 
-
 if (typeof localStorage === "undefined" || localStorage === null) {
   var LocalStorage = require('node-localstorage').LocalStorage;
   localStorage = new LocalStorage('./scratch');
 }
 
-
-
- 
 module.exports = function(app){
 
 	app.post('/api/auth', function(req, rest){
@@ -115,7 +111,6 @@ module.exports = function(app){
 	app.get('/home', function(req,res) {
 		console.log("got to home");
 		
-		
         var token = new Cookies(req, res).get('access_token');
 
         console.log(token);
@@ -131,163 +126,200 @@ module.exports = function(app){
 
                 console.log("good cookie");
 
-
                 //UPDATE ANY COMMUNITY BETS AND EXPIRE THEM
-				bets.betData("bets", function(resData){
-					bets.betCommunity("votes", function(resCData){
-					var date = new Date();
-					//console.log(resData);
-					var betID;
 
-					for (i in resData){
-						var isValid = true;
-						if (resData[i].result == null){
-							if(resData[i].create_date.getYear() != date.getYear()) {
-								isValid = false;
-							}
-							else if (resData[i].create_date.getMonth() != date.getMonth()) {
-								isValid = false;
-							}
-							else if(date.getDate() - resData[i].create_date.getDate() > 2 ) {
-								isValid = false;
-							}
+				bets.betData("bets", function(resData) {
+				    bets.betCommunity("votes", function(resCData) {
+				        var date = new Date();
+				        //console.log(resData);
+				        var betID;
 
-							if (isValid == false){
-								isValid = true;
-								var condition = 'bet_id = ' + resData[i].bet_id;
+				        for (i in resData) {
+				            var isValid = true;
+				            if (resData[i].result == null) {
+				                if (resData[i].create_date.getYear() != date.getYear()) {
+				                    isValid = false;
+				                } else if (resData[i].create_date.getMonth() != date.getMonth()) {
+				                    isValid = false;
+				                } else if (date.getDate() - resData[i].create_date.getDate() > 2) {
+				                    isValid = false;
+				                }
 
-								betID = resData[i].bet_id;
+				                if (isValid == false) {
+				                    isValid = true;
+				                    var condition = 'bet_id = ' + resData[i].bet_id;
 
-								if (resData[i].judge == "community"){
-									var p1 = 0;
-									var p2 = 0;
-									for(e in resCData){
-										if (resData[i].bet_id == resCData[e].bet_id && "p1" == resCData[e].voter_pick){
-											p1 += 1;
-										}
-										else if (resData[i].bet_id == resCData[e].bet_id && "p2" == resCData[e].voter_pick){
-											p2 += 1;
-										}
-									}
-									
-									if (p1 == p2){var Judgement = "draw";}
-									else if (p1 > p2){var Judgement = "p1";}
-									else if (p1 < p2){var Judgement = "p2";}
-									
-									
-		if (Judgement == "draw"){
-		bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
-				//res.redirect('/home');
-			});	
-		}
-		else {
-			bets.betJudge("bets", function(resBData){
+				                    betID = resData[i].bet_id;
 
-				var conditionP1;
-				var conditionP2;
-				
-				var points;
+				                    if (resData[i].judge == "community") {
+				                        var p1 = 0;
+				                        var p2 = 0;
+				                        for (e in resCData) {
+				                            if (resData[i].bet_id == resCData[e].bet_id && "p1" == resCData[e].voter_pick) {
+				                                p1 += 1;
+				                            } else if (resData[i].bet_id == resCData[e].bet_id && "p2" == resCData[e].voter_pick) {
+				                                p2 += 1;
+				                            }
+				                        }
 
-				for (r = 0; r < resBData.length; r++) {
-					if (resBData[r].bet_id == betID) {
-
-						points = resBData[r].bet_amount;
-						conditionP1 = 'user_id = ' + resBData[r].p1_id;
-						conditionP2 = 'user_id = ' + resBData[r].p2_id;
-					}
-				}
-				
-				if (Judgement == "p1"){	
-					bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){			
-						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP1, function(data){
-							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP2, function(data){
-							});
-						});
-					});	
-				}
-				else if (Judgement == "p2"){
-					bets.updateBet({'result' : "'" + Judgement + "'"}, condition, function(data){
-						bets.update({'`wins`' : 'wins + 1', '`current_points`' : 'current_points + ' + points, '`total_points_won`' : 'total_points_won + ' + points}, conditionP2, function(data){
-							bets.update({'`losses`' : 'losses + 1', '`current_points`' : 'current_points - ' + points, '`total_points_lost`' : 'total_points_lost + ' + points}, conditionP1, function(data){
-							});
-						});
-					});	
-				}
-			
-			});
-		}
-								}
-								else{
-								bets.updateBet({'result' : "'draw'"}, condition, function(data){
-								});
-								}
-							}
-						}
-					}
-
-                var currentUsername = localStorage.getItem("currentUsername");
-                var currentUserID = localStorage.getItem("currentUserID");
-                //console.log(currentUserID);
-                
-                var homeDataObj = {};
-
-                bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(userBetsData){
-                	//console.log(userBetsData);
-                	homeDataObj.bets = userBetsData;
-
-                	bets.selectNegativeJoinBetsVotes(currentUserID, function(communityBetsData){
-                		//console.log(communityBetsData);
-
-                		var expireDateArr = [];
-
-                		for (j = 0; j < communityBetsData.length; j++) {
-	                		//console.log(communityBetsData[0].create_date);
-	                		var createDateSQL = (communityBetsData[j].create_date);
-	                		//console.log(createDateSQL);
-	                		//console.log(createDateSQL.toISOString());
-
-	                		var createDateISO = createDateSQL.toISOString();
-	                		var createDateMoment = moment(createDateISO);
-	                		var expireDate = moment(createDateISO).add(2, 'day').format("YYYY/MM/DD HH:mm:ss");
-	                		//console.log(expireDate);
-	                		expireDateArr.push(expireDate);
-                		}
-
-                		console.log(expireDateArr);
-
-                		homeDataObj.users = communityBetsData;
-
-	            		bets.selectWhereUsers("user_id", currentUserID, function(userData){                			
-	        				//console.log(userData);
-
-	        				homeDataObj.usersStats = userData;
-
-			                var hbsObject = {
-			                	currentUsername: currentUsername,
-			                	currentBets: userBetsData,
-			                	userData: userData,
-			                	communityBets: communityBetsData,
-			                	expireDateArr: expireDateArr
-			                }
-
-			                //console.log(hbsObject);
-							
-							res.render("home", hbsObject);								
-	            		})
-            		})
-                })
-
-					});
-				});
+				                        if (p1 == p2) {
+				                            var Judgement = "draw";
+				                        } else if (p1 > p2) {
+				                            var Judgement = "p1";
+				                        } else if (p1 < p2) {
+				                            var Judgement = "p2";
+				                        }
 
 
+				                        if (Judgement == "draw") {
+				                            bets.updateBet({
+				                                'result': "'" + Judgement + "'"
+				                            }, condition, function(data) {
+				                                //res.redirect('/home');
+				                            });
+				                        } else {
+				                            bets.betJudge("bets", function(resBData) {
 
+				                                var conditionP1;
+				                                var conditionP2;
 
+				                                var points;
+
+				                                for (r = 0; r < resBData.length; r++) {
+				                                    if (resBData[r].bet_id == betID) {
+
+				                                        points = resBData[r].bet_amount;
+				                                        conditionP1 = 'user_id = ' + resBData[r].p1_id;
+				                                        conditionP2 = 'user_id = ' + resBData[r].p2_id;
+				                                    }
+				                                }
+
+				                                if (Judgement == "p1") {
+				                                    bets.updateBet({
+				                                        'result': "'" + Judgement + "'"
+				                                    }, condition, function(data) {
+				                                        bets.update({
+				                                            '`wins`': 'wins + 1',
+				                                            '`current_points`': 'current_points + ' + points,
+				                                            '`total_points_won`': 'total_points_won + ' + points
+				                                        }, conditionP1, function(data) {
+				                                            bets.update({
+				                                                '`losses`': 'losses + 1',
+				                                                '`current_points`': 'current_points - ' + points,
+				                                                '`total_points_lost`': 'total_points_lost + ' + points
+				                                            }, conditionP2, function(data) {});
+				                                        });
+				                                    });
+				                                } else if (Judgement == "p2") {
+				                                    bets.updateBet({
+				                                        'result': "'" + Judgement + "'"
+				                                    }, condition, function(data) {
+				                                        bets.update({
+				                                            '`wins`': 'wins + 1',
+				                                            '`current_points`': 'current_points + ' + points,
+				                                            '`total_points_won`': 'total_points_won + ' + points
+				                                        }, conditionP2, function(data) {
+				                                            bets.update({
+				                                                '`losses`': 'losses + 1',
+				                                                '`current_points`': 'current_points - ' + points,
+				                                                '`total_points_lost`': 'total_points_lost + ' + points
+				                                            }, conditionP1, function(data) {});
+				                                        });
+				                                    });
+				                                }
+
+				                            });
+				                        }
+				                    } else {
+				                        bets.updateBet({
+				                            'result': "'draw'"
+				                        }, condition, function(data) {});
+				                    }
+				                }
+				            }
+				        }
+
+				        var currentUsername = localStorage.getItem("currentUsername");
+				        var currentUserID = localStorage.getItem("currentUserID");
+				        //console.log(currentUserID);
+
+				        var userDataObj = {};
+
+				        bets.userData("users", function(resData) {
+				            //console.log(resData);
+				            userDataObj.userData = resData;
+				        });
+
+				        bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(userBetsData) {
+				            //console.log(userBetsData);
+
+				            for (i = 0; i < userBetsData.length; i++) {
+
+				                if (userBetsData[i].p1_id == currentUserID) {
+				                    userBetsData[i].yourAnswer = userBetsData[i].p1_answer;
+				                    userBetsData[i].opponentAnswer = userBetsData[i].p2_answer;
+				                } else if (userBetsData[i].p2_id == currentUserID) {
+				                    userBetsData[i].yourAnswer = userBetsData[i].p2_answer;
+				                    userBetsData[i].opponentAnswer = userBetsData[i].p1_answer;
+				                }
+
+				                if (userBetsData[i].judge == "friend") {
+
+				                    for (l = 0; l < userDataObj.userData.length; l++) {
+				                        if (userBetsData[i].p3_id == userDataObj.userData[l].user_id) {
+				                            userBetsData[i].judgeText = userDataObj.userData[l].username + " (Friend)";
+				                        }
+				                    }
+
+				                } else if (userBetsData[i].judge == "admin") {
+				                    userBetsData[i].judgeText = "Admin";
+				                } else if (userBetsData[i].judge == "community") {
+				                    userBetsData[i].judgeText = "Community";
+				                }
+				            }
+
+				            bets.selectNegativeJoinBetsVotes(currentUserID, function(communityBetsData) {
+				                //console.log(communityBetsData);
+
+				                var expireDateArr = [];
+
+				                for (j = 0; j < communityBetsData.length; j++) {
+				                    //console.log(communityBetsData[0].create_date);
+				                    var createDateSQL = (communityBetsData[j].create_date);
+				                    //console.log(createDateSQL);
+				                    //console.log(createDateSQL.toISOString());
+
+				                    var createDateISO = createDateSQL.toISOString();
+				                    var createDateMoment = moment(createDateISO);
+				                    var expireDate = moment(createDateISO).add(2, 'day').format("YYYY/MM/DD HH:mm:ss");
+				                    //console.log(expireDate);
+				                    expireDateArr.push(expireDate);
+				                }
+
+				                console.log(expireDateArr);
+
+				                bets.selectWhereUsers("user_id", currentUserID, function(userData) {
+				                    //console.log(userData);
+
+				                    var hbsObject = {
+				                        currentUsername: currentUsername,
+				                        currentBets: userBetsData,
+				                        userData: userData,
+				                        communityBets: communityBetsData,
+				                        expireDateArr: expireDateArr
+				                    }
+
+				                    //console.log(hbsObject);
+
+				                    res.render("home", hbsObject);
+				                })
+				            })
+				        })
+				    })
+				})
             }
         })
 	});
-	
-	
 
 	app.get('/admin', function(req,res) {
 		console.log("got to admin");
@@ -341,24 +373,20 @@ module.exports = function(app){
                 //console.log(currentUserID);
                 
                 var myBetsDataObj = {};
-                var tempArr =[];
-
 
 				bets.userData("users", function(resData){
-					console.log(resData);
+					//console.log(resData);
 					myBetsDataObj.userData = resData;
 				});
 
                 bets.selectWhereAndAndNull("p3_id", currentUserID, "p2_agree", 1, "result", function(judgingBetsData){
                 	//console.log(judgingBetsData);
-                	myBetsDataObj.judgingBets = judgingBetsData;
                 	
                 	bets.selectWhereAndNull("p2_id", currentUserID, "p2_agree", function(pendingBetsData){
                 		//console.log(pendingBetsData);
-                		myBetsDataObj.pendingBets = pendingBetsData;
 
 	            		bets.selectWhereOrAndAndNull("p1_id", currentUserID, "p2_id", currentUserID, "p2_agree", 1, "result", function(currentBetsData){             			
-	        				console.log(currentBetsData);
+	        				//console.log(currentBetsData);
 
 	        				for (k = 0; k < currentBetsData.length; k++) {
 
@@ -385,12 +413,42 @@ module.exports = function(app){
 	        					}
 	        				}
 
-	        				myBetsDataObj.currentBets = currentBetsData;
-
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
 		        				//console.log(pastBetsData);
 
-		        				myBetsDataObj.currentBets = pastBetsData;
+		        				for (m = 0; m < pastBetsData.length; m++) {
+
+		        					if (pastBetsData[m].result == "draw") {
+		        						pastBetsData[m].resultText = "Draw"
+	        						}
+	        						else if (pastBetsData[m].result == "p1"){
+
+	        							if (pastBetsData[m].p1_id == currentUserID) {
+	        								pastBetsData[m].yourAnswer = pastBetsData[m].p1_answer;
+	        								pastBetsData[m].opponentAnswer = pastBetsData[m].p2_answer;
+	        								pastBetsData[m].resultText = "Win";
+	        							} else {
+	        								pastBetsData[m].yourAnswerText = pastBetsData[m].p2_answer;
+	        								pastBetsData[m].opponentAnswer = pastBetsData[m].p1_answer;
+	        								pastBetsData[m].resultText = "Loss";	        								
+	        							}
+
+	        						}
+	        						else if (pastBetsData[m].result == "p2"){
+
+	        							if (pastBetsData[m].p2_id == currentUserID) {
+	        								pastBetsData[m].yourAnswer = pastBetsData[m].p2_answer;
+	        								pastBetsData[m].opponentAnswer = pastBetsData[m].p1_answer;
+	        								pastBetsData[m].resultText = "Win";
+	        							} else {
+	        								pastBetsData[m].yourAnswer = pastBetsData[m].p1_answer;
+	        								pastBetsData[m].opponentAnswer = pastBetsData[m].p2_answer;
+	        								pastBetsData[m].resultText = "Loss";	        								
+	        							}
+	        						}
+		        				}		        				
+
+		        				//console.log(pastBetsData);
 
 				                var hbsObject = {
 				                	currentUsername: currentUsername,
@@ -402,7 +460,7 @@ module.exports = function(app){
 
 				                //console.log(hbsObject);
 								
-								res.render("myBets", hbsObject);	
+								res.render("myBets", hbsObject);
 		            		})
 	            		})
             		})

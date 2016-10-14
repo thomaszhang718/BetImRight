@@ -32,11 +32,21 @@
     <div class="row">
         <div class="col-md-5 left">
             <section class="service page-section" id="service">
-                <h2 class="fancy-title">User Bets</h2>
+                <h2 class="fancy-title">Bets Snapshot</h2>
+                
                 {{#each currentBets}}
-                    <li>{{this.bet_text}}</li>
-                    Your Pick: {{this.p1_answer}}
+                    <div class="homeCurrentBetDiv" id="betID-{{this.bet_id}}-div">
+                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+                        <h4 class="betInfoHeader">
+                            Your Answer: {{this.yourAnswer}}<br>
+                            Opponent Answer: {{this.opponentAnswer}}<br>
+                            Judge Selected: {{this.judgeText}}<br>
+                        </h4>
+                        </form>
+                    </div>
                 {{/each}}
+
+                <h5>For a full list of all bets you're involved in, go to <i class="fa fa-exchange" aria-hidden="true"></i> {{currentUsername}}'s Bets</h5>
             </section>
         </div>
 
@@ -44,8 +54,6 @@
             <section class="service page-section" id="service">
 
                 <h2 class="fancy-title">Community Bets</h2>
-
-                <h2>Community Bets</h2>
 
                          {{#each expireDateArr}}
                               {{this}}<br>
@@ -55,26 +63,22 @@
 
                 {{#each communityBets}}
                     
-                    <div class="community-vote-div">
-                        
+                    <div class="community-vote-div" id="betID-{{this.bet_id}}-div">
+                        <h3 class="betTextHeader">Bet: {{this.bet_text}}</h3>
+
                         <form class="community-vote-form" id="betID-{{this.bet_id}}">
-                        {{this.expireDate}}
-                             <div class="countdown-timer" value="{{this.expireDate}}">
-                        
-                            </div> -->
 
-                            <div id="countdowntimer"><span id="future_date"><span></div>
+                            <div class="radioBetDiv">
+                                <label for="{{this.bet_id}}-p1-Option" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1" required> <span>{{this.p1_answer}}</span>
+                                </label>
+                            </div>
 
-
-                            <h2>Bet: {{this.bet_text}}</h2>
-                            
-                            <label for="{{this.bet_id}}-p1-Option">
-                            <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p1-Option" value="p1"> <span>{{this.p1_answer}}</span>
-                            </label>
-
-                            <label for="{{this.bet_id}}-p2-Option">
-                            <input type="radio" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2"> <span>{{this.p2_answer}}</span>
-                            </label>
+                            <div class="radioBetDiv">
+                                <label for="{{this.bet_id}}-p2-Option" class="radioBetLabel">
+                                <input type="radio" class="radioInputLabel" name="{{this.bet_id}}" id="{{this.bet_id}}-p2-Option" value="p2" required> <span>{{this.p2_answer}}</span>
+                                </label>
+                            </div>
 
                             <input type="submit" value="Submit" class="communitySubmitButton" id="{{this.bet_id}}">
 
@@ -83,6 +87,7 @@
                         </form>
                     </div>
                 {{/each}}
+
             </section>
         </div>
 
