@@ -32,7 +32,7 @@ require('./controllers/bets_controller.js')(app);
 //app.use('/', routes);
 
 // Starts the server to begin listening
-var PORT = 8080;
+var PORT = process.env.PORT || 8080;
 app.listen(PORT, function(){
 	console.log('App listening on: http://localhost:' + PORT);
 })
