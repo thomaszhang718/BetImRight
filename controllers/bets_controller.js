@@ -10,6 +10,11 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   var LocalStorage = require('node-localstorage').LocalStorage;
   localStorage = new LocalStorage('./scratch');
 }
+/*var LocalStorage = require('node-localstorage').LocalStorage;
+localStorage = new LocalStorage('./scratch');
+localStorage._deleteLocation();
+localStorage = new LocalStorage('./scratch');*/
+
 
 module.exports = function(app){
 
@@ -38,6 +43,10 @@ module.exports = function(app){
 
 				currentUsername = res[i].username;
 				currentUserID = res[i].user_id;
+		        localStorage.setItem("currentUsername", currentUsername);
+				localStorage.setItem("currentUserID", currentUserID);
+
+
 				//console.log(currentUsername);
 				//console.log(currentUserID);
 
@@ -80,6 +89,9 @@ module.exports = function(app){
 						currentUserID: currentUserID
 					}
 					
+					console.log(loginRedirectObj)
+
+
 					rest.json(loginRedirectObj);
 					//rest.json('user');
 					}
@@ -241,6 +253,7 @@ module.exports = function(app){
 
 				        var currentUsername = localStorage.getItem("currentUsername");
 				        var currentUserID = localStorage.getItem("currentUserID");
+				        //console.log(currentUsername);
 				        //console.log(currentUserID);
 
 				        var userDataObj = {};
@@ -425,7 +438,7 @@ module.exports = function(app){
 	        				//console.log(currentBetsData);
 
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
-		        				console.log(pastBetsData);
+		        				//console.log(pastBetsData);
 
 		        				for (m = 0; m < pastBetsData.length; m++) {
 
@@ -509,15 +522,17 @@ module.exports = function(app){
 
 	app.get('/logout', function(req,res, next) {
 			
-				var token = jwt.sign({logout : "Logout"}, app.get('jwtSecret'), {
-					expiresIn: 0
-				})
-				
-				new Cookies(req, res).set('access_token', token, {
-					httpOnly: true,
-					secure: false
-					});
+		var token = jwt.sign({logout : "Logout"}, app.get('jwtSecret'), {
+			expiresIn: 0
+		})
+		
+		new Cookies(req, res).set('access_token', token, {
+			httpOnly: true,
+			secure: false
+		});
 
+		localStorage.removeItem("currentUsername");
+		localStorage.removeItem("currentUserID");
 		console.log("This is logout bets");
 		res.redirect('/index'); 
 
