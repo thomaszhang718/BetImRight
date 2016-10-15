@@ -26,10 +26,10 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 // Routes
-/*require('./controllers/bets_controller.js')(app);*/
+require('./controllers/bets_controller.js')(app);
 
-var routes = require('./controllers/bets_controller.js');
-app.use('/', routes);
+//var routes = require('./controllers/bets_controller.js');
+//app.use('/', routes);
 
 // Starts the server to begin listening
 var PORT = process.env.PORT || 8080;
