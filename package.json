@@ -21,14 +21,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ScribeDK/Burger.git"
-  },
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ScribeDK/Burger/issues"
-  },
-  "homepage": "https://github.com/ScribeDK/Burger#readme"
+  "license": "ISC"
 }
