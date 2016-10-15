@@ -24,7 +24,7 @@ module.exports = function(app){
 
 		bets.userAuth("users", function(res){
 			
-		console.log(res);
+		//console.log(res);
 		
 		var checked = false;
 		for (i in res){
@@ -137,7 +137,8 @@ module.exports = function(app){
 				        for (i in resData) {
 				            var isValid = true;
 				            if (resData[i].result == null) {
-				                if (resData[i].create_date.getYear() != date.getYear()) {
+
+				                if (resData[i].create_date.getFullYear() != date.getFullYear()) {
 				                    isValid = false;
 				                } else if (resData[i].create_date.getMonth() != date.getMonth()) {
 				                    isValid = false;
@@ -169,7 +170,6 @@ module.exports = function(app){
 				                        } else if (p1 < p2) {
 				                            var Judgement = "p2";
 				                        }
-
 
 				                        if (Judgement == "draw") {
 				                            bets.updateBet({
@@ -315,8 +315,6 @@ module.exports = function(app){
         })
 	});
 
-
-
 	app.get('/admin', function(req,res) {
 		console.log("got to admin");
 
@@ -352,17 +350,6 @@ module.exports = function(app){
         })
 		
 	});
-
-
-
-
-
-
-
-
-
-
-
 
 	app.get('/myBets', function(req,res, next) {
 
@@ -438,7 +425,7 @@ module.exports = function(app){
 	        				//console.log(currentBetsData);
 
 		            		bets.selectWhereOrAndNotNull("p1_id", currentUserID, "p2_id", currentUserID, "result", function(pastBetsData){             			
-		        				//console.log(pastBetsData);
+		        				console.log(pastBetsData);
 
 		        				for (m = 0; m < pastBetsData.length; m++) {
 

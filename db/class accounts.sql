@@ -1,0 +1,25 @@
+-- Users
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('joshua', 'Joshua', 'Miller', 'miller', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('edwin', 'Edwin', 'Rodriguez', 'rodriguez', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('omar', 'Omar', 'Lewis', 'lewis', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('jason', 'Jason', 'Perry', 'perry', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('davidb', 'David', 'Bunner', 'bunner', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('davidj', 'David', 'Jourdain', 'jourdain', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('natalia', 'Natalia', 'Garcia', 'garcia', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('katherine', 'Katherine', 'Register', 'register', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('jesus', 'Jesus', 'Cuza', 'cuza', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('jordan', 'Jordan', 'Ponce', 'ponce', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('melissa', 'Melissa', 'Holsapple', 'holsapple', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('charles', 'Charles', 'McCarthy', 'mccarthy', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('lauren', 'Lauren', 'Farrell', 'farrell', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('davidf', 'David', 'Forman', 'forman', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('davidr', 'David', 'Reel', 'reel', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('davidw', 'David', 'Whittaker', 'whittaker', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('nicholas', 'Nicholas', 'Hodgins', 'hodgins', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('jorge', 'Jorge', 'Rivas', 'rivas', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('michelle', 'Michelle', 'Hettinger', 'hettinger', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('oscar', 'Oscar', 'Hedblad', 'hedblad', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('peter', 'Peter', 'Ortiz', 'ortiz', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('ricky', 'Ricky', 'Cuellar', 'cuellar', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('abiam', 'Abiam', 'Velazquez', 'velazquez', 'test@test.com', false);
+INSERT INTO users (username, first_name, last_name, password, email, admin) VALUES ('jonathan', 'Jonathan', 'Medina', 'medina', 'test@test.com', false);
