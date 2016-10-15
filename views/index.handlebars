@@ -371,7 +371,6 @@
                 console.log("You are an admin");
                 localStorage.setItem("currentUsername", results.currentUsername);
                 localStorage.setItem("currentUserID", results.currentUserID);
-
                 window.location.replace(window.location.origin + results.path);
             }
             else if (results.type === "user") {

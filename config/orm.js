@@ -66,7 +66,7 @@ var orm = {
 	
 	userAuth: function(table, callback) {
         var queryString = 'SELECT * FROM ' + table + ";";
-        console.log(queryString);
+        //console.log(queryString);
 
         connection.query(queryString, function(err, result) {
             if (err) throw err;
@@ -75,7 +75,7 @@ var orm = {
     },
 
 	userData: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`username`,`' + table + '`.`user_id`, `' + table + '`.`current_points` FROM `bets_db`.`' + table + '`;';
+        var queryString = 'SELECT * FROM ' + table + ";";
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
@@ -83,7 +83,7 @@ var orm = {
   },
 
 	betData: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`bet_id`,`' + table + '`.`judge`,`' + table + '`.`create_date`,`' + table + '`.`result` FROM `bets_db`.`' + table + '`;';
+        var queryString = 'SELECT * FROM ' + table + ";";
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
@@ -91,7 +91,7 @@ var orm = {
   },
 
   betJudge: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`bet_id`,`' + table + '`.`p1_id`,`' + table + '`.`bet_amount`,`' + table +'`.`p2_id` FROM `bets_db`.`' + table + '`;';
+        var queryString = 'SELECT * FROM ' + table + ";";
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
@@ -99,7 +99,7 @@ var orm = {
   },
 
   betCommunity: function(table, callback) {
-        var queryString = 'SELECT `' + table + '`.`bet_id`,`' + table +'`.`voter_pick` FROM `bets_db`.`' + table + '`;';
+        var queryString = 'SELECT * FROM ' + table + ";";
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             callback(result);
