@@ -799,6 +799,13 @@ textarea.contact {
   z-index: 2;
 }
 
+#footer{
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  left: 0px;
+}
+
 .footer .container {
   padding: 60px 0 20px;
 }
